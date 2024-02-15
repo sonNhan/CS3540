@@ -3,5 +3,6 @@ Library/
 Logs/
 Temp/
 UserSettings/
+.vscode/
 *.sln
 *.unitypackage
