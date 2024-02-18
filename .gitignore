@@ -6,3 +6,4 @@ UserSettings/
 .vscode/
 *.sln
 *.unitypackage
+Assembly-CSharp.csproj
