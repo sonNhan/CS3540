@@ -22,6 +22,7 @@ public class CameraController : MonoBehaviour
         pitch = transform.rotation.eulerAngles.x;
         yaw = transform.localRotation.eulerAngles.y;
 
+        // Hide and capture hardware cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
