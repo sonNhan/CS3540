@@ -9,17 +9,18 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     float mouseSensitivity = 50f;
 
+    Vector3 startingPosition;
+    Quaternion startingRotation;
     float pitch;
     float yaw;
 
     // Start is called before the first frame update
     void Start()
     {
+        startingPosition = transform.position;
+        startingRotation = transform.rotation;
         pitch = transform.rotation.eulerAngles.x;
         yaw = transform.localRotation.eulerAngles.y;
-
-        Debug.Log(pitch);
-        Debug.Log(yaw);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -31,6 +32,8 @@ public class CameraController : MonoBehaviour
         // Input handling for camera move and rotation
         CameraMove();
         CameraRotate();
+        // Inpyt handling for resetting the camera back to original position/rotation on scene start
+        CameraReset();
     }
 
     // Handles movement of the camera on all axises.
@@ -69,6 +72,15 @@ public class CameraController : MonoBehaviour
             pitch = Mathf.Clamp(pitch, -90f, 90f);
 
             transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
+        }
+    }
+
+    void CameraReset()
+    {
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            transform.position = startingPosition;
+            transform.rotation = startingRotation;
         }
     }
 }
