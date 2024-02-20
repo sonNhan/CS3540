@@ -8,6 +8,8 @@ TagManager:
   - PlacementCursor
   - PlacementRange
   - AttackRange
+  - Unplaceable
+  - Terrain
   layers:
   - Default
   - TransparentFX

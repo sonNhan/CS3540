@@ -147,6 +147,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8941852230478559516}
+  - component: {fileID: 6336594992955496973}
   m_Layer: 0
   m_Name: CrossBowTowerLoaded
   m_TagString: Untagged
@@ -172,6 +173,18 @@ Transform:
   - {fileID: 6708496910724477302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6336594992955496973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2446679930469445888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c94dbabcd8f0ddbd89f5b1e88c109752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4288472079094015292
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +296,7 @@ Transform:
   m_GameObject: {fileID: 7060481956703870798}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.1879315, y: -3.244948, z: -10.571638}
+  m_LocalPosition: {x: 4.1879315, y: -4, z: -10.571638}
   m_LocalScale: {x: 7, y: 5, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
