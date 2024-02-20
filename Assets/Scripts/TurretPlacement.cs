@@ -8,6 +8,7 @@ public class TurretPlacement : MonoBehaviour
     public bool Placeable
     {
         get { return placeable; }
+        set { placeable = value; }
     }
 
     bool placeable;
