@@ -10,6 +10,8 @@ TagManager:
   - AttackRange
   - Unplaceable
   - Terrain
+  - EnemyWaypoint
+
   layers:
   - Default
   - TransparentFX
