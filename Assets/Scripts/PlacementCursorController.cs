@@ -84,6 +84,11 @@ public class PlacementCursorBehavior : MonoBehaviour
         if (selectedTurret && Input.GetMouseButton(0))
         {
             // Disable rendering of turret's range indicator
+            Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
+            Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
+            Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
+            placementIndicator.GetComponent<Renderer>().enabled = false;
+            attackIndicator.GetComponent<Renderer>().enabled = false;
 
             currentTurret.transform.parent = turretParent.transform;
             confirmedSelection = true;
