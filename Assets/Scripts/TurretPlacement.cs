@@ -17,9 +17,8 @@ public class TurretPlacement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        placeableColor = new Color(0, 255, 0, 50);
-        unplaceableColor = new Color(255, 255, 255, 50);
-        Debug.Log(placeableColor.a);
+        placeableColor = new Color(0f, 0f, 1f, 0.3f);
+        unplaceableColor = new Color(1f, 1f, 1f, 0.3f);
     }
 
     // Update is called once per frame
@@ -42,13 +41,11 @@ public class TurretPlacement : MonoBehaviour
             if (ground.CompareTag("Placeable"))
             {
                 placementIndicator.GetComponent<Renderer>().material.color = placeableColor;
-                Debug.Log(placeableColor.a);
                 placeable = true;
             }
             else if (ground.CompareTag("Unplaceable"))
             {
                 placementIndicator.GetComponent<Renderer>().material.color = unplaceableColor;
-                Debug.Log(placeableColor.a);
                 placeable = false;
             }
         }
