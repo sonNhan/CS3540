@@ -11,7 +11,9 @@ public class PlacementCursorBehavior : MonoBehaviour
     GameObject turret1; // HACK: need a cleaner way to represent different selectable turrets
 
     GameObject terrain;
+    GameObject currentTurret;
     GameObject placementPointer;
+    GameObject turretParent;
     bool selectedTurret = false;
     bool confirmedSelection = false;
 
@@ -20,12 +22,17 @@ public class PlacementCursorBehavior : MonoBehaviour
     {
         terrain = GameObject.Find("DirtGround");
         placementPointer = GameObject.Find("PlacementPointer");
+        turretParent = GameObject.Find("Turrets");
     }
 
     // Update is called once per frame
     void Update()
     {
         MovePointer();
+        if (selectedTurret)
+        {
+            MoveTurret();
+        }
         RotatePointer();
         PlaceTurret();
     }
@@ -57,21 +64,31 @@ public class PlacementCursorBehavior : MonoBehaviour
         placementPointer.transform.rotation = Quaternion.Euler(90f, cameraRotation.eulerAngles.y, cameraRotation.eulerAngles.z);
     }
 
+    void MoveTurret()
+    {
+        currentTurret.transform.position = placementPointer.transform.position;
+    }
+
     void PlaceTurret()
     {
         // Choose turret
-        if (!selectedTurret && Input.GetKey(KeyCode.Alpha1))
+        if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
+            currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
             placementPointer.GetComponent<Renderer>().enabled = false;
             selectedTurret = true;
         }
         // TODO: handle other keys for other turrets in the future
 
         // Confirm selection
-        if (selectedTurret && Input.GetKey(KeyCode.Return))
+        if (selectedTurret && Input.GetMouseButton(0))
         {
+            // Disable rendering of turret's range indicator
 
+            currentTurret.transform.parent = turretParent.transform;
+            confirmedSelection = true;
+            selectedTurret = false;
+            placementPointer.GetComponent<Renderer>().enabled = true;
         }
 
         // Cancel selection
