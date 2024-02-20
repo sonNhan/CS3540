@@ -85,7 +85,6 @@ public class PlacementCursorBehavior : MonoBehaviour
         // Confirm selection
         if (selectedTurret && Input.GetMouseButton(0) && currentTurret.GetComponent<TurretPlacement>().Placeable)
         {
-            Debug.Log(currentTurret.GetComponent<TurretPlacement>().Placeable);
             // Disable rendering of turret's range indicator
             Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
             Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
@@ -102,5 +101,11 @@ public class PlacementCursorBehavior : MonoBehaviour
         }
 
         // Cancel selection
+        if (selectedTurret && Input.GetKey(KeyCode.X))
+        {
+            Destroy(currentTurret);
+            selectedTurret = false;
+            placementPointer.GetComponent<Renderer>().enabled = true;
+        }
     }
 }
