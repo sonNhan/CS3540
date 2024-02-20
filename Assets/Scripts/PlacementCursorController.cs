@@ -8,8 +8,6 @@ public class PlacementCursorBehavior : MonoBehaviour
     [SerializeField]
     float cursorSensitivity = 10f;
     [SerializeField]
-    LayerMask groundLayerMask;
-    [SerializeField]
     GameObject turret1; // HACK: need a cleaner way to represent different selectable turrets
 
     GameObject terrain;
@@ -18,7 +16,6 @@ public class PlacementCursorBehavior : MonoBehaviour
     GameObject turretParent;
     bool selectedTurret = false;
     bool confirmedSelection = false;
-    bool placeable = false;
 
     // Start is called before the first frame update
     void Start()
@@ -72,7 +69,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         currentTurret.transform.position = placementPointer.transform.position;
 
         // Check if we are placing on valid terrain, and represent that in the turret's placement indicator
-        OnValidTerrain();
+        currentTurret.GetComponent<TurretPlacement>().OnValidTerrain();
 
         // Check that we aren't colliding with other turrets or objects in the map
         // TODO
@@ -89,8 +86,8 @@ public class PlacementCursorBehavior : MonoBehaviour
         }
         // TODO: handle other keys for other turrets in the future
 
-        // Confirm selection
-        if (selectedTurret && Input.GetMouseButton(0) && placeable)
+        // Confirm selectionee
+        if (selectedTurret && Input.GetMouseButton(0) && currentTurret.GetComponent<TurretPlacement>().Placeable)
         {
             // Disable rendering of turret's range indicator
             Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
@@ -106,30 +103,5 @@ public class PlacementCursorBehavior : MonoBehaviour
         }
 
         // Cancel selection
-    }
-
-    void OnValidTerrain()
-    {
-        RaycastHit hit;
-        // Use the placement indicator/collision box to raycast downwards and see if the terrain below is 
-        // valid for placement
-        Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
-        Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
-        int groundLayerMask = -LayerMask.GetMask("PlacementCursor");
-        if (Physics.Raycast(placementIndicator.position, Vector3.down, out hit))
-        {
-            // Check if the hit GameObject is placeable terrain
-            Transform ground = hit.transform.parent;
-            if (ground.CompareTag("Placeable"))
-            {
-                placementIndicator.GetComponent<Renderer>().material.color = Color.green;
-                placeable = true;
-            }
-            else if (ground.CompareTag("Unplaceable"))
-            {
-                placementIndicator.GetComponent<Renderer>().material.color = Color.white;
-                placeable = false;
-            }
-        }
     }
 }

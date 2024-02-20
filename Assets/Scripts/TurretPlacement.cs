@@ -5,11 +5,21 @@ using UnityEngine;
 public class TurretPlacement : MonoBehaviour
 {
 
+    public bool Placeable
+    {
+        get { return placeable; }
+    }
+
+    bool placeable;
+    Color placeableColor;
+    Color unplaceableColor;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        placeableColor = new Color(0, 255, 0, 50);
+        unplaceableColor = new Color(255, 255, 255, 50);
+        Debug.Log(placeableColor.a);
     }
 
     // Update is called once per frame
@@ -17,4 +27,31 @@ public class TurretPlacement : MonoBehaviour
     {
 
     }
+
+    public void OnValidTerrain()
+    {
+        RaycastHit hit;
+        // Use the placement indicator/collision box to raycast downwards and see if the terrain below is 
+        // valid for placement
+        Transform rangeIndicators = transform.Find("RangeIndicators");
+        Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
+        if (Physics.Raycast(placementIndicator.position, Vector3.down, out hit))
+        {
+            // Check if the hit GameObject is placeable terrain
+            Transform ground = hit.transform.parent;
+            if (ground.CompareTag("Placeable"))
+            {
+                placementIndicator.GetComponent<Renderer>().material.color = placeableColor;
+                Debug.Log(placeableColor.a);
+                placeable = true;
+            }
+            else if (ground.CompareTag("Unplaceable"))
+            {
+                placementIndicator.GetComponent<Renderer>().material.color = unplaceableColor;
+                Debug.Log(placeableColor.a);
+                placeable = false;
+            }
+        }
+    }
+
 }
