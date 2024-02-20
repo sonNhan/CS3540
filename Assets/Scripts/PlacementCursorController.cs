@@ -12,8 +12,8 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     GameObject terrain;
     GameObject placementPointer;
-    bool selectedTurret;
-
+    bool selectedTurret = false;
+    bool confirmedSelection = false;
 
     // Start is called before the first frame update
     void Start()
@@ -59,21 +59,21 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     void PlaceTurret()
     {
-        // TODO: fix
-        /*
-        if (Input.GetKey(KeyCode.Alpha1) && !selectedTurret)
+        // Choose turret
+        if (!selectedTurret && Input.GetKey(KeyCode.Alpha1))
         {
             Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
-            placementPointer = turret1;
+            placementPointer.GetComponent<Renderer>().enabled = false;
             selectedTurret = true;
         }
+        // TODO: handle other keys for other turrets in the future
 
-        // TODO other keys correspond to other turrets
-
-        if (Input.GetKey(KeyCode.Escape) && !placementPointer.activeInHierarchy)
+        // Confirm selection
+        if (selectedTurret && Input.GetKey(KeyCode.Return))
         {
-            placementPointer.SetActive(true);
+
         }
-        */
+
+        // Cancel selection
     }
 }
