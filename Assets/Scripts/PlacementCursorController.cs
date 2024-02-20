@@ -15,7 +15,6 @@ public class PlacementCursorBehavior : MonoBehaviour
     GameObject placementPointer;
     GameObject turretParent;
     bool selectedTurret = false;
-    bool confirmedSelection = false;
 
     // Start is called before the first frame update
     void Start()
@@ -70,9 +69,6 @@ public class PlacementCursorBehavior : MonoBehaviour
 
         // Check if we are placing on valid terrain, and represent that in the turret's placement indicator
         currentTurret.GetComponent<TurretPlacement>().OnValidTerrain();
-
-        // Check that we aren't colliding with other turrets or objects in the map
-        // TODO
     }
 
     void PlaceTurret()
@@ -86,9 +82,10 @@ public class PlacementCursorBehavior : MonoBehaviour
         }
         // TODO: handle other keys for other turrets in the future
 
-        // Confirm selectionee
+        // Confirm selection
         if (selectedTurret && Input.GetMouseButton(0) && currentTurret.GetComponent<TurretPlacement>().Placeable)
         {
+            Debug.Log(currentTurret.GetComponent<TurretPlacement>().Placeable);
             // Disable rendering of turret's range indicator
             Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
             Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
@@ -96,9 +93,11 @@ public class PlacementCursorBehavior : MonoBehaviour
             placementIndicator.GetComponent<Renderer>().enabled = false;
             attackIndicator.GetComponent<Renderer>().enabled = false;
 
+            // Put the turret into the turret parent object
             currentTurret.transform.parent = turretParent.transform;
-            confirmedSelection = true;
             selectedTurret = false;
+
+            // Render the placement cursor again
             placementPointer.GetComponent<Renderer>().enabled = true;
         }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlacementIndicatorDetector : MonoBehaviour
+public class PlacementIndicatorBehavior : MonoBehaviour
 {
     Transform turret;
 
@@ -20,20 +20,25 @@ public class PlacementIndicatorDetector : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger enter");
-        turret.GetComponent<TurretPlacement>().Placeable = false;
+        if (other.CompareTag("PlacementRange"))
+        {
+            turret.GetComponent<TurretPlacement>().NotColliding = false;
+        }
     }
 
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("Trigger stay");
-        turret.GetComponent<TurretPlacement>().Placeable = false;
+        if (other.CompareTag("PlacementRange"))
+        {
+            turret.GetComponent<TurretPlacement>().NotColliding = false;
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("Trigger exit");
-        turret.GetComponent<TurretPlacement>().Placeable = true;
+        if (other.CompareTag("PlacementRange"))
+        {
+            turret.GetComponent<TurretPlacement>().NotColliding = true;
+        }
     }
-
 }

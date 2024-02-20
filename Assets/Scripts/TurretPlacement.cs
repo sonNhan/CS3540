@@ -8,10 +8,16 @@ public class TurretPlacement : MonoBehaviour
     public bool Placeable
     {
         get { return placeable; }
-        set { placeable = value; }
+    }
+    public bool NotColliding
+    {
+        get { return notColliding; }
+        set { notColliding = value; }
     }
 
-    bool placeable;
+    bool placeable = false;
+    bool validTerrain = false;
+    bool notColliding = true;
     Color placeableColor;
     Color unplaceableColor;
 
@@ -25,7 +31,22 @@ public class TurretPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        placeable = validTerrain && notColliding;
+        UpdateColor();
+    }
 
+    void UpdateColor()
+    {
+        Transform rangeIndicators = transform.Find("RangeIndicators");
+        Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
+        if (placeable)
+        {
+            placementIndicator.GetComponent<Renderer>().material.color = placeableColor;
+        }
+        else
+        {
+            placementIndicator.GetComponent<Renderer>().material.color = unplaceableColor;
+        }
     }
 
     public void OnValidTerrain()
@@ -41,13 +62,11 @@ public class TurretPlacement : MonoBehaviour
             Transform ground = hit.transform.parent;
             if (ground.CompareTag("Placeable"))
             {
-                placementIndicator.GetComponent<Renderer>().material.color = placeableColor;
-                placeable = true;
+                validTerrain = true;
             }
             else if (ground.CompareTag("Unplaceable"))
             {
-                placementIndicator.GetComponent<Renderer>().material.color = unplaceableColor;
-                placeable = false;
+                validTerrain = false;
             }
         }
     }
