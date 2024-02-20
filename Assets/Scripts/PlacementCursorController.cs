@@ -67,6 +67,7 @@ public class PlacementCursorBehavior : MonoBehaviour
     void MoveTurret()
     {
         currentTurret.transform.position = placementPointer.transform.position;
+
     }
 
     void PlaceTurret()
