@@ -7,34 +7,73 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     [SerializeField]
     float cursorSensitivity = 10f;
+    [SerializeField]
+    GameObject turret1; // HACK: need a cleaner way to represent different selectable turrets
+
+    GameObject terrain;
+    GameObject placementPointer;
+    bool selectedTurret;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        terrain = GameObject.Find("DirtGround");
+        placementPointer = GameObject.Find("PlacementPointer");
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveCursor();
-        RotateCursor();
+        MovePointer();
+        RotatePointer();
+        PlaceTurret();
     }
 
-    void MoveCursor()
+    void MovePointer()
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        // The cursor (which is a quad), is rotated 90 degrees on the X axis, so the Z axis is pointing down.
-        transform.Translate(mouseX * cursorSensitivity, mouseY * cursorSensitivity, 0.0f);
+        float minX = -terrain.transform.localScale.x / 2;
+        float minZ = -terrain.transform.localScale.z / 2;
+        float maxX = terrain.transform.localScale.x / 2;
+        float maxZ = terrain.transform.localScale.z / 2;
+
+        placementPointer.transform.Translate(mouseX * cursorSensitivity, mouseY * cursorSensitivity, 0f);
+
+        float clampX = Mathf.Clamp(placementPointer.transform.position.x, minX, maxX);
+        float clampZ = Mathf.Clamp(placementPointer.transform.position.z, minZ, maxZ);
+
+        placementPointer.transform.position = new Vector3(clampX, placementPointer.transform.position.y, clampZ);
     }
 
-    void RotateCursor()
+    void RotatePointer()
     {
         // Get the rotation of the camera
         Quaternion cameraRotation = Camera.main.transform.rotation;
 
         // Set the rotation of the cursor to match the rotation of the camera
-        transform.rotation = Quaternion.Euler(90f, cameraRotation.eulerAngles.y, cameraRotation.eulerAngles.z);
+        placementPointer.transform.rotation = Quaternion.Euler(90f, cameraRotation.eulerAngles.y, cameraRotation.eulerAngles.z);
+    }
+
+    void PlaceTurret()
+    {
+        // TODO: fix
+        /*
+        if (Input.GetKey(KeyCode.Alpha1) && !selectedTurret)
+        {
+            Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
+            placementPointer = turret1;
+            selectedTurret = true;
+        }
+
+        // TODO other keys correspond to other turrets
+
+        if (Input.GetKey(KeyCode.Escape) && !placementPointer.activeInHierarchy)
+        {
+            placementPointer.SetActive(true);
+        }
+        */
     }
 }
