@@ -11,7 +11,7 @@ TagManager:
   - Unplaceable
   - Terrain
   - EnemyWaypoint
-
+  - Enemy
   layers:
   - Default
   - TransparentFX

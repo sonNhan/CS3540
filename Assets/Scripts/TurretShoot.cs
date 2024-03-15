@@ -34,6 +34,7 @@ public class TurretShoot : MonoBehaviour
         LookForTarget(targetingStyle);
         if (target != null)
         {
+            Debug.Log("Shooting at target...");
             ShootAtTarget(target);
         }
     }
@@ -133,12 +134,19 @@ public class TurretShoot : MonoBehaviour
 
     void ShootAtTarget(GameObject target)
     {
-        // TODO
+        transform.LookAt(target.transform, Vector3.up);
     }
 
     public void AddEnemyInRange(GameObject enemy)
     {
-        enemiesInRange.Add(enemy);
+        if (enemy != null)
+        {
+            enemiesInRange.Add(enemy);
+        }
+        else
+        {
+            Debug.Log("Null enemy!");
+        }
     }
 
     public void RemoveEnemyInRange(GameObject enemy)

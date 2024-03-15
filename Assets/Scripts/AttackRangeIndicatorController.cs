@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class AttackRangeIndicatorController : MonoBehaviour
 {
-    Transform turret;
+    GameObject turret;
     TurretShoot turretShootScript;
+    TurretPlacement turretPlacementScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        turret = transform.parent;
+        turret = transform.parent.transform.parent.gameObject;
         turretShootScript = turret.GetComponent<TurretShoot>();
+        turretPlacementScript = turret.GetComponent<TurretPlacement>();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && turretPlacementScript.IsPlaced())
         {
+            Debug.Log("Adding Enemy..." + other.gameObject.name);
             turretShootScript.AddEnemyInRange(other.gameObject);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && turretPlacementScript.IsPlaced())
         {
             turretShootScript.RemoveEnemyInRange(other.gameObject);
         }

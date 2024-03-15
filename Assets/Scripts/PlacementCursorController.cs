@@ -96,6 +96,9 @@ public class PlacementCursorBehavior : MonoBehaviour
             currentTurret.transform.parent = turretParent.transform;
             selectedTurret = false;
 
+            // Flag the turret as "placed"
+            currentTurret.GetComponent<TurretPlacement>().SetPlaced(true);
+
             // Render the placement cursor again
             placementPointer.GetComponent<Renderer>().enabled = true;
         }
