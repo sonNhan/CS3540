@@ -63,9 +63,13 @@ public class TurretShoot : MonoBehaviour
 
     GameObject GetFirstEnemy()
     {
-        GameObject first = null;
+        GameObject first = target;
         foreach (GameObject enemy in enemiesInRange)
         {
+            if (enemy == null)
+            {
+                continue;
+            }
             // The only enemy in range is the first one
             if (first == null)
             {
@@ -73,13 +77,9 @@ public class TurretShoot : MonoBehaviour
             }
             // The first enemy is the enemy closest to their goal
             else if (Vector3.Distance(first.transform.position, enemyGoal.transform.position)
-                    < Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
+                    > Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
             {
                 first = enemy;
-            }
-            else
-            {
-                continue;
             }
         }
         return first;
@@ -87,9 +87,13 @@ public class TurretShoot : MonoBehaviour
 
     GameObject GetLastEnemy()
     {
-        GameObject last = null;
+        GameObject last = target;
         foreach (GameObject enemy in enemiesInRange)
         {
+            if (enemy == null)
+            {
+                continue;
+            }
             // The only enemy in range is the first one
             if (last == null)
             {
@@ -97,7 +101,7 @@ public class TurretShoot : MonoBehaviour
             }
             // The last enemy is the enemy furthest from their goal
             else if (Vector3.Distance(last.transform.position, enemyGoal.transform.position)
-                    > Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
+                    < Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
             {
                 last = enemy;
             }
@@ -111,16 +115,20 @@ public class TurretShoot : MonoBehaviour
 
     GameObject GetClosestEnemy()
     {
-        GameObject closest = null;
+        GameObject closest = target;
         foreach (GameObject enemy in enemiesInRange)
         {
+            if (enemy == null)
+            {
+                continue;
+            }
             // The only enemy in range is the first one
             if (closest == null)
             {
                 closest = enemy;
             }
             else if (Vector3.Distance(closest.transform.position, transform.position)
-                    < Vector3.Distance(enemy.transform.position, transform.position))
+                    > Vector3.Distance(enemy.transform.position, transform.position))
             {
                 closest = enemy;
             }
