@@ -32,7 +32,7 @@ public class TurretShoot : MonoBehaviour
     void Update()
     {
         LookForTarget(targetingStyle);
-        if (target != null)
+        if (target != null && enemiesInRange.Contains(target))
         {
             Debug.Log("Shooting at target...");
             ShootAtTarget(target);
@@ -147,13 +147,9 @@ public class TurretShoot : MonoBehaviour
 
     public void AddEnemyInRange(GameObject enemy)
     {
-        if (enemy != null)
+        if (enemy != null && !enemiesInRange.Contains(enemy))
         {
             enemiesInRange.Add(enemy);
-        }
-        else
-        {
-            Debug.Log("Null enemy!");
         }
     }
 

@@ -18,11 +18,13 @@ public class AttackRangeIndicatorController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy") && turretPlacementScript.IsPlaced())
-        {
-            Debug.Log("Adding Enemy..." + other.gameObject.name);
-            turretShootScript.AddEnemyInRange(other.gameObject);
-        }
+        AddEnemy(other);
+    }
+
+    // Needed when a turret is placed down whilst units are already there
+    void OnTriggerStay(Collider other)
+    {
+        AddEnemy(other);
     }
 
     void OnTriggerExit(Collider other)
@@ -30,6 +32,14 @@ public class AttackRangeIndicatorController : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") && turretPlacementScript.IsPlaced())
         {
             turretShootScript.RemoveEnemyInRange(other.gameObject);
+        }
+    }
+
+    void AddEnemy(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy") && turretPlacementScript.IsPlaced())
+        {
+            turretShootScript.AddEnemyInRange(other.gameObject);
         }
     }
 }
