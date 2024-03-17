@@ -242,6 +242,8 @@ MonoBehaviour:
   projectile: {fileID: 4241235622762587685, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
   attackRangeCollider: {fileID: 7512970956796780397}
   enemyGoal: {fileID: 316481469115566528, guid: 127b44a0bd42a344db795741cc2c2e27, type: 3}
+  attackSpeed: 2
+  turretRotationSpeed: 10
 --- !u!1 &4288472079094015292
 GameObject:
   m_ObjectHideFlags: 0

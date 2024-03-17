@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TurretShoot : MonoBehaviour
 {
-    public enum TargetingStyle
+    public enum TargetPriority
     {
         FIRST,
         LAST,
@@ -17,10 +17,13 @@ public class TurretShoot : MonoBehaviour
     Collider attackRangeCollider;
     [SerializeField]
     GameObject enemyGoal;
+    [SerializeField]
+    float attackSpeed = 2f, turretRotationSpeed = 10f;
 
     List<GameObject> enemiesInRange;
     GameObject target;
-    TargetingStyle targetingStyle = TargetingStyle.FIRST;
+    TargetPriority targetPriority = TargetPriority.FIRST;
+    float timeSinceAttack = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,27 +34,27 @@ public class TurretShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LookForTarget(targetingStyle);
+        LookForTarget(targetPriority);
         if (target != null && enemiesInRange.Contains(target))
         {
-            Debug.Log("Shooting at target...");
             ShootAtTarget(target);
         }
+        timeSinceAttack += Time.deltaTime;
     }
 
-    void LookForTarget(TargetingStyle targetingStyle)
+    void LookForTarget(TargetPriority targetPriority)
     {
         foreach (GameObject enemy in enemiesInRange)
         {
-            switch (targetingStyle)
+            switch (targetPriority)
             {
-                case TargetingStyle.FIRST:
+                case TargetPriority.FIRST:
                     target = GetFirstEnemy();
                     break;
-                case TargetingStyle.LAST:
+                case TargetPriority.LAST:
                     target = GetLastEnemy();
                     break;
-                case TargetingStyle.CLOSE:
+                case TargetPriority.CLOSE:
                     target = GetClosestEnemy();
                     break;
                 default:
@@ -66,12 +69,8 @@ public class TurretShoot : MonoBehaviour
         GameObject first = target;
         foreach (GameObject enemy in enemiesInRange)
         {
-            if (enemy == null)
-            {
-                continue;
-            }
             // The only enemy in range is the first one
-            if (first == null)
+            if (first == null || !enemiesInRange.Contains(first))
             {
                 first = enemy;
             }
@@ -90,12 +89,8 @@ public class TurretShoot : MonoBehaviour
         GameObject last = target;
         foreach (GameObject enemy in enemiesInRange)
         {
-            if (enemy == null)
-            {
-                continue;
-            }
             // The only enemy in range is the first one
-            if (last == null)
+            if (last == null || !enemiesInRange.Contains(last))
             {
                 last = enemy;
             }
@@ -104,10 +99,6 @@ public class TurretShoot : MonoBehaviour
                     < Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
             {
                 last = enemy;
-            }
-            else
-            {
-                continue;
             }
         }
         return last;
@@ -118,12 +109,8 @@ public class TurretShoot : MonoBehaviour
         GameObject closest = target;
         foreach (GameObject enemy in enemiesInRange)
         {
-            if (enemy == null)
-            {
-                continue;
-            }
             // The only enemy in range is the first one
-            if (closest == null)
+            if (closest == null || !enemiesInRange.Contains(closest))
             {
                 closest = enemy;
             }
@@ -132,17 +119,21 @@ public class TurretShoot : MonoBehaviour
             {
                 closest = enemy;
             }
-            else
-            {
-                continue;
-            }
         }
         return closest;
     }
 
     void ShootAtTarget(GameObject target)
     {
-        transform.LookAt(target.transform, Vector3.up);
+        // Aim at the target
+        Vector3 targetDirection = (target.transform.position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
+        // Shoot at the target
+        if (timeSinceAttack >= attackSpeed)
+        {
+            timeSinceAttack = 0.0f;
+        }
     }
 
     public void AddEnemyInRange(GameObject enemy)
@@ -156,5 +147,10 @@ public class TurretShoot : MonoBehaviour
     public void RemoveEnemyInRange(GameObject enemy)
     {
         enemiesInRange.Remove(enemy);
+    }
+
+    public void ChangeTargetPriority(TargetPriority targetPriority)
+    {
+        this.targetPriority = targetPriority;
     }
 }
