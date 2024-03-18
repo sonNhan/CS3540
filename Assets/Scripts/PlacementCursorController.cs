@@ -11,10 +11,10 @@ public class PlacementCursorBehavior : MonoBehaviour
     GameObject turret1; // HACK: need a cleaner way to represent different selectable turrets
 
     GameObject terrain;
-    GameObject currentTurret;
-    GameObject placementPointer;
-    GameObject turretParent;
+    GameObject currentTurret, highlightedTurret, hoveredTurret, placementPointer, turretParent;
     bool selectedTurret = false;
+    float highlightDelay = 0.5f;
+    float lastPlacedTime = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -28,12 +28,13 @@ public class PlacementCursorBehavior : MonoBehaviour
     void Update()
     {
         MovePointer();
+        RotatePointer();
+        PlaceTurret();
         if (selectedTurret)
         {
             MoveTurret();
         }
-        RotatePointer();
-        PlaceTurret();
+        HighlightTurret();
     }
 
     void MovePointer()
@@ -76,6 +77,10 @@ public class PlacementCursorBehavior : MonoBehaviour
         // Choose turret
         if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha1))
         {
+            if (highlightedTurret != null)
+            {
+                UnhighlightTurret(highlightedTurret);
+            }
             currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
             placementPointer.GetComponent<Renderer>().enabled = false;
             selectedTurret = true;
@@ -85,6 +90,8 @@ public class PlacementCursorBehavior : MonoBehaviour
         // Confirm selection
         if (selectedTurret && Input.GetMouseButton(0) && currentTurret.GetComponent<TurretPlacement>().Placeable)
         {
+            lastPlacedTime = Time.time;
+
             // Disable rendering of turret's range indicator
             Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
             Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
@@ -110,5 +117,54 @@ public class PlacementCursorBehavior : MonoBehaviour
             selectedTurret = false;
             placementPointer.GetComponent<Renderer>().enabled = true;
         }
+    }
+
+    // Opens a menu for controlling a selected turret
+    void HighlightTurret()
+    {
+        if (Time.time - lastPlacedTime >= highlightDelay)
+        {
+            if (!selectedTurret && Input.GetMouseButton(0) && hoveredTurret != null)
+            {
+                // unhighlight already highlighted turrets
+                if (highlightedTurret != null)
+                {
+                    UnhighlightTurret(highlightedTurret);
+                }
+                Transform rangeIndicators = hoveredTurret.transform.Find("RangeIndicators");
+                Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
+                Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
+                placementIndicator.GetComponent<Renderer>().enabled = true;
+                attackIndicator.GetComponent<Renderer>().enabled = true;
+                // highlight the new turret
+                highlightedTurret = hoveredTurret;
+            }
+        }
+        // Unhighlight a turret if we have a highlighted turret and we click on the ground with nothing
+        if (highlightedTurret != null && Input.GetMouseButton(0) && hoveredTurret == null)
+        {
+            UnhighlightTurret(highlightedTurret);
+        }
+    }
+
+    void UnhighlightTurret(GameObject turret)
+    {
+        Transform rangeIndicators = turret.transform.Find("RangeIndicators");
+        Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
+        Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
+        placementIndicator.GetComponent<Renderer>().enabled = false;
+        attackIndicator.GetComponent<Renderer>().enabled = false;
+        highlightedTurret = null;
+    }
+
+    // Gets the turret that the pointer is currently hovering over
+    public void SetHoveredTurret(GameObject turret)
+    {
+        hoveredTurret = turret;
+    }
+
+    public GameObject GetHoveredTurret()
+    {
+        return hoveredTurret;
     }
 }

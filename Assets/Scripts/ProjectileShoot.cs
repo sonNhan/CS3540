@@ -10,6 +10,7 @@ public class ProjectileShoot : MonoBehaviour
     float projectileLifespan = 5f;
 
     GameObject target;
+    bool shot = false; // required in case an enemy hitbox brushes on the projectile model in the turret
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +27,11 @@ public class ProjectileShoot : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && shot)
         {
+            Debug.Log("Hit enemy");
             // TODO: deal damage to enemy (probably through another script)
             Destroy(gameObject);
         }
@@ -38,6 +40,7 @@ public class ProjectileShoot : MonoBehaviour
 
     public void Shoot(GameObject enemy)
     {
+        shot = true;
         target = enemy;
         // Once shot, projectile has a lifespan
         Destroy(gameObject, projectileLifespan);
