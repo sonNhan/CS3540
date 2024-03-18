@@ -38,7 +38,6 @@ public class TurretShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(target);
         LookForTarget(targetPriority);
         if (target != null && enemiesInRange.Contains(target))
         {
@@ -85,7 +84,6 @@ public class TurretShoot : MonoBehaviour
         GameObject first = target;
         foreach (GameObject enemy in enemiesInRange)
         {
-            Debug.Log(enemy);
             // The only enemy in range is the first one
             if (first == null || !enemiesInRange.Contains(first))
             {
