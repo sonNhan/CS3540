@@ -99,10 +99,10 @@ public class PlacementCursorBehavior : MonoBehaviour
                 var script = ground.GetComponent<PlaceableTerrainScript>();
                 script.isPlaceable = false;
                 script.turret = currentTurret;
+                currentTurret.GetComponent<TurretPlacement>().SetPlaced(true);
                 var position = ground.transform.position;
                 currentTurret.transform.position = new Vector3(position.x, position.y + 0.5f, position.z);
-                
-                
+
                 Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
                 Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
                 Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
@@ -115,7 +115,7 @@ public class PlacementCursorBehavior : MonoBehaviour
 
                 // Render the placement cursor again
                 placementPointer.GetComponent<Renderer>().enabled = true;
-           }
+            }
         }
 
         // Cancel selection

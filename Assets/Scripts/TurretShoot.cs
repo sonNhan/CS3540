@@ -27,11 +27,6 @@ public class TurretShoot : MonoBehaviour
     TargetPriority targetPriority = TargetPriority.FIRST;
     float timeSinceAttack = 0.0f;
     ProjectileShoot projectileShootScript;
-    // Where the projectile should be, how it should be oriented and scaled upon being
-    // instantiated on the turret
-    float projectileXPos, projectileYPos, projectileZPos;
-    float projectileXRot, projectileYRot, projectileZRot;
-    float projectileXScale, projectileYScale, projectileZScale;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +38,7 @@ public class TurretShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(target);
         LookForTarget(targetPriority);
         if (target != null && enemiesInRange.Contains(target))
         {
@@ -89,6 +85,7 @@ public class TurretShoot : MonoBehaviour
         GameObject first = target;
         foreach (GameObject enemy in enemiesInRange)
         {
+            Debug.Log(enemy);
             // The only enemy in range is the first one
             if (first == null || !enemiesInRange.Contains(first))
             {

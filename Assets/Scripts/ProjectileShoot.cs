@@ -31,7 +31,6 @@ public class ProjectileShoot : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && shot)
         {
-            Debug.Log("Hit enemy");
             // TODO: deal damage to enemy (probably through another script)
             Destroy(gameObject);
         }
