@@ -28,12 +28,12 @@ public class ProjectileShoot : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log("collided with" + other.gameObject.name);
         if (other.gameObject.CompareTag("Enemy"))
         {
             // TODO: deal damage to enemy (probably through another script)
             Destroy(gameObject);
         }
+
     }
 
     public void Shoot(GameObject enemy)
