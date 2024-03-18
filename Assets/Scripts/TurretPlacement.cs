@@ -18,6 +18,7 @@ public class TurretPlacement : MonoBehaviour
     bool placeable = false;
     bool validTerrain = false;
     bool notColliding = true;
+    bool placed = false;
     Color placeableColor;
     Color unplaceableColor;
 
@@ -59,7 +60,7 @@ public class TurretPlacement : MonoBehaviour
         if (Physics.Raycast(placementIndicator.position, Vector3.down, out hit))
         {
             // Check if the hit GameObject is placeable terrain
-            Transform ground = hit.transform.parent;
+            Transform ground = hit.transform;
             if (ground.CompareTag("Placeable"))
             {
                 validTerrain = true;
@@ -69,6 +70,16 @@ public class TurretPlacement : MonoBehaviour
                 validTerrain = false;
             }
         }
+    }
+
+    public bool IsPlaced()
+    {
+        return placed;
+    }
+
+    public void SetPlaced(bool flag)
+    {
+        placed = flag;
     }
 
 }
