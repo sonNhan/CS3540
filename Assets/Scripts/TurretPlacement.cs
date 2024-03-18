@@ -60,7 +60,7 @@ public class TurretPlacement : MonoBehaviour
         if (Physics.Raycast(placementIndicator.position, Vector3.down, out hit))
         {
             // Check if the hit GameObject is placeable terrain
-            Transform ground = hit.transform.parent;
+            Transform ground = hit.transform;
             if (ground.CompareTag("Placeable"))
             {
                 validTerrain = true;
