@@ -12,7 +12,9 @@ public class TurretShoot : MonoBehaviour
     }
 
     [SerializeField]
-    GameObject projectile;
+    GameObject projectilePrefab;
+    [SerializeField]
+    AudioClip shootSFX;
     [SerializeField]
     Collider attackRangeCollider;
     [SerializeField]
@@ -21,14 +23,21 @@ public class TurretShoot : MonoBehaviour
     float attackSpeed = 2f, turretRotationSpeed = 10f;
 
     List<GameObject> enemiesInRange;
-    GameObject target;
+    GameObject target, currentProjectile;
     TargetPriority targetPriority = TargetPriority.FIRST;
     float timeSinceAttack = 0.0f;
+    ProjectileShoot projectileShootScript;
+    // Where the projectile should be, how it should be oriented and scaled upon being
+    // instantiated on the turret
+    float projectileXPos, projectileYPos, projectileZPos;
+    float projectileXRot, projectileYRot, projectileZRot;
+    float projectileXScale, projectileYScale, projectileZScale;
 
     // Start is called before the first frame update
     void Start()
     {
         enemiesInRange = new List<GameObject>();
+        currentProjectile = InstantiateProjectile();
     }
 
     // Update is called once per frame
@@ -37,9 +46,20 @@ public class TurretShoot : MonoBehaviour
         LookForTarget(targetPriority);
         if (target != null && enemiesInRange.Contains(target))
         {
-            ShootAtTarget(target);
+            Shoot(target);
         }
         timeSinceAttack += Time.deltaTime;
+    }
+
+    GameObject InstantiateProjectile()
+    {
+        Vector3 projectilePosition = transform.position + transform.rotation * projectilePrefab.transform.position;
+        Quaternion projectileRotation = Quaternion.Euler(transform.rotation.x + projectilePrefab.transform.rotation.eulerAngles.x,
+                transform.rotation.eulerAngles.y + projectilePrefab.transform.rotation.eulerAngles.y,
+                transform.rotation.eulerAngles.z + projectilePrefab.transform.rotation.eulerAngles.z);
+        GameObject projectile = Instantiate(projectilePrefab, projectilePosition, projectileRotation);
+        projectile.transform.parent = transform;
+        return projectile;
     }
 
     void LookForTarget(TargetPriority targetPriority)
@@ -123,16 +143,19 @@ public class TurretShoot : MonoBehaviour
         return closest;
     }
 
-    void ShootAtTarget(GameObject target)
+    void Shoot(GameObject target)
     {
-        // Aim at the target
         Vector3 targetDirection = (target.transform.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
-        // Shoot at the target
         if (timeSinceAttack >= attackSpeed)
         {
             timeSinceAttack = 0.0f;
+            AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
+            projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
+            projectileShootScript.Shoot(target);
+            GameObject newProjectile = InstantiateProjectile();
+            currentProjectile = newProjectile;
         }
     }
 
