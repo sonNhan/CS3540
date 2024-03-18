@@ -86,18 +86,29 @@ public class PlacementCursorBehavior : MonoBehaviour
         if (selectedTurret && Input.GetMouseButton(0) && currentTurret.GetComponent<TurretPlacement>().Placeable)
         {
             // Disable rendering of turret's range indicator
-            Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
-            Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
-            Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
-            placementIndicator.GetComponent<Renderer>().enabled = false;
-            attackIndicator.GetComponent<Renderer>().enabled = false;
+            if (Physics.Raycast(currentTurret.transform.position, Vector3.down, out var hit))
+            {
+                var ground = hit.transform.gameObject;
+                var script = ground.GetComponent<PlaceableTerrainScript>();
+                script.isPlaceable = false;
+                script.turret = currentTurret;
+                var position = ground.transform.position;
+                currentTurret.transform.position = new Vector3(position.x, position.y + 0.5f, position.z);
+                
+                
+                Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
+                Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
+                Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
+                placementIndicator.GetComponent<Renderer>().enabled = false;
+                attackIndicator.GetComponent<Renderer>().enabled = false;
 
-            // Put the turret into the turret parent object
-            currentTurret.transform.parent = turretParent.transform;
-            selectedTurret = false;
+                // Put the turret into the turret parent object
+                currentTurret.transform.parent = turretParent.transform;
+                selectedTurret = false;
 
-            // Render the placement cursor again
-            placementPointer.GetComponent<Renderer>().enabled = true;
+                // Render the placement cursor again
+                placementPointer.GetComponent<Renderer>().enabled = true;
+            }
         }
 
         // Cancel selection

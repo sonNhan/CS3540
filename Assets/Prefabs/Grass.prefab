@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7890145072676876114}
   - component: {fileID: 814265836621287376}
   - component: {fileID: 5659959956139990955}
+  - component: {fileID: -2574864929144483911}
   m_Layer: 0
   m_Name: Grass
   m_TagString: Placeable
@@ -105,3 +106,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-2574864929144483911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196857241743545068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d4649b0139a694e8ff976f803d7a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaceable: 1
+  turret: {fileID: 0}
