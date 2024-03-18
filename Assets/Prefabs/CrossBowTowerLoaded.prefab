@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2086613574114763529}
   - component: {fileID: 5307866236889875922}
   - component: {fileID: 7512970956796780397}
+  - component: {fileID: 164760381144560129}
+  - component: {fileID: 3389582923361110521}
   m_Layer: 0
   m_Name: AttackRange
   m_TagString: AttackRange
@@ -105,6 +107,45 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &164760381144560129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912017079095353562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 336a5806d36b8d84183980769c2ba73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &3389582923361110521
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912017079095353562}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &2196840744589320053
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8941852230478559516}
   - component: {fileID: 6336594992955496973}
+  - component: {fileID: 1825417970964696646}
   m_Layer: 0
   m_Name: CrossBowTowerLoaded
   m_TagString: Untagged
@@ -169,7 +211,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4358501407089845585}
-  - {fileID: 7842357047396260005}
   - {fileID: 6708496910724477302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -185,6 +226,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c94dbabcd8f0ddbd89f5b1e88c109752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1825417970964696646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2446679930469445888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46915684c211fb48c87af5a5c2f4a64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 4241235622762587685, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
+  shootSFX: {fileID: 8300000, guid: d7a3236f439759afaaf2d5e3fdcb99d6, type: 3}
+  attackRangeCollider: {fileID: 7512970956796780397}
+  enemyGoal: {fileID: 316481469115566528, guid: 127b44a0bd42a344db795741cc2c2e27, type: 3}
+  attackSpeed: 2.5
+  turretRotationSpeed: 200
 --- !u!1 &4288472079094015292
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +257,7 @@ GameObject:
   - component: {fileID: 5797049864001502865}
   m_Layer: 0
   m_Name: Crossbow
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -364,10 +423,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -410,69 +469,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1001 &833167487592541966
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8941852230478559516}
-    m_Modifications:
-    - target: {fileID: 4241235622762587685, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_Name
-      value: BallistaShot
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071067
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
---- !u!4 &7842357047396260005 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7441537876032911275, guid: 15b0fc886fa2f8de48a2fda631185ddc, type: 3}
-  m_PrefabInstance: {fileID: 833167487592541966}
-  m_PrefabAsset: {fileID: 0}

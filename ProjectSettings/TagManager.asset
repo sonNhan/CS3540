@@ -11,7 +11,8 @@ TagManager:
   - Unplaceable
   - Terrain
   - EnemyWaypoint
-
+  - Enemy
+  - Turret
   layers:
   - Default
   - TransparentFX
