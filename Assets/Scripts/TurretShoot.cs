@@ -90,7 +90,7 @@ public class TurretShoot : MonoBehaviour
                 first = enemy;
             }
             // The first enemy is the enemy closest to their goal
-            else if (Vector3.Distance(first.transform.position, enemyGoal.transform.position)
+            else if (enemy != null && Vector3.Distance(first.transform.position, enemyGoal.transform.position)
                     > Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
             {
                 first = enemy;
@@ -110,7 +110,7 @@ public class TurretShoot : MonoBehaviour
                 last = enemy;
             }
             // The last enemy is the enemy furthest from their goal
-            else if (Vector3.Distance(last.transform.position, enemyGoal.transform.position)
+            else if (enemy != null && Vector3.Distance(last.transform.position, enemyGoal.transform.position)
                     < Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
             {
                 last = enemy;
@@ -129,7 +129,7 @@ public class TurretShoot : MonoBehaviour
             {
                 closest = enemy;
             }
-            else if (Vector3.Distance(closest.transform.position, transform.position)
+            else if (enemy != null && Vector3.Distance(closest.transform.position, transform.position)
                     > Vector3.Distance(enemy.transform.position, transform.position))
             {
                 closest = enemy;
