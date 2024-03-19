@@ -22,13 +22,13 @@ public class TerrainController : MonoBehaviour
         new int[] {1,1,1,1,1,1,1,1,1,1},
         new int[] {1,1,1,1,1,1,1,1,1,1}
     };
-    
+
     public static List<List<GameObject>> terrainList = new List<List<GameObject>>();
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        terrain.transform.localScale = new Vector3(10f,0.5f,10f);
+        terrain.transform.localScale = new Vector3(10f, 0.5f, 10f);
         var placeable = this.transform.Find("Placeable");
         for (int i = 0; i < levelMap.Length; i++)
         {
@@ -40,12 +40,14 @@ public class TerrainController : MonoBehaviour
                     terrain.name = $"Terrain_{i}_{j}";
                     terrain.transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
                     row.Add(Instantiate(terrain, placeable));
-                } else if (levelMap[i][j] == 2)
+                }
+                else if (levelMap[i][j] == 2)
                 {
-                    var enemyStart = GameObject.Find("EnemyStart");
-                    enemyStart.transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
-                    row.Add(enemyStart);
-                } else if (levelMap[i][j] == 3)
+                    var levelManager = GameObject.Find("LevelManager");
+                    levelManager.transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
+                    row.Add(levelManager);
+                }
+                else if (levelMap[i][j] == 3)
                 {
                     end.transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
                     row.Add(Instantiate(end));
@@ -58,6 +60,6 @@ public class TerrainController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

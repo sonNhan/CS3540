@@ -13,6 +13,8 @@ public class PlacementCursorBehavior : MonoBehaviour
     GameObject terrain;
     GameObject currentTurret, highlightedTurret, hoveredTurret, placementPointer, turretParent;
     GameObject highlightTurretUI;
+    GameObject levelManager;
+    GameController gameControllerScript;
     HighlightedTurretUIBehavior highlightTurretUIScript;
     bool selectedTurret = false;
     float highlightDelay = 0.5f;
@@ -21,6 +23,8 @@ public class PlacementCursorBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        levelManager = GameObject.Find("LevelManager");
+        gameControllerScript = levelManager.GetComponent<GameController>();
         highlightTurretUI = GameObject.Find("HighlightedTurretUI");
         highlightTurretUIScript = highlightTurretUI.GetComponent<HighlightedTurretUIBehavior>();
         terrain = GameObject.Find("DirtGround");
@@ -79,7 +83,7 @@ public class PlacementCursorBehavior : MonoBehaviour
     void PlaceTurret()
     {
         // Choose turret
-        if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha1))
+        if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha1) && gameControllerScript.GetMoney() >= 20)
         {
             if (highlightedTurret != null)
             {
@@ -88,6 +92,7 @@ public class PlacementCursorBehavior : MonoBehaviour
             currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
             placementPointer.GetComponent<Renderer>().enabled = false;
             selectedTurret = true;
+            gameControllerScript.AddMoney(-20);
         }
         // TODO: handle other keys for other turrets in the future
 

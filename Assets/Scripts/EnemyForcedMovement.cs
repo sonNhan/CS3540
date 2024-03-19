@@ -15,7 +15,7 @@ public class EnemyForcedMovement : MonoBehaviour
         waypoints = GameObject.FindGameObjectsWithTag("EnemyWaypoint");
         wayponitIndex = 0;
         sortWaypoints();
-        gameController = GameObject.Find("EnemyStart").GetComponent<GameController>();
+        gameController = GameObject.Find("LevelManager").GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -32,13 +32,13 @@ public class EnemyForcedMovement : MonoBehaviour
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
             transform.LookAt(targetPosition);
-            
+
             if (transform.position == targetPosition)
             {
                 wayponitIndex++;
             }
         }
-        else 
+        else
         {
             if (isAlive)
             {
@@ -51,7 +51,8 @@ public class EnemyForcedMovement : MonoBehaviour
         }
     }
 
-    void sortWaypoints() {
+    void sortWaypoints()
+    {
         waypoints = waypoints.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).ToArray();
         //Debug.Log("Waypoints sorted.");
         for (int i = 0; i < waypoints.Length; i++)

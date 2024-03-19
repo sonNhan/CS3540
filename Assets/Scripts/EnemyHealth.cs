@@ -13,10 +13,10 @@ public class EnemyHealth : MonoBehaviour
         /* could do something for getting enemy type based on tag here to determine health amount */
         currentHealth = startingHealth;
         animator = GetComponent<Animator>();
-        gameController = GameObject.Find("EnemyStart").GetComponent<GameController>();
+        gameController = GameObject.Find("LevelManager").GetComponent<GameController>();
     }
 
-    public void TakeDamage(int dam) 
+    public void TakeDamage(int dam)
     {
         currentHealth -= dam;
 
@@ -29,7 +29,7 @@ public class EnemyHealth : MonoBehaviour
             Debug.Log($"Enemy died. Current money: {gameController.GetMoney()}");
         }
     }
-    
+
     public int GetCurrentHealth()
     {
         return currentHealth;

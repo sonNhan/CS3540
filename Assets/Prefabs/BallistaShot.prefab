@@ -149,4 +149,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 250
-  projectileLifespan: 5
+  projectileLifespan: 1

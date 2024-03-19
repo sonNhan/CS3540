@@ -18,11 +18,13 @@ public class HighlightedTurretUIInteract : MonoBehaviour
 
     GameObject placementCursor;
     PlacementCursorBehavior placementCursorBehaviorScript;
+    GameController gameControllerScript;
 
     void Start()
     {
         placementCursor = GameObject.FindGameObjectWithTag("PlacementCursor");
         placementCursorBehaviorScript = placementCursor.GetComponent<PlacementCursorBehavior>();
+        gameControllerScript = GameObject.Find("LevelManager").GetComponent<GameController>();
     }
 
     public void TriggerUI()
@@ -37,10 +39,14 @@ public class HighlightedTurretUIInteract : MonoBehaviour
                 targetingText.text = turretShoot.GetTargetPriority().ToString();
                 break;
             case UIType.UPGRADE:
-                // TODO: subtract gold/check if we have enough gold
-                turretShoot.UpgradeTurret();
+                if (gameControllerScript.GetMoney() >= 10)
+                {
+                    turretShoot.UpgradeTurret();
+                    gameControllerScript.AddMoney(-10);
+                }
                 break;
             case UIType.SELL:
+                gameControllerScript.AddMoney(5);
                 placementCursorBehaviorScript.UnhighlightTurret(highlightedTurret);
                 turretShoot.SellTurret();
                 break;
