@@ -167,8 +167,26 @@ public class TurretShoot : MonoBehaviour
         enemiesInRange.Remove(enemy);
     }
 
-    public void ChangeTargetPriority(TargetPriority targetPriority)
+    public TargetPriority GetTargetPriority()
     {
-        this.targetPriority = targetPriority;
+        return targetPriority;
+    }
+
+    public void ChangeTargetPriority()
+    {
+        switch (targetPriority)
+        {
+            case TargetPriority.FIRST:
+                targetPriority = TargetPriority.LAST;
+                break;
+            case TargetPriority.LAST:
+                targetPriority = TargetPriority.CLOSE;
+                break;
+            case TargetPriority.CLOSE:
+                targetPriority = TargetPriority.FIRST;
+                break;
+            default:
+                break;
+        }
     }
 }
