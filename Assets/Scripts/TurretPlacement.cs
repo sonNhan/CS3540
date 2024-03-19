@@ -21,6 +21,7 @@ public class TurretPlacement : MonoBehaviour
     bool placed = false;
     Color placeableColor;
     Color unplaceableColor;
+    PlaceableTerrainScript tile;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +49,11 @@ public class TurretPlacement : MonoBehaviour
         {
             placementIndicator.GetComponent<Renderer>().material.color = unplaceableColor;
         }
+    }
+
+    void OnDestroy()
+    {
+        tile.isPlaceable = true;
     }
 
     public void OnValidTerrain()
@@ -80,6 +86,11 @@ public class TurretPlacement : MonoBehaviour
     public void SetPlaced(bool flag)
     {
         placed = flag;
+    }
+
+    public void SetTile(PlaceableTerrainScript terrainScript)
+    {
+        tile = terrainScript;
     }
 
 }

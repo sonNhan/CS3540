@@ -38,7 +38,6 @@ public class TurretShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(target);
         LookForTarget(targetPriority);
         if (target != null && enemiesInRange.Contains(target))
         {
@@ -85,14 +84,13 @@ public class TurretShoot : MonoBehaviour
         GameObject first = target;
         foreach (GameObject enemy in enemiesInRange)
         {
-            Debug.Log(enemy);
             // The only enemy in range is the first one
             if (first == null || !enemiesInRange.Contains(first))
             {
                 first = enemy;
             }
             // The first enemy is the enemy closest to their goal
-            else if (Vector3.Distance(first.transform.position, enemyGoal.transform.position)
+            else if (enemy != null && Vector3.Distance(first.transform.position, enemyGoal.transform.position)
                     > Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
             {
                 first = enemy;
@@ -112,7 +110,7 @@ public class TurretShoot : MonoBehaviour
                 last = enemy;
             }
             // The last enemy is the enemy furthest from their goal
-            else if (Vector3.Distance(last.transform.position, enemyGoal.transform.position)
+            else if (enemy != null && Vector3.Distance(last.transform.position, enemyGoal.transform.position)
                     < Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
             {
                 last = enemy;
@@ -131,7 +129,7 @@ public class TurretShoot : MonoBehaviour
             {
                 closest = enemy;
             }
-            else if (Vector3.Distance(closest.transform.position, transform.position)
+            else if (enemy != null && Vector3.Distance(closest.transform.position, transform.position)
                     > Vector3.Distance(enemy.transform.position, transform.position))
             {
                 closest = enemy;
@@ -169,8 +167,40 @@ public class TurretShoot : MonoBehaviour
         enemiesInRange.Remove(enemy);
     }
 
-    public void ChangeTargetPriority(TargetPriority targetPriority)
+    public TargetPriority GetTargetPriority()
     {
-        this.targetPriority = targetPriority;
+        return targetPriority;
+    }
+
+    // TODO: maybe these scripts should go into another....
+    public void ChangeTargetPriority()
+    {
+        // HACK: kinda hardcoded... maybe theres a better cleaner way to iterate
+        switch (targetPriority)
+        {
+            case TargetPriority.FIRST:
+                targetPriority = TargetPriority.LAST;
+                break;
+            case TargetPriority.LAST:
+                targetPriority = TargetPriority.CLOSE;
+                break;
+            case TargetPriority.CLOSE:
+                targetPriority = TargetPriority.FIRST;
+                break;
+            default:
+                break;
+        }
+    }
+
+    // TODO: Make more modular, maybe we want to upgrade range and damage
+    public void UpgradeTurret()
+    {
+        attackSpeed = (float)(attackSpeed * .8);
+    }
+
+    public void SellTurret()
+    {
+        // TODO: play sell sfx, get gold back
+        Destroy(gameObject);
     }
 }

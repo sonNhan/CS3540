@@ -32,6 +32,7 @@ public class ProjectileShoot : MonoBehaviour
         if (other.CompareTag("Enemy") && shot)
         {
             // TODO: deal damage to enemy (probably through another script)
+            other.GetComponent<EnemyHealth>().TakeDamage(20);
             Destroy(gameObject);
         }
 

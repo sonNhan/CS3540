@@ -33,8 +33,6 @@ public class CameraController : MonoBehaviour
         // Input handling for camera move and rotation
         CameraMove();
         CameraRotate();
-        // Inpyt handling for resetting the camera back to original position/rotation on scene start
-        CameraReset();
     }
 
     // Handles movement of the camera on all axises.
@@ -73,15 +71,6 @@ public class CameraController : MonoBehaviour
             pitch = Mathf.Clamp(pitch, -90f, 90f);
 
             transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
-        }
-    }
-
-    void CameraReset()
-    {
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            transform.position = startingPosition;
-            transform.rotation = startingRotation;
         }
     }
 }

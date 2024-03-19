@@ -12,6 +12,10 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     GameObject terrain;
     GameObject currentTurret, highlightedTurret, hoveredTurret, placementPointer, turretParent;
+    GameObject highlightTurretUI;
+    GameObject levelManager;
+    GameController gameControllerScript;
+    HighlightedTurretUIBehavior highlightTurretUIScript;
     bool selectedTurret = false;
     float highlightDelay = 0.5f;
     float lastPlacedTime = 0f;
@@ -19,6 +23,10 @@ public class PlacementCursorBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        levelManager = GameObject.Find("LevelManager");
+        gameControllerScript = levelManager.GetComponent<GameController>();
+        highlightTurretUI = GameObject.Find("HighlightedTurretUI");
+        highlightTurretUIScript = highlightTurretUI.GetComponent<HighlightedTurretUIBehavior>();
         terrain = GameObject.Find("DirtGround");
         placementPointer = GameObject.Find("PlacementPointer");
         turretParent = GameObject.Find("Turrets");
@@ -75,7 +83,7 @@ public class PlacementCursorBehavior : MonoBehaviour
     void PlaceTurret()
     {
         // Choose turret
-        if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha1))
+        if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha1) && gameControllerScript.GetMoney() >= 20)
         {
             if (highlightedTurret != null)
             {
@@ -84,6 +92,7 @@ public class PlacementCursorBehavior : MonoBehaviour
             currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
             placementPointer.GetComponent<Renderer>().enabled = false;
             selectedTurret = true;
+            gameControllerScript.AddMoney(-20);
         }
         // TODO: handle other keys for other turrets in the future
 
@@ -96,25 +105,29 @@ public class PlacementCursorBehavior : MonoBehaviour
             if (Physics.Raycast(currentTurret.transform.position, Vector3.down, out var hit))
             {
                 var ground = hit.transform.gameObject;
-                var script = ground.GetComponent<PlaceableTerrainScript>();
-                script.isPlaceable = false;
-                script.turret = currentTurret;
-                currentTurret.GetComponent<TurretPlacement>().SetPlaced(true);
-                var position = ground.transform.position;
-                currentTurret.transform.position = new Vector3(position.x, position.y + 0.5f, position.z);
+                if (ground.CompareTag("Placeable"))
+                {
+                    var script = ground.GetComponent<PlaceableTerrainScript>();
+                    script.isPlaceable = false;
+                    script.turret = currentTurret;
+                    currentTurret.GetComponent<TurretPlacement>().SetPlaced(true);
+                    currentTurret.GetComponent<TurretPlacement>().SetTile(script);
+                    var position = ground.transform.position;
+                    currentTurret.transform.position = new Vector3(position.x, position.y + 0.5f, position.z);
 
-                Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
-                Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
-                Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
-                placementIndicator.GetComponent<Renderer>().enabled = false;
-                attackIndicator.GetComponent<Renderer>().enabled = false;
+                    Transform rangeIndicators = currentTurret.transform.Find("RangeIndicators");
+                    Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
+                    Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
+                    placementIndicator.GetComponent<Renderer>().enabled = false;
+                    attackIndicator.GetComponent<Renderer>().enabled = false;
 
-                // Put the turret into the turret parent object
-                currentTurret.transform.parent = turretParent.transform;
-                selectedTurret = false;
+                    // Put the turret into the turret parent object
+                    currentTurret.transform.parent = turretParent.transform;
+                    selectedTurret = false;
 
-                // Render the placement cursor again
-                placementPointer.GetComponent<Renderer>().enabled = true;
+                    // Render the placement cursor again
+                    placementPointer.GetComponent<Renderer>().enabled = true;
+                }
             }
         }
 
@@ -146,6 +159,7 @@ public class PlacementCursorBehavior : MonoBehaviour
                 attackIndicator.GetComponent<Renderer>().enabled = true;
                 // highlight the new turret
                 highlightedTurret = hoveredTurret;
+                highlightTurretUIScript.ShowUI(true);
             }
         }
         // Unhighlight a turret if we have a highlighted turret and we click on the ground with nothing
@@ -155,7 +169,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         }
     }
 
-    void UnhighlightTurret(GameObject turret)
+    public void UnhighlightTurret(GameObject turret)
     {
         Transform rangeIndicators = turret.transform.Find("RangeIndicators");
         Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
@@ -163,6 +177,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         placementIndicator.GetComponent<Renderer>().enabled = false;
         attackIndicator.GetComponent<Renderer>().enabled = false;
         highlightedTurret = null;
+        highlightTurretUIScript.ShowUI(false);
     }
 
     // Gets the turret that the pointer is currently hovering over
@@ -174,5 +189,10 @@ public class PlacementCursorBehavior : MonoBehaviour
     public GameObject GetHoveredTurret()
     {
         return hoveredTurret;
+    }
+
+    public GameObject GetHighlightedTurret()
+    {
+        return highlightedTurret;
     }
 }

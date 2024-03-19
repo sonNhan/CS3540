@@ -13,6 +13,10 @@ TagManager:
   - EnemyWaypoint
   - Enemy
   - Turret
+  - TargetingPriorityUI
+  - SellUI
+  - UpgradeUI
+  - UIButton
   layers:
   - Default
   - TransparentFX
