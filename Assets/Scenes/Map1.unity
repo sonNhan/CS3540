@@ -325,6 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 760772966}
   - component: {fileID: 760772965}
+  - component: {fileID: 760772967}
   m_Layer: 0
   m_Name: EnemyStart
   m_TagString: Untagged
@@ -344,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af2a0c2d92cf0d4a95af2a939ad23f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4948009757188610712, guid: 0eef714f054b0c249b36891d3124ff04, type: 3}
+  enemyPrefab: {fileID: 5641754721376316627, guid: 298a4eaf499a8ed42ae7e5c76809300f, type: 3}
 --- !u!4 &760772966
 Transform:
   m_ObjectHideFlags: 0
@@ -365,6 +366,22 @@ Transform:
   - {fileID: 1603925663}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &760772967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760772964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba82c7803d1e2e46a378c6edea888bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingLives: 10
+  startingMoney: 100
+  startingScore: 0
+  startingWave: 1
 --- !u!1 &796557365
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +721,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786692858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8849cc85f12ef3b4988233e9826292ac, type: 3}
+  m_Script: {fileID: 11500000, guid: d1c56eb8e099fcfda97bccf956d767bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 1196857241743545068, guid: 20b4c001883ae9d22a65457d29594431, type: 3}
