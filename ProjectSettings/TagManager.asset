@@ -11,7 +11,12 @@ TagManager:
   - Unplaceable
   - Terrain
   - EnemyWaypoint
-
+  - Enemy
+  - Turret
+  - TargetingPriorityUI
+  - SellUI
+  - UpgradeUI
+  - UIButton
   layers:
   - Default
   - TransparentFX

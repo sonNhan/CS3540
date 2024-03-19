@@ -5,24 +5,20 @@ using UnityEngine;
 public class PlacementIndicatorBehavior : MonoBehaviour
 {
     Transform turret;
+    TurretPlacement turretPlacementScript;
 
     // Start is called before the first frame update
     void Start()
     {
         turret = transform.parent.transform.parent;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        turretPlacementScript = turret.GetComponent<TurretPlacement>();
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlacementRange"))
         {
-            turret.GetComponent<TurretPlacement>().NotColliding = false;
+            turretPlacementScript.NotColliding = false;
         }
     }
 
@@ -30,7 +26,7 @@ public class PlacementIndicatorBehavior : MonoBehaviour
     {
         if (other.CompareTag("PlacementRange"))
         {
-            turret.GetComponent<TurretPlacement>().NotColliding = false;
+            turretPlacementScript.NotColliding = false;
         }
     }
 
@@ -38,7 +34,7 @@ public class PlacementIndicatorBehavior : MonoBehaviour
     {
         if (other.CompareTag("PlacementRange"))
         {
-            turret.GetComponent<TurretPlacement>().NotColliding = true;
+            turretPlacementScript.NotColliding = true;
         }
     }
 }

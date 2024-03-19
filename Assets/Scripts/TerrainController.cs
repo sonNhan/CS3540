@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,7 +10,7 @@ public class TerrainController : MonoBehaviour
     public GameObject[] vegitatedTerrain;
     public GameObject end;
 
-    private int[][] levelMap = new[]
+    public static int[][] levelMap = new[]
     {
         new int[] {7,7,6,6,7,6,6,7,7,6},
         new int[] {6,7,6,7,4,7,5,4,4,5},
@@ -22,14 +23,17 @@ public class TerrainController : MonoBehaviour
         new int[] {5,4,5,4,6,7,6,7,7,6},
         new int[] {7,6,7,6,7,6,7,6,6,7}
     };
-    
+
+    public static List<List<GameObject>> terrainList = new List<List<GameObject>>();
+
     // Start is called before the first frame update
     void Start()
     {
-        terrain.transform.localScale = new Vector3(10f,0.5f,10f);
+        terrain.transform.localScale = new Vector3(10f, 0.5f, 10f);
         var placeable = this.transform.Find("Placeable");
         for (int i = 0; i < levelMap.Length; i++)
         {
+            var row = new List<GameObject>();
             for (int j = 0; j < levelMap[i].Length; j++)
             {
                 switch (levelMap[i][j])
@@ -68,9 +72,10 @@ public class TerrainController : MonoBehaviour
                         vegitatedTerrain[3].transform.position = new Vector3(-j * 10 + 45, 0, i * 10 - 45);
                         Instantiate(vegitatedTerrain[3]);
                         break;
+
                 }
             }
+            terrainList.Add(row);
         }
-        
     }
 }
