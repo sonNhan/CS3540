@@ -172,8 +172,10 @@ public class TurretShoot : MonoBehaviour
         return targetPriority;
     }
 
+    // TODO: maybe these scripts should go into another....
     public void ChangeTargetPriority()
     {
+        // HACK: kinda hardcoded... maybe theres a better cleaner way to iterate
         switch (targetPriority)
         {
             case TargetPriority.FIRST:
@@ -188,5 +190,17 @@ public class TurretShoot : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    // TODO: Make more modular, maybe we want to upgrade range and damage
+    public void UpgradeTurret()
+    {
+        attackSpeed = (float)(attackSpeed * .8);
+    }
+
+    public void SellTurret()
+    {
+        // TODO: play sell sfx, get gold back
+        Destroy(gameObject);
     }
 }

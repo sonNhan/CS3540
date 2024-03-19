@@ -60,7 +60,7 @@ public class HighlightedTurretUIBehavior : MonoBehaviour
 
     }
 
-    void ShowUIButton(bool flag, int index)
+    public void ShowUIButton(bool flag, int index)
     {
         currentHighlightedUI = UIElements[index];
         currentHighlightedUI.transform.Find("Button").gameObject.SetActive(flag);

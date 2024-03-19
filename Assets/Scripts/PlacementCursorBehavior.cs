@@ -106,6 +106,7 @@ public class PlacementCursorBehavior : MonoBehaviour
                     script.isPlaceable = false;
                     script.turret = currentTurret;
                     currentTurret.GetComponent<TurretPlacement>().SetPlaced(true);
+                    currentTurret.GetComponent<TurretPlacement>().SetTile(script);
                     var position = ground.transform.position;
                     currentTurret.transform.position = new Vector3(position.x, position.y + 0.5f, position.z);
 
@@ -163,7 +164,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         }
     }
 
-    void UnhighlightTurret(GameObject turret)
+    public void UnhighlightTurret(GameObject turret)
     {
         Transform rangeIndicators = turret.transform.Find("RangeIndicators");
         Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");

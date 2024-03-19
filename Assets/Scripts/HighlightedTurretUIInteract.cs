@@ -16,9 +16,8 @@ public class HighlightedTurretUIInteract : MonoBehaviour
     [SerializeField]
     UIType uiType;
 
-    GameObject placementCursor, highlightedTurret;
+    GameObject placementCursor;
     PlacementCursorBehavior placementCursorBehaviorScript;
-    TurretShoot turretShoot;
 
     void Start()
     {
@@ -28,17 +27,22 @@ public class HighlightedTurretUIInteract : MonoBehaviour
 
     public void TriggerUI()
     {
+        GameObject highlightedTurret = placementCursorBehaviorScript.GetHighlightedTurret();
+        TurretShoot turretShoot = highlightedTurret.GetComponent<TurretShoot>();
         switch (uiType)
         {
             case UIType.TARGETING_PRIO:
-                turretShoot = placementCursorBehaviorScript.GetHighlightedTurret().GetComponent<TurretShoot>();
                 turretShoot.ChangeTargetPriority();
                 Text targetingText = gameObject.transform.Find("CurrentTargetingPriority").GetComponent<Text>();
                 targetingText.text = turretShoot.GetTargetPriority().ToString();
                 break;
             case UIType.UPGRADE:
+                // TODO: subtract gold/check if we have enough gold
+                turretShoot.UpgradeTurret();
                 break;
             case UIType.SELL:
+                placementCursorBehaviorScript.UnhighlightTurret(highlightedTurret);
+                turretShoot.SellTurret();
                 break;
             default:
                 Debug.Log("Invalid UI element to trigger!");
