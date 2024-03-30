@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [SerializeField]
+    AudioClip deathSFX;
     public int startingHealth = 100;
     private int currentHealth;
     private GameController gameController;
@@ -23,6 +25,7 @@ public class EnemyHealth : MonoBehaviour
         // if health is 0 or less we die
         if (currentHealth <= 0 && animator.GetBool("isAlive"))
         {
+            AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position);
             animator.SetBool("isAlive", false);
             gameController.AddMoney(10);
             gameController.AddScore(10);
