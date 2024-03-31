@@ -12,10 +12,9 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     GameObject terrain;
     GameObject currentTurret, highlightedTurret, hoveredTurret, placementPointer, turretParent;
-    GameObject highlightTurretUI;
+    HighlightedTurretUI highlightedTurretUIScript;
     GameObject levelManager;
     GameController gameControllerScript;
-    HighlightedTurretUIBehavior highlightTurretUIScript;
     bool selectedTurret = false;
     float highlightDelay = 0.5f;
     float lastPlacedTime = 0f;
@@ -25,11 +24,10 @@ public class PlacementCursorBehavior : MonoBehaviour
     {
         levelManager = GameObject.Find("LevelManager");
         gameControllerScript = levelManager.GetComponent<GameController>();
-        highlightTurretUI = GameObject.Find("HighlightedTurretUI");
-        highlightTurretUIScript = highlightTurretUI.GetComponent<HighlightedTurretUIBehavior>();
         terrain = GameObject.Find("DirtGround");
         placementPointer = GameObject.Find("PlacementPointer");
         turretParent = GameObject.Find("Turrets");
+        highlightedTurretUIScript = GameObject.Find("UI").GetComponent<HighlightedTurretUI>();
     }
 
     // Update is called once per frame
@@ -159,7 +157,9 @@ public class PlacementCursorBehavior : MonoBehaviour
                 attackIndicator.GetComponent<Renderer>().enabled = true;
                 // highlight the new turret
                 highlightedTurret = hoveredTurret;
-                highlightTurretUIScript.ShowUI(true);
+
+                // enable the context menu for a highlighted turret
+                highlightedTurretUIScript.SetUIActive(true, highlightedTurret);
             }
         }
         // Unhighlight a turret if we have a highlighted turret and we click on the ground with nothing
@@ -171,13 +171,15 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     public void UnhighlightTurret(GameObject turret)
     {
+        // disable the context menu for a highlighted turret
+        highlightedTurretUIScript.SetUIActive(false, highlightedTurret);
+
         Transform rangeIndicators = turret.transform.Find("RangeIndicators");
         Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
         Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
         placementIndicator.GetComponent<Renderer>().enabled = false;
         attackIndicator.GetComponent<Renderer>().enabled = false;
         highlightedTurret = null;
-        highlightTurretUIScript.ShowUI(false);
     }
 
     // Gets the turret that the pointer is currently hovering over
