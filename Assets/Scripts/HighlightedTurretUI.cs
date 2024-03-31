@@ -20,6 +20,19 @@ public class HighlightedTurretUI : MonoBehaviour
 
     public void SetUIActive(bool flag, GameObject turret)
     {
+        if (flag)
+        {
+            // Unlock Cursor
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            // Lock Cursor
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
         highlightedTurret = turret;
         selectedTurretText.text = $"Selected Turret\n<u>{turret.name.Replace("(Clone)", "")}</u>";
         UI.SetActive(flag);
