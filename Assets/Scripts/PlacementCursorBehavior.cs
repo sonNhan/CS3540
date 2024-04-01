@@ -15,6 +15,7 @@ public class PlacementCursorBehavior : MonoBehaviour
     HighlightedTurretUI highlightedTurretUIScript;
     GameObject levelManager;
     GameController gameControllerScript;
+    Renderer placementPointerRenderer;
     bool selectedTurret = false;
     float highlightDelay = 0.5f;
     float lastPlacedTime = 0f;
@@ -26,6 +27,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         gameControllerScript = levelManager.GetComponent<GameController>();
         terrain = GameObject.Find("DirtGround");
         placementPointer = GameObject.Find("PlacementPointer");
+        placementPointerRenderer = placementPointer.GetComponent<Renderer>();
         turretParent = GameObject.Find("Turrets");
         highlightedTurretUIScript = GameObject.Find("UI").GetComponent<HighlightedTurretUI>();
     }
@@ -33,12 +35,17 @@ public class PlacementCursorBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePointer();
-        RotatePointer();
-        PlaceTurret();
-        if (selectedTurret)
+        // Placement cursor should be disabled when a turret is highlighted 
+        // to allow for the player to interact with the UI
+        if (highlightedTurret == null)
         {
-            MoveTurret();
+            MovePointer();
+            RotatePointer();
+            PlaceTurret();
+            if (selectedTurret)
+            {
+                MoveTurret();
+            }
         }
         HighlightTurret();
     }
@@ -88,7 +95,7 @@ public class PlacementCursorBehavior : MonoBehaviour
                 UnhighlightTurret(highlightedTurret);
             }
             currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
-            placementPointer.GetComponent<Renderer>().enabled = false;
+            placementPointerRenderer.enabled = false;
             selectedTurret = true;
             gameControllerScript.AddMoney(-20);
         }
@@ -124,7 +131,7 @@ public class PlacementCursorBehavior : MonoBehaviour
                     selectedTurret = false;
 
                     // Render the placement cursor again
-                    placementPointer.GetComponent<Renderer>().enabled = true;
+                    placementPointerRenderer.enabled = true;
                 }
             }
         }
@@ -134,7 +141,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         {
             Destroy(currentTurret);
             selectedTurret = false;
-            placementPointer.GetComponent<Renderer>().enabled = true;
+            placementPointerRenderer.enabled = true;
         }
     }
 
@@ -145,11 +152,14 @@ public class PlacementCursorBehavior : MonoBehaviour
         {
             if (!selectedTurret && Input.GetMouseButton(0) && hoveredTurret != null)
             {
-                // unhighlight already highlighted turrets
-                if (highlightedTurret != null)
-                {
-                    UnhighlightTurret(highlightedTurret);
-                }
+                // Lock Cursor
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+
+                // Hide the placement cursor
+                placementPointerRenderer.enabled = false;
+                Debug.Log(placementPointerRenderer.enabled);
+
                 Transform rangeIndicators = hoveredTurret.transform.Find("RangeIndicators");
                 Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
                 Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
@@ -157,13 +167,12 @@ public class PlacementCursorBehavior : MonoBehaviour
                 attackIndicator.GetComponent<Renderer>().enabled = true;
                 // highlight the new turret
                 highlightedTurret = hoveredTurret;
-                Debug.Log(highlightedTurret);
                 // enable the context menu for a highlighted turret
                 highlightedTurretUIScript.SetUIActive(true, highlightedTurret);
             }
         }
         // Unhighlight a turret if we have a highlighted turret and we click on the ground with nothing
-        if (highlightedTurret != null && Input.GetMouseButton(0) && hoveredTurret == null)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             UnhighlightTurret(highlightedTurret);
         }
@@ -171,6 +180,13 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     public void UnhighlightTurret(GameObject turret)
     {
+        // Unlock Cursor
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        // Show the placement cursor again
+        placementPointerRenderer.enabled = true;
+
         // disable the context menu for a highlighted turret
         highlightedTurretUIScript.SetUIActive(false, highlightedTurret);
 

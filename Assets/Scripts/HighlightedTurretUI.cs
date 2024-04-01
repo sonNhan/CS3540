@@ -33,6 +33,8 @@ public class HighlightedTurretUI : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+        // Instantiated objects automatically have " (Clone)" appended to their name
+        // so we should remove that before displaying it to the user
         highlightedTurret = turret;
         selectedTurretText.text = $"Selected Turret\n<u>{turret.name.Replace("(Clone)", "")}</u>";
         UI.SetActive(flag);
