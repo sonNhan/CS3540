@@ -157,7 +157,7 @@ public class PlacementCursorBehavior : MonoBehaviour
                 attackIndicator.GetComponent<Renderer>().enabled = true;
                 // highlight the new turret
                 highlightedTurret = hoveredTurret;
-
+                Debug.Log(highlightedTurret);
                 // enable the context menu for a highlighted turret
                 highlightedTurretUIScript.SetUIActive(true, highlightedTurret);
             }

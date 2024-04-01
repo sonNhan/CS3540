@@ -14,7 +14,7 @@ public class HighlightedTurretUI : MonoBehaviour
     void Start()
     {
         UI = GameObject.Find("HighlightedTurretUI");
-        selectedTurretText = UI.transform.Find("TurretTitle").GetComponent<TextMeshProUGUI>();
+        selectedTurretText = UI.transform.Find("Background").transform.Find("TurretTitle").GetComponent<TextMeshProUGUI>();
         UI.SetActive(false);
     }
 
