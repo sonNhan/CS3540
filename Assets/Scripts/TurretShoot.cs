@@ -21,6 +21,8 @@ public class TurretShoot : MonoBehaviour
     GameObject enemyGoal;
     [SerializeField]
     float attackSpeed = 2f, turretRotationSpeed = 10f;
+    [SerializeField]
+    Vector3 projectileInstantiatePosition;
 
     List<GameObject> enemiesInRange;
     GameObject target, currentProjectile;
@@ -48,7 +50,7 @@ public class TurretShoot : MonoBehaviour
 
     GameObject InstantiateProjectile()
     {
-        Vector3 projectilePosition = transform.position + transform.rotation * projectilePrefab.transform.position;
+        Vector3 projectilePosition = transform.position + transform.rotation * projectileInstantiatePosition;
         Quaternion projectileRotation = Quaternion.Euler(transform.rotation.x + projectilePrefab.transform.rotation.eulerAngles.x,
                 transform.rotation.eulerAngles.y + projectilePrefab.transform.rotation.eulerAngles.y,
                 transform.rotation.eulerAngles.z + projectilePrefab.transform.rotation.eulerAngles.z);
