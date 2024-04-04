@@ -1,3 +1,5 @@
+using static Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +23,8 @@ public class TurretShoot : MonoBehaviour
     GameObject enemyGoal;
     [SerializeField]
     float attackSpeed = 2f, turretRotationSpeed = 10f;
+    [SerializeField]
+    int damage = 10;
     [SerializeField]
     Vector3 projectileInstantiatePosition;
 
@@ -150,7 +154,7 @@ public class TurretShoot : MonoBehaviour
             timeSinceAttack = 0.0f;
             AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
             projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
-            projectileShootScript.Shoot(target);
+            projectileShootScript.Shoot(target, damage);
             GameObject newProjectile = InstantiateProjectile();
             currentProjectile = newProjectile;
         }
@@ -174,23 +178,15 @@ public class TurretShoot : MonoBehaviour
         return targetPriority;
     }
 
-    // TODO: maybe these scripts should go into another....
-    public void ChangeTargetPriority()
+    public void ChangeTargetPriority(bool right)
     {
-        // HACK: kinda hardcoded... maybe theres a better cleaner way to iterate
-        switch (targetPriority)
+        if (right)
         {
-            case TargetPriority.FIRST:
-                targetPriority = TargetPriority.LAST;
-                break;
-            case TargetPriority.LAST:
-                targetPriority = TargetPriority.CLOSE;
-                break;
-            case TargetPriority.CLOSE:
-                targetPriority = TargetPriority.FIRST;
-                break;
-            default:
-                break;
+            targetPriority = targetPriority.GetNext();
+        }
+        else
+        {
+            targetPriority = targetPriority.GetPrev();
         }
     }
 

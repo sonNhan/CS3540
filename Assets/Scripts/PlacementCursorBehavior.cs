@@ -92,7 +92,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         {
             if (highlightedTurret != null)
             {
-                UnhighlightTurret(highlightedTurret);
+                UnhighlightTurret();
             }
             currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
             placementPointerRenderer.enabled = false;
@@ -158,7 +158,6 @@ public class PlacementCursorBehavior : MonoBehaviour
 
                 // Hide the placement cursor
                 placementPointerRenderer.enabled = false;
-                Debug.Log(placementPointerRenderer.enabled);
 
                 Transform rangeIndicators = hoveredTurret.transform.Find("RangeIndicators");
                 Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
@@ -174,11 +173,11 @@ public class PlacementCursorBehavior : MonoBehaviour
         // Unhighlight a turret if we have a highlighted turret and we click on the ground with nothing
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            UnhighlightTurret(highlightedTurret);
+            UnhighlightTurret();
         }
     }
 
-    public void UnhighlightTurret(GameObject turret)
+    public void UnhighlightTurret()
     {
         // Unlock Cursor
         Cursor.visible = true;
@@ -190,7 +189,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         // disable the context menu for a highlighted turret
         highlightedTurretUIScript.SetUIActive(false, highlightedTurret);
 
-        Transform rangeIndicators = turret.transform.Find("RangeIndicators");
+        Transform rangeIndicators = highlightedTurret.transform.Find("RangeIndicators");
         Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
         Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
         placementIndicator.GetComponent<Renderer>().enabled = false;

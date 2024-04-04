@@ -14,12 +14,8 @@ public class ProjectileShoot : MonoBehaviour
     GameObject target;
     bool targetSet; // if a target for this projectile has been set ever.
     bool shot = false; // required in case an enemy hitbox brushes on the projectile model in the turret
+    int projectileDamage;
     Vector3 targetDirection;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
     // Update is called once per frame
     void Update()
@@ -45,16 +41,17 @@ public class ProjectileShoot : MonoBehaviour
         if (other.CompareTag("Enemy") && shot)
         {
             // TODO: deal damage to enemy (probably through another script)
-            other.GetComponent<EnemyHealth>().TakeDamage(30);
+            other.GetComponent<EnemyHealth>().TakeDamage(projectileDamage);
             Destroy(gameObject);
         }
 
     }
 
-    public void Shoot(GameObject enemy)
+    public void Shoot(GameObject enemy, int damage)
     {
         shot = true;
         target = enemy;
+        projectileDamage = damage;
         targetSet = true;
         targetDirection = (target.transform.position - transform.position).normalized;
         // Once shot, projectile has a lifespan
