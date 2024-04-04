@@ -17,4 +17,16 @@ public static class Constants
         DAMAGE,
         SPEED
     }
+
+    public enum Ability
+    {
+        EXPLOSION,
+        BLIZZARD
+    }
+
+    public enum AbilityEffect
+    {
+        DAMAGE,
+        SLOW
+    }
 }
