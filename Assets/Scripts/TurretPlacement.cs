@@ -74,6 +74,10 @@ public class TurretPlacement : MonoBehaviour
             else if (ground.CompareTag("Unplaceable"))
             {
                 validTerrain = false;
+            } 
+            else if (ground.CompareTag("ShopTile"))
+            {
+                validTerrain = false;
             }
         }
     }

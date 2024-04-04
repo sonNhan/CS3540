@@ -14,7 +14,7 @@ public class TerrainController : MonoBehaviour
     {
         new int[] {7,7,6,6,7,6,6,7,7,6},
         new int[] {6,7,6,7,4,7,5,4,4,5},
-        new int[] {5,4,5,4,1,6,1,1,1,1},
+        new int[] {5,8,5,4,1,6,1,1,1,1},
         new int[] {4,5,4,1,0,0,0,0,0,3},
         new int[] {1,4,1,1,0,1,4,0,1,1},
         new int[] {1,1,0,0,0,1,1,0,1,4},
@@ -71,6 +71,11 @@ public class TerrainController : MonoBehaviour
                         vegitatedTerrain[3].tag = "Unplaceable";
                         vegitatedTerrain[3].transform.position = new Vector3(-j * 10 + 45, 0, i * 10 - 45);
                         Instantiate(vegitatedTerrain[3]);
+                        break;
+                    case 8:
+                        vegitatedTerrain[4].tag = "ShopTile";
+                        vegitatedTerrain[4].transform.position = new Vector3(-j * 10 + 45, 0, i * 10 - 45);
+                        Instantiate(vegitatedTerrain[4]);
                         break;
 
                 }
