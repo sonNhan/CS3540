@@ -1091,6 +1091,7 @@ MonoBehaviour:
   - {fileID: 6588866250651801179, guid: 0b4060bcedd794b49af7695e47cd1058, type: 3}
   - {fileID: 5692015404228956425, guid: 2f9be7f671bb1e948bfd0ad50862faf6, type: 3}
   - {fileID: 5651388803900931385, guid: bf2071ad47a50ea489c5eb987a5c46d9, type: 3}
+  - {fileID: 6714311479941224408, guid: c2763abe835d839458cf2b2f6042878a, type: 3}
   end: {fileID: 316481469115566528, guid: 127b44a0bd42a344db795741cc2c2e27, type: 3}
 --- !u!1 &1874736664
 GameObject:
@@ -1133,6 +1134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1895195736}
   - component: {fileID: 1895195735}
+  - component: {fileID: 1895195737}
   m_Layer: 0
   m_Name: PlacementCursor
   m_TagString: PlacementCursor
@@ -1172,6 +1174,19 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1956326930
+--- !u!114 &1895195737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895195734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8f9bd20f4b59a42a669549653b4d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1922793461
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
