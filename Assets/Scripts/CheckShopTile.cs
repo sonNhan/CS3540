@@ -43,8 +43,6 @@ public class CheckShopTile : MonoBehaviour
                 IdleState();
                 break;
         }
-        IsOnShopTile();
-        CheckClickOnShopTile();
     }
 
     void WalkState()
