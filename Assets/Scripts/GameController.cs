@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField]
     AudioClip spawnSFX;
-    Text moneyText, livesText, gameStateText, enemiesLeftText;
+    TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText;
+    GameObject gameStateUI;
 
     public int startingLives = 10;
     private int currentLives;
@@ -24,10 +26,12 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        moneyText = GameObject.Find("UI").transform.Find("MoneyText").GetComponent<Text>();
-        livesText = GameObject.Find("UI").transform.Find("HealthText").GetComponent<Text>();
-        gameStateText = GameObject.Find("UI").transform.Find("GameStateText").GetComponent<Text>();
-        enemiesLeftText = GameObject.Find("UI").transform.Find("EnemiesLeftText").GetComponent<Text>();
+        Transform UI = GameObject.Find("UI").transform;
+        gameStateUI = UI.Find("GameState").gameObject;
+        moneyText = UI.Find("Money").GetComponentInChildren<TextMeshProUGUI>();
+        livesText = UI.Find("Lives").GetComponentInChildren<TextMeshProUGUI>();
+        gameStateText = UI.Find("GameState").GetComponentInChildren<TextMeshProUGUI>(true);
+        enemiesLeftText = UI.Find("EnemiesLeft").GetComponentInChildren<TextMeshProUGUI>();
         currentLives = startingLives;
         currentMoney = startingMoney;
         currentScore = startingScore;
@@ -94,11 +98,12 @@ public class GameController : MonoBehaviour
 
     void UpdateHealthText()
     {
-        livesText.text = "Lives: " + currentLives.ToString();
+        livesText.text = currentLives.ToString();
     }
 
     void UpdateGameStateText(bool win)
     {
+        gameStateUI.SetActive(true);
         if (win)
         {
             gameStateText.text = "You Win!\n Final Score: " + currentScore;
