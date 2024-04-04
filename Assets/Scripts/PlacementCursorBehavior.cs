@@ -12,10 +12,10 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     GameObject terrain;
     GameObject currentTurret, highlightedTurret, hoveredTurret, placementPointer, turretParent;
-    GameObject highlightTurretUI;
+    HighlightedTurretUI highlightedTurretUIScript;
     GameObject levelManager;
     GameController gameControllerScript;
-    HighlightedTurretUIBehavior highlightTurretUIScript;
+    Renderer placementPointerRenderer;
     bool selectedTurret = false;
     float highlightDelay = 0.5f;
     float lastPlacedTime = 0f;
@@ -25,23 +25,28 @@ public class PlacementCursorBehavior : MonoBehaviour
     {
         levelManager = GameObject.Find("LevelManager");
         gameControllerScript = levelManager.GetComponent<GameController>();
-        highlightTurretUI = GameObject.Find("HighlightedTurretUI");
-        highlightTurretUIScript = highlightTurretUI.GetComponent<HighlightedTurretUIBehavior>();
         terrain = GameObject.Find("DirtGround");
         placementPointer = GameObject.Find("PlacementPointer");
+        placementPointerRenderer = placementPointer.GetComponent<Renderer>();
         turretParent = GameObject.Find("Turrets");
+        highlightedTurretUIScript = GameObject.Find("UI").GetComponent<HighlightedTurretUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovePointer();
-        RotatePointer();
-        PlaceTurret();
-        if (selectedTurret)
+        // Placement cursor should be disabled when a turret is highlighted 
+        // to allow for the player to interact with the UI
+        if (highlightedTurret == null)
         {
-            MoveTurret();
+            MovePointer();
+            RotatePointer();
+            if (selectedTurret)
+            {
+                MoveTurret();
+            }
         }
+        PlaceTurret();
         HighlightTurret();
     }
 
@@ -87,10 +92,10 @@ public class PlacementCursorBehavior : MonoBehaviour
         {
             if (highlightedTurret != null)
             {
-                UnhighlightTurret(highlightedTurret);
+                UnhighlightTurret();
             }
             currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
-            placementPointer.GetComponent<Renderer>().enabled = false;
+            placementPointerRenderer.enabled = false;
             selectedTurret = true;
             gameControllerScript.AddMoney(-20);
         }
@@ -126,7 +131,7 @@ public class PlacementCursorBehavior : MonoBehaviour
                     selectedTurret = false;
 
                     // Render the placement cursor again
-                    placementPointer.GetComponent<Renderer>().enabled = true;
+                    placementPointerRenderer.enabled = true;
                 }
             }
         }
@@ -136,7 +141,7 @@ public class PlacementCursorBehavior : MonoBehaviour
         {
             Destroy(currentTurret);
             selectedTurret = false;
-            placementPointer.GetComponent<Renderer>().enabled = true;
+            placementPointerRenderer.enabled = true;
         }
     }
 
@@ -145,13 +150,15 @@ public class PlacementCursorBehavior : MonoBehaviour
     {
         if (Time.time - lastPlacedTime >= highlightDelay)
         {
-            if (!selectedTurret && Input.GetMouseButton(0) && hoveredTurret != null)
+            if (!selectedTurret && Input.GetMouseButton(0) && hoveredTurret != null && highlightedTurret == null)
             {
-                // unhighlight already highlighted turrets
-                if (highlightedTurret != null)
-                {
-                    UnhighlightTurret(highlightedTurret);
-                }
+                // Lock Cursor
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+
+                // Hide the placement cursor
+                placementPointerRenderer.enabled = false;
+
                 Transform rangeIndicators = hoveredTurret.transform.Find("RangeIndicators");
                 Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
                 Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
@@ -159,25 +166,35 @@ public class PlacementCursorBehavior : MonoBehaviour
                 attackIndicator.GetComponent<Renderer>().enabled = true;
                 // highlight the new turret
                 highlightedTurret = hoveredTurret;
-                highlightTurretUIScript.ShowUI(true);
+                // enable the context menu for a highlighted turret
+                highlightedTurretUIScript.SetUIActive(true, highlightedTurret);
             }
         }
         // Unhighlight a turret if we have a highlighted turret and we click on the ground with nothing
-        if (highlightedTurret != null && Input.GetMouseButton(0) && hoveredTurret == null)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            UnhighlightTurret(highlightedTurret);
+            UnhighlightTurret();
         }
     }
 
-    public void UnhighlightTurret(GameObject turret)
+    public void UnhighlightTurret()
     {
-        Transform rangeIndicators = turret.transform.Find("RangeIndicators");
+        // Unlock Cursor
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        // Show the placement cursor again
+        placementPointerRenderer.enabled = true;
+
+        // disable the context menu for a highlighted turret
+        highlightedTurretUIScript.SetUIActive(false, highlightedTurret);
+
+        Transform rangeIndicators = highlightedTurret.transform.Find("RangeIndicators");
         Transform placementIndicator = rangeIndicators.transform.Find("PlacementRange");
         Transform attackIndicator = rangeIndicators.transform.Find("AttackRange");
         placementIndicator.GetComponent<Renderer>().enabled = false;
         attackIndicator.GetComponent<Renderer>().enabled = false;
         highlightedTurret = null;
-        highlightTurretUIScript.ShowUI(false);
     }
 
     // Gets the turret that the pointer is currently hovering over
