@@ -66,4 +66,24 @@ public class HighlightedTurretUI : MonoBehaviour
         turretShootScript.ChangeTargetPriority(right);
     }
 
+    public void UpgradeTurretRange()
+    {
+        turretShootScript.Upgrade(Constants.UpgradeType.RANGE);
+    }
+
+    public void UpgradeTurretDamage()
+    {
+        turretShootScript.Upgrade(Constants.UpgradeType.DAMAGE);
+    }
+
+    public void UpgradeTurretSpeed()
+    {
+        turretShootScript.Upgrade(Constants.UpgradeType.SPEED);
+    }
+
+    public void SellTurret()
+    {
+        turretShootScript.SellTurret();
+    }
+
 }

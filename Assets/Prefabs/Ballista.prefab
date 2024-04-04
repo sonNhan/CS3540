@@ -239,12 +239,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 5149116325426453422, guid: 4f123ae7b59daf369b28affd5b2f9eaf, type: 3}
-  shootSFX: {fileID: 8300000, guid: d7a3236f439759afaaf2d5e3fdcb99d6, type: 3}
-  attackRangeCollider: {fileID: 7512970956796780397}
   enemyGoal: {fileID: 316481469115566528, guid: 127b44a0bd42a344db795741cc2c2e27, type: 3}
-  attackSpeed: 2.5
-  turretRotationSpeed: 200
+  shootSFX: {fileID: 8300000, guid: d7a3236f439759afaaf2d5e3fdcb99d6, type: 3}
   projectileInstantiatePosition: {x: 0, y: 3.8, z: 2}
+  damage: 20
+  attackSpeed: 3
+  turretRotationSpeed: 360
+  attackRangeIndicator: {fileID: 0}
+  upgradeCostIncreaseModifier: 1.2
+  rangeUpgradeCost: 5
+  damageUpgradeCost: 5
+  speedUpgradeCost: 5
+  sellValue: 10
 --- !u!1 &4288472079094015292
 GameObject:
   m_ObjectHideFlags: 0

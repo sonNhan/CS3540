@@ -1,4 +1,5 @@
 using static Utils;
+using static Constants;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,39 +7,42 @@ using UnityEngine;
 
 public class TurretShoot : MonoBehaviour
 {
-    public enum TargetPriority
-    {
-        FIRST,
-        LAST,
-        CLOSE
-    }
 
+    [Header("Initialization")]
     [SerializeField]
-    GameObject projectilePrefab;
+    GameObject projectilePrefab, enemyGoal;
     [SerializeField]
     AudioClip shootSFX;
     [SerializeField]
-    Collider attackRangeCollider;
-    [SerializeField]
-    GameObject enemyGoal;
-    [SerializeField]
-    float attackSpeed = 2f, turretRotationSpeed = 10f;
-    [SerializeField]
-    int damage = 10;
-    [SerializeField]
     Vector3 projectileInstantiatePosition;
+    [Header("Stats")]
+    [SerializeField]
+    int damage = 20;
+    [SerializeField]
+    float attackRate = 2f, turretRotationSpeed = 10f;
+    [SerializeField]
+    GameObject attackRangeIndicator;
+    [Header("Prices")]
+    [SerializeField]
+    float upgradeCostIncreaseModifier = 1.1f;
+    [SerializeField]
+    int rangeUpgradeCost = 10, damageUpgradeCost = 10,
+        speedUpgradeCost = 10, sellValue = 10;
 
     List<GameObject> enemiesInRange;
     GameObject target, currentProjectile;
     TargetPriority targetPriority = TargetPriority.FIRST;
     float timeSinceAttack = 0.0f;
     ProjectileShoot projectileShootScript;
+    GameController gameController;
 
     // Start is called before the first frame update
     void Start()
     {
         enemiesInRange = new List<GameObject>();
         currentProjectile = InstantiateProjectile();
+        attackRangeIndicator = GameObject.Find("RangeIndicators").transform.Find("AttackRange").gameObject;
+        gameController = FindObjectOfType<GameController>();
     }
 
     // Update is called once per frame
@@ -149,7 +153,7 @@ public class TurretShoot : MonoBehaviour
         Vector3 targetDirection = (target.transform.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
-        if (timeSinceAttack >= attackSpeed)
+        if (timeSinceAttack >= attackRate)
         {
             timeSinceAttack = 0.0f;
             AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
@@ -190,15 +194,48 @@ public class TurretShoot : MonoBehaviour
         }
     }
 
-    // TODO: Make more modular, maybe we want to upgrade range and damage
-    public void UpgradeTurret()
+    // TODO: maybe make this more modular, i.e. make upgrading damage, range, etc different for 
+    // every tower
+    public void Upgrade(UpgradeType upgradeType)
     {
-        attackSpeed = (float)(attackSpeed * .8);
+        int money = gameController.GetMoney();
+        switch (upgradeType)
+        {
+            case UpgradeType.RANGE:
+                if (money >= rangeUpgradeCost)
+                {
+                    gameController.AddMoney(-rangeUpgradeCost);
+                    attackRangeIndicator.transform.localScale *= 1.2f;
+                    sellValue += Mathf.RoundToInt(rangeUpgradeCost / 2);
+                    rangeUpgradeCost = Mathf.RoundToInt(rangeUpgradeCost * upgradeCostIncreaseModifier);
+                }
+                break;
+            case UpgradeType.DAMAGE:
+                if (money >= damageUpgradeCost)
+                {
+                    gameController.AddMoney(-damageUpgradeCost);
+                    damage += 5;
+                    sellValue += Mathf.RoundToInt(damageUpgradeCost / 2);
+                    damageUpgradeCost = Mathf.RoundToInt(damageUpgradeCost * upgradeCostIncreaseModifier);
+                }
+                break;
+            case UpgradeType.SPEED:
+                if (money >= speedUpgradeCost)
+                {
+                    gameController.AddMoney(-speedUpgradeCost);
+                    attackRate /= 1.2f;
+                    sellValue += Mathf.RoundToInt(speedUpgradeCost / 2);
+                    speedUpgradeCost = Mathf.RoundToInt(speedUpgradeCost * upgradeCostIncreaseModifier);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     public void SellTurret()
     {
-        // TODO: play sell sfx, get gold back
+        gameController.AddMoney(sellValue);
         Destroy(gameObject);
     }
 }
