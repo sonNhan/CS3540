@@ -45,7 +45,7 @@ public class TerrainController : MonoBehaviour
                         Instantiate(terrain, placeable);
                         break;
                     case 2:
-                        var enemyStart = GameObject.Find("EnemyStart");
+                        var enemyStart = GameObject.Find("LevelManager");
                         enemyStart.transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
                         break;
                     case 3:
