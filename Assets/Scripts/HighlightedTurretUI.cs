@@ -11,15 +11,24 @@ public class HighlightedTurretUI : MonoBehaviour
     TurretShoot turretShootScript;
     TextMeshProUGUI selectedTurretText;
     TextMeshProUGUI targetPriorityText;
-    // TODO upgrade and sell prices
+    TextMeshProUGUI rangeUpgradePriceText;
+    TextMeshProUGUI damageUpgradePriceText;
+    TextMeshProUGUI speedUpgradePriceText;
+    TextMeshProUGUI sellValueText;
+    GameController gameController;
 
     // Start is called before the first frame update
     void Start()
     {
         UI = GameObject.Find("HighlightedTurretUI");
         Transform UIBG = UI.transform.Find("Background");
+        Transform upgrade = UIBG.transform.Find("Upgrade");
         selectedTurretText = UIBG.transform.Find("TurretTitle").GetComponent<TextMeshProUGUI>();
         targetPriorityText = UIBG.transform.Find("TargetPriority").Find("TurretPriorityText").GetComponent<TextMeshProUGUI>();
+        rangeUpgradePriceText = upgrade.transform.Find("UpgradeRangeButton").Find("CostText (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        damageUpgradePriceText = upgrade.transform.Find("UpgradeDamageButton").Find("CostText (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        speedUpgradePriceText = upgrade.transform.Find("UpgradeSpeedButton").Find("CostText (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        sellValueText = UIBG.transform.Find("Sell").Find("SellButton").Find("ValueText (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
         UI.SetActive(false);
     }
 
@@ -29,6 +38,34 @@ public class HighlightedTurretUI : MonoBehaviour
         {
             string currentTargetPriority = turretShootScript.GetTargetPriority().ToString();
             targetPriorityText.text = $"Targeting Priority\n<u>{currentTargetPriority}</u>";
+            if (!turretShootScript.CanAffordUpgrade(Constants.UpgradeType.RANGE))
+            {
+                rangeUpgradePriceText.color = Color.red;
+            }
+            else
+            {
+                rangeUpgradePriceText.color = Color.white;
+            }
+            if (!turretShootScript.CanAffordUpgrade(Constants.UpgradeType.DAMAGE))
+            {
+                damageUpgradePriceText.color = Color.red;
+            }
+            else
+            {
+                damageUpgradePriceText.color = Color.white;
+            }
+            if (!turretShootScript.CanAffordUpgrade(Constants.UpgradeType.SPEED))
+            {
+                speedUpgradePriceText.color = Color.red;
+            }
+            else
+            {
+                speedUpgradePriceText.color = Color.white;
+            }
+            rangeUpgradePriceText.text = turretShootScript.GetRangeUpgradeCost().ToString();
+            damageUpgradePriceText.text = turretShootScript.GetDamageUpgradeCost().ToString();
+            speedUpgradePriceText.text = turretShootScript.GetSpeedUpgradeCost().ToString();
+            sellValueText.text = turretShootScript.GetSellValue().ToString();
         }
     }
 

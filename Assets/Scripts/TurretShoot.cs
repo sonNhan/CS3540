@@ -194,42 +194,51 @@ public class TurretShoot : MonoBehaviour
         }
     }
 
-    // TODO: maybe make this more modular, i.e. make upgrading damage, range, etc different for 
-    // every tower
-    public void Upgrade(UpgradeType upgradeType)
+    public bool CanAffordUpgrade(UpgradeType upgradeType)
     {
         int money = gameController.GetMoney();
         switch (upgradeType)
         {
             case UpgradeType.RANGE:
-                if (money >= rangeUpgradeCost)
-                {
+                return money >= rangeUpgradeCost;
+            case UpgradeType.DAMAGE:
+                return money >= damageUpgradeCost;
+            case UpgradeType.SPEED:
+                return money >= speedUpgradeCost;
+            default:
+                return false;
+        }
+    }
+
+    // TODO: maybe make this more modular, i.e. make upgrading damage, range, etc different for 
+    // every tower
+    public void Upgrade(UpgradeType upgradeType)
+    {
+        if (CanAffordUpgrade(upgradeType))
+        {
+            switch (upgradeType)
+            {
+                case UpgradeType.RANGE:
                     gameController.AddMoney(-rangeUpgradeCost);
                     attackRangeIndicator.transform.localScale *= 1.2f;
                     sellValue += Mathf.RoundToInt(rangeUpgradeCost / 2);
                     rangeUpgradeCost = Mathf.RoundToInt(rangeUpgradeCost * upgradeCostIncreaseModifier);
-                }
-                break;
-            case UpgradeType.DAMAGE:
-                if (money >= damageUpgradeCost)
-                {
+                    break;
+                case UpgradeType.DAMAGE:
                     gameController.AddMoney(-damageUpgradeCost);
                     damage += 5;
                     sellValue += Mathf.RoundToInt(damageUpgradeCost / 2);
                     damageUpgradeCost = Mathf.RoundToInt(damageUpgradeCost * upgradeCostIncreaseModifier);
-                }
-                break;
-            case UpgradeType.SPEED:
-                if (money >= speedUpgradeCost)
-                {
+                    break;
+                case UpgradeType.SPEED:
                     gameController.AddMoney(-speedUpgradeCost);
                     attackRate /= 1.2f;
                     sellValue += Mathf.RoundToInt(speedUpgradeCost / 2);
                     speedUpgradeCost = Mathf.RoundToInt(speedUpgradeCost * upgradeCostIncreaseModifier);
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -237,5 +246,25 @@ public class TurretShoot : MonoBehaviour
     {
         gameController.AddMoney(sellValue);
         Destroy(gameObject);
+    }
+
+    public int GetRangeUpgradeCost()
+    {
+        return rangeUpgradeCost;
+    }
+
+    public int GetDamageUpgradeCost()
+    {
+        return damageUpgradeCost;
+    }
+
+    public int GetSpeedUpgradeCost()
+    {
+        return speedUpgradeCost;
+    }
+
+    public int GetSellValue()
+    {
+        return sellValue;
     }
 }
