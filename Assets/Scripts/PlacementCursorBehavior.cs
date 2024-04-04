@@ -41,12 +41,12 @@ public class PlacementCursorBehavior : MonoBehaviour
         {
             MovePointer();
             RotatePointer();
-            PlaceTurret();
             if (selectedTurret)
             {
                 MoveTurret();
             }
         }
+        PlaceTurret();
         HighlightTurret();
     }
 
@@ -150,7 +150,7 @@ public class PlacementCursorBehavior : MonoBehaviour
     {
         if (Time.time - lastPlacedTime >= highlightDelay)
         {
-            if (!selectedTurret && Input.GetMouseButton(0) && hoveredTurret != null)
+            if (!selectedTurret && Input.GetMouseButton(0) && hoveredTurret != null && highlightedTurret == null)
             {
                 // Lock Cursor
                 Cursor.visible = false;
