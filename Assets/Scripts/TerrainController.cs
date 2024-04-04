@@ -10,18 +10,30 @@ public class TerrainController : MonoBehaviour
     public GameObject[] vegitatedTerrain;
     public GameObject end;
 
+    /*
+    Representations:
+    0 - Enemy path
+    1 - Placeable tile
+    2 - Enemy Start Tile
+    3 - Enemy end tile
+    4 - Small veg tile 1
+    5 - Small veg tile 2
+    6 - High veg tile 1
+    7 - High veg tile 2
+    8 - Shop Tile
+    */
     public static int[][] levelMap = new[]
     {
-    new int[] {7,6,4,1,1,1,1,1,1,1},
-    new int[] {6,5,1,1,1,1,1,1,1,1},
-    new int[] {4,1,1,1,1,1,1,1,1,1},
-    new int[] {1,1,1,1,0,0,0,0,0,3},
-    new int[] {1,1,1,1,0,1,1,0,1,1},
-    new int[] {1,1,0,0,0,1,1,0,1,1},
-    new int[] {2,0,0,1,0,0,0,0,1,1},
-    new int[] {1,1,1,1,1,1,1,1,1,4},
-    new int[] {1,1,1,1,1,1,1,1,5,6},
-    new int[] {1,1,1,1,1,1,1,4,6,7}
+        new int[] {7,6,5,4,7,6,4,5,5,6},
+        new int[] {4,7,4,5,4,5,4,5,4,5},
+        new int[] {5,8,5,4,1,6,1,1,1,1},
+        new int[] {4,5,4,1,0,0,0,0,0,3},
+        new int[] {1,4,1,1,0,1,4,0,1,1},
+        new int[] {1,1,0,0,0,1,1,0,1,4},
+        new int[] {2,0,0,1,0,0,0,0,1,5},
+        new int[] {4,1,1,5,1,1,5,1,4,5},
+        new int[] {5,4,4,5,4,5,4,5,5,6},
+        new int[] {7,5,6,4,5,6,7,4,6,7}
     };
 
     public static List<List<GameObject>> terrainList = new List<List<GameObject>>();
@@ -71,6 +83,11 @@ public class TerrainController : MonoBehaviour
                         vegitatedTerrain[3].tag = "Unplaceable";
                         vegitatedTerrain[3].transform.position = new Vector3(-j * 10 + 45, 0, i * 10 - 45);
                         Instantiate(vegitatedTerrain[3]);
+                        break;
+                    case 8:
+                        vegitatedTerrain[4].tag = "ShopTile";
+                        vegitatedTerrain[4].transform.position = new Vector3(-j * 10 + 45, 0, i * 10 - 45);
+                        Instantiate(vegitatedTerrain[4]);
                         break;
 
                 }
