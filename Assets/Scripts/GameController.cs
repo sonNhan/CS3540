@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField]
+    AudioClip spawnSFX;
     Text moneyText, livesText, gameStateText, enemiesLeftText;
 
     public int startingLives = 10;
@@ -80,6 +82,7 @@ public class GameController : MonoBehaviour
             {
                 waveInterval -= 2;
             }
+            AudioSource.PlayClipAtPoint(spawnSFX, Camera.main.transform.position);
             enemies.Add(this.GetComponent<EnemySpawner>().SpawnEnemy());
         }
     }
