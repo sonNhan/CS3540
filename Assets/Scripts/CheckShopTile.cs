@@ -29,6 +29,7 @@ public class CheckShopTile : MonoBehaviour
         if (Physics.Raycast(placementPointer.transform.position, Vector3.down, out hit))
         {
             Transform ground = hit.transform;
+            //Debug.Log(ground.tag);
             if (ground.CompareTag("ShopTile"))
             {
                 onShopTile = true;

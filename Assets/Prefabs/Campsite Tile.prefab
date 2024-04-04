@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7660395198720166712}
   m_Layer: 0
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: ShopTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4887,6 +4887,7 @@ GameObject:
   - component: {fileID: 8272455633598638269}
   - component: {fileID: 7690574047295988779}
   - component: {fileID: 6948157458403936853}
+  - component: {fileID: 6723916045134157514}
   m_Layer: 0
   m_Name: Campsite Tile
   m_TagString: ShopTile
@@ -5004,13 +5005,34 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6714311479941224408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7e471cbc3df32bc79481e196dc0062a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isPlaceable: 1
   turret: {fileID: 0}
+--- !u!65 &6723916045134157514
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6714311479941224408}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 14.52, z: 0}
 --- !u!1 &7845321248324451662
 GameObject:
   m_ObjectHideFlags: 0
