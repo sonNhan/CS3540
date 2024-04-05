@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CheckShopTile : MonoBehaviour
 {
+    [SerializeField]
+    AudioClip ShopkeeperHelloSFX, ShopKeeperTalkingSFX;
+
     GameObject terrain;
     TerrainController terrainController;
     GameObject placementPointer;
     bool onShopTile;
     GameObject shopTile;
     Animator animator;
-    enum FSMstates {
+    GameObject chatBox;
+
+    enum FSMstates
+    {
         WALKING,
-        IDLE
+        GREET,
+        TALK
     }
     FSMstates currentState;
 
@@ -23,6 +31,8 @@ public class CheckShopTile : MonoBehaviour
 
     private void init()
     {
+        chatBox = GameObject.Find("UI").transform.Find("Shopkeeper").gameObject;
+        chatBox.SetActive(false);
         terrain = GameObject.Find("DirtGround");
         terrainController = terrain.GetComponent<TerrainController>();
         placementPointer = GameObject.Find("PlacementPointer");
@@ -39,8 +49,11 @@ public class CheckShopTile : MonoBehaviour
             case FSMstates.WALKING:
                 WalkState();
                 break;
-            case FSMstates.IDLE:
+            case FSMstates.GREET:
                 IdleState();
+                break;
+            case FSMstates.TALK:
+                TalkState();
                 break;
         }
     }
@@ -48,17 +61,40 @@ public class CheckShopTile : MonoBehaviour
     void WalkState()
     {
         animator.SetBool("ShouldIdle", false);
-        IsOnShopTile();
+        if (IsOnShopTile())
+        {
+            currentState = FSMstates.GREET;
+            AudioSource.PlayClipAtPoint(ShopkeeperHelloSFX, Camera.main.transform.position);
+        }
     }
 
     void IdleState()
     {
         animator.SetBool("ShouldIdle", true);
-        IsOffShopTile();
+        if (!IsOnShopTile())
+        {
+            onShopTile = false;
+            currentState = FSMstates.WALKING;
+        }
         CheckClickOnShopTile();
     }
 
-    void IsOnShopTile()
+    void TalkState()
+    {
+        // on chat close, the shopkeeper goes back to whatever they were doing
+        if (!chatBox.activeSelf)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            currentState = FSMstates.WALKING;
+            return;
+        }
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        animator.SetBool("ShouldIdle", true);
+    }
+
+    bool IsOnShopTile()
     {
         // check if when we raycast we hit the shop tile
         RaycastHit hit;
@@ -69,35 +105,64 @@ public class CheckShopTile : MonoBehaviour
             if (ground.CompareTag("ShopTile"))
             {
                 onShopTile = true;
-                currentState = FSMstates.IDLE;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+    void IsOnShopTile()
+    {
+        // check if when we raycast we hit the shop tile
+        RaycastHit hit;
+        if (Physics.Raycast(placementPoin/home/john/Documents/School/Classes/CS3450/Chronicles of Northwind/Assets/Scriptster.transform.position, Vector3.down, out hit))
+        {
+            Transform ground = hit.transform;
+            //Debug.Log(ground.tag);
+            if (ground.CompareTag("ShopTile"))
+            {
+                onShopTile = true;
+                currentState = FSMstates.GREET;
+                AudioSource.PlayClipAtPoint(ShopkeeperHelloSFX, Camera.main.transform.position);
             }
         }
     }
-    
+
     void IsOffShopTile()
     {
         RaycastHit hit;
         if (Physics.Raycast(placementPointer.transform.position, Vector3.down, out hit))
         {
             Transform ground = hit.transform;
-            if (!ground.CompareTag("ShopTile")) {
+            if (!ground.CompareTag("ShopTile"))
+            {
                 onShopTile = false;
                 currentState = FSMstates.WALKING;
             }
         }
     }
+    */
 
     void CheckClickOnShopTile()
     {
         // check if left mouse button is clicked
         if (onShopTile && Input.GetMouseButtonDown(0))
         {
-            OpenShop();
+            //OpenShop();
+            currentState = FSMstates.TALK;
+            chatBox.SetActive(true);
+            AudioSource.PlayClipAtPoint(ShopKeeperTalkingSFX, Camera.main.transform.position);
         }
     }
 
     void OpenShop()
     {
         Debug.Log("Opening the shop");
+    }
+
+    public void CloseConversation()
+    {
+        chatBox.SetActive(false);
     }
 }

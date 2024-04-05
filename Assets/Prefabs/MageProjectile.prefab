@@ -98,12 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06886c7e9e48c1d990c8fe259456298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 100
-  projectileLifespan: 6
+  projectileSpeed: 150
+  projectileLifespan: 2
   homing: 1
   exploding: 1
   explosionAbility: {fileID: 5099040617789825340, guid: 8a0dfc5278d6ab4de81c5b1d2af61b14, type: 3}
-  explosionRadius: 20
+  explosionRadius: 15
 --- !u!135 &2471729680133034232
 SphereCollider:
   m_ObjectHideFlags: 0
