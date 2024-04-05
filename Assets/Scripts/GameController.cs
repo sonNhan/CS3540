@@ -9,9 +9,17 @@ public class GameController : MonoBehaviour
 {
     [SerializeField]
     AudioClip spawnSFX;
-    TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText;
+    [SerializeField]
+    int maxMana = 100;
+
+
+    TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
     GameObject gameStateUI;
 
+    int currentMana;
+    int manaRegen = 1;
+    float regenInterval = 1f;
+    float regenTimer = 0f;
     public int startingLives = 10;
     private int currentLives;
     public int startingMoney = 100;
@@ -28,6 +36,7 @@ public class GameController : MonoBehaviour
     private int finalLevel = 2;
     private TerrainController TerrainController;
     private bool levelComplete = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +46,8 @@ public class GameController : MonoBehaviour
         livesText = UI.Find("Lives").GetComponentInChildren<TextMeshProUGUI>();
         gameStateText = UI.Find("GameState").GetComponentInChildren<TextMeshProUGUI>(true);
         enemiesLeftText = UI.Find("EnemiesLeft").GetComponentInChildren<TextMeshProUGUI>();
+        manaText = UI.Find("Mana").GetComponentInChildren<TextMeshProUGUI>();
+        currentMana = maxMana;
         currentLives = startingLives;
         currentMoney = startingMoney;
         currentScore = startingScore;
@@ -48,9 +59,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RegenMana();
         UpdateMoneyText();
         UpdateHealthText();
+        UpdateManaText();
         UpdateEnemiesLeftText();
+        regenTimer += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -69,7 +83,7 @@ public class GameController : MonoBehaviour
                 Destroy(enemy);
             }
         }
-        else if (currentWave >= 2)
+        else if (currentWave >= 100)
         {
             if (enemies.Count != 0)
             {
@@ -87,7 +101,7 @@ public class GameController : MonoBehaviour
                     currentLevel++;
                     levelComplete = true;
                     gameStateUI.SetActive(true);
-                    gameStateText.text = $"Level Complete!\n Final Score: {currentScore}\n Next Level in 5 seconds...";
+                    gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
                     FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
                 }
                 nextLevel();
@@ -105,7 +119,7 @@ public class GameController : MonoBehaviour
             enemies.Add(this.GetComponent<EnemySpawner>().SpawnEnemy());
         }
     }
-    
+
     void nextLevel()
     {
         if (currentLevel > finalLevel)
@@ -126,6 +140,8 @@ public class GameController : MonoBehaviour
             loadLevel(currentLevel);
             levelComplete = false;
             currentTime = 0;
+            currentMana = maxMana;
+            waveInterval = 150;
         }
     }
 
@@ -137,6 +153,23 @@ public class GameController : MonoBehaviour
     void UpdateHealthText()
     {
         livesText.text = currentLives.ToString();
+    }
+
+    void RegenMana()
+    {
+        if (regenTimer >= regenInterval)
+        {
+            if (currentMana < maxMana)
+            {
+                currentMana = Mathf.Clamp(currentMana + manaRegen, 0, maxMana);
+            }
+            regenTimer = 0f;
+        }
+    }
+
+    void UpdateManaText()
+    {
+        manaText.text = currentMana.ToString();
     }
 
     void UpdateGameStateText(bool win)
@@ -154,7 +187,7 @@ public class GameController : MonoBehaviour
 
     void UpdateEnemiesLeftText()
     {
-        enemiesLeftText.text = "Enemies Left: " + (40 - currentWave);
+        enemiesLeftText.text = "Enemies Left: " + (100 - currentWave);
     }
 
     public void RemoveEnemy(GameObject enemy)
@@ -190,6 +223,16 @@ public class GameController : MonoBehaviour
     public int GetScore()
     {
         return currentScore;
+    }
+
+    public int GetMana()
+    {
+        return currentMana;
+    }
+
+    public void AddMana(int value)
+    {
+        currentMana = Mathf.Clamp(currentMana + value, 0, maxMana);
     }
 
     private bool loadLevel(int level)

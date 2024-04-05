@@ -10,6 +10,12 @@ public class ProjectileShoot : MonoBehaviour
     float projectileLifespan = 5f;
     [SerializeField]
     bool homing = false;
+    [SerializeField]
+    bool exploding = false;
+    [SerializeField]
+    GameObject explosionAbility;
+    [SerializeField]
+    float explosionRadius;
 
     GameObject target;
     bool targetSet; // if a target for this projectile has been set ever.
@@ -40,8 +46,21 @@ public class ProjectileShoot : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && shot)
         {
-            other.GetComponent<EnemyHealth>().TakeDamage(projectileDamage);
-            Destroy(gameObject);
+            if (!exploding)
+            {
+                other.GetComponent<EnemyHealth>().TakeDamage(projectileDamage);
+                Destroy(gameObject);
+            }
+            else
+            {
+                GameObject ability = Instantiate(explosionAbility, transform.position, transform.rotation);
+                AbilityProperties abilityProperties = ability.GetComponent<AbilityProperties>();
+                abilityProperties.AddAbilityEffect(Constants.AbilityEffect.DAMAGE, projectileDamage);
+                abilityProperties.SetRadius(explosionRadius);
+                abilityProperties.SetSpellDuration(0.5f);
+                abilityProperties.Activate();
+                Destroy(gameObject);
+            }
         }
 
     }

@@ -22,19 +22,7 @@ public class TerrainController : MonoBehaviour
     7 - High veg tile 2
     8 - Shop Tile
     */
-    // private static int[][] levelMap = new[]
-    // {
-    //     new int[] {7,6,5,4,7,6,4,5,5,6},
-    //     new int[] {4,7,4,5,4,5,4,5,4,5},
-    //     new int[] {5,8,5,1,1,1,1,1,1,7},
-    //     new int[] {4,5,0,0,0,1,0,0,0,1},
-    //     new int[] {1,1,0,1,0,1,0,1,0,1},
-    //     new int[] {1,1,0,1,0,1,0,1,0,4},
-    //     new int[] {2,0,0,1,0,0,0,1,0,5},
-    //     new int[] {4,1,1,1,1,1,1,1,0,3},
-    //     new int[] {5,4,1,1,1,1,1,1,1,6},
-    //     new int[] {7,5,6,4,5,6,7,4,6,7}
-    // };
+
     // Start is called before the first frame update
     private void ClearLevel()
     {
