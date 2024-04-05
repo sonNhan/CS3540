@@ -15,6 +15,8 @@ public class PlacementCursorBehavior : MonoBehaviour
     float explosionRadius, blizzardRadius;
     [SerializeField]
     int explosionDamage, blizzardDamage, blizzardSlow;
+    [SerializeField]
+    int explosionManaCost, blizzardManaCost;
 
     List<Constants.Ability> learnedAbilities;
     GameObject terrain;
@@ -193,7 +195,6 @@ public class PlacementCursorBehavior : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log("Cast ability 'z'");
             CastAbility(0);
         }
         else if (Input.GetKeyDown(KeyCode.X))
@@ -216,10 +217,15 @@ public class PlacementCursorBehavior : MonoBehaviour
         if (learnedAbilities.Count > index)
         {
             Constants.Ability ability = learnedAbilities[index];
+            int mana = gameControllerScript.GetMana();
             switch (ability)
             {
                 case Constants.Ability.EXPLOSION:
-                    Debug.Log("Cast explosion");
+                    if (mana < explosionManaCost)
+                    {
+                        break;
+                    }
+                    gameControllerScript.AddMana(-explosionManaCost);
                     GameObject explosion = Instantiate(ExplosionSpell, placementPointer.transform.position,
                             placementPointer.transform.rotation);
                     AbilityProperties explosionProperties = explosion.GetComponent<AbilityProperties>();
@@ -229,8 +235,12 @@ public class PlacementCursorBehavior : MonoBehaviour
                     explosionProperties.Activate();
                     break;
                 case Constants.Ability.BLIZZARD:
-                    Debug.Log("Cast blizzard");
-                    GameObject blizzard = Instantiate(ExplosionSpell, placementPointer.transform.position,
+                    if (mana < blizzardManaCost)
+                    {
+                        break;
+                    }
+                    gameControllerScript.AddMana(-blizzardManaCost);
+                    GameObject blizzard = Instantiate(BlizzardSpell, placementPointer.transform.position,
                             placementPointer.transform.rotation);
                     AbilityProperties blizzardProperties = blizzard.GetComponent<AbilityProperties>();
                     blizzardProperties.AddAbilityEffect(Constants.AbilityEffect.SLOW, blizzardSlow);

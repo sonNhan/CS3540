@@ -8,9 +8,17 @@ public class GameController : MonoBehaviour
 {
     [SerializeField]
     AudioClip spawnSFX;
-    TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText;
+    [SerializeField]
+    int maxMana = 100;
+
+
+    TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
     GameObject gameStateUI;
 
+    int currentMana;
+    int manaRegen = 1;
+    float regenInterval = 1f;
+    float regenTimer = 0f;
     public int startingLives = 10;
     private int currentLives;
     public int startingMoney = 100;
@@ -23,6 +31,7 @@ public class GameController : MonoBehaviour
     private int currentTime = 0;
     private int waveInterval = 150;
     public static bool isGameOver = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +41,8 @@ public class GameController : MonoBehaviour
         livesText = UI.Find("Lives").GetComponentInChildren<TextMeshProUGUI>();
         gameStateText = UI.Find("GameState").GetComponentInChildren<TextMeshProUGUI>(true);
         enemiesLeftText = UI.Find("EnemiesLeft").GetComponentInChildren<TextMeshProUGUI>();
+        manaText = UI.Find("Mana").GetComponentInChildren<TextMeshProUGUI>();
+        currentMana = maxMana;
         currentLives = startingLives;
         currentMoney = startingMoney;
         currentScore = startingScore;
@@ -41,9 +52,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RegenMana();
         UpdateMoneyText();
         UpdateHealthText();
+        UpdateManaText();
         UpdateEnemiesLeftText();
+        regenTimer += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -101,6 +115,23 @@ public class GameController : MonoBehaviour
         livesText.text = currentLives.ToString();
     }
 
+    void RegenMana()
+    {
+        if (regenTimer >= regenInterval)
+        {
+            if (currentMana < maxMana)
+            {
+                currentMana = Mathf.Clamp(currentMana + manaRegen, 0, maxMana);
+            }
+            regenTimer = 0f;
+        }
+    }
+
+    void UpdateManaText()
+    {
+        manaText.text = currentMana.ToString();
+    }
+
     void UpdateGameStateText(bool win)
     {
         gameStateUI.SetActive(true);
@@ -152,6 +183,16 @@ public class GameController : MonoBehaviour
     public int GetScore()
     {
         return currentScore;
+    }
+
+    public int GetMana()
+    {
+        return currentMana;
+    }
+
+    public void AddMana(int value)
+    {
+        currentMana = Mathf.Clamp(currentMana + value, 0, maxMana);
     }
 
 }

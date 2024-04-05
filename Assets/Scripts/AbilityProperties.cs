@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class AbilityProperties : MonoBehaviour
 {
+    [SerializeField]
+    ParticleSystem abilityVFX;
+
     Dictionary<Constants.AbilityEffect, int> abilityEffects;
     bool activated = false;
     float spellDuration;
-    ParticleSystem abilityVFX;
 
     void Awake()
     {
@@ -69,7 +71,9 @@ public class AbilityProperties : MonoBehaviour
     public void Activate()
     {
         activated = true;
-        Instantiate(abilityVFX, transform.position, transform.rotation);
+        ParticleSystem vfx = Instantiate(abilityVFX, transform.position + abilityVFX.transform.position, transform.rotation);
+        vfx.transform.parent = transform;
+        vfx.transform.localScale = transform.localScale / 10;
         Debug.Log($"Destroying in {spellDuration} seconds");
         Destroy(gameObject, spellDuration);
     }
