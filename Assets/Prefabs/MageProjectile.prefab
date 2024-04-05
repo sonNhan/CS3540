@@ -100,6 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 100
   projectileLifespan: 6
+  homing: 1
+  exploding: 1
+  explosionAbility: {fileID: 5099040617789825340, guid: 8a0dfc5278d6ab4de81c5b1d2af61b14, type: 3}
+  explosionRadius: 20
 --- !u!135 &2471729680133034232
 SphereCollider:
   m_ObjectHideFlags: 0

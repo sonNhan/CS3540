@@ -865,6 +865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursorSensitivity: 10
   turret1: {fileID: 2446679930469445888, guid: b972f89bcd17d0165855019069fb69c2, type: 3}
+  turret2: {fileID: 5706106864024855294, guid: 01219bb55e98407a4a441db452852241, type: 3}
   ExplosionSpell: {fileID: 5099040617789825340, guid: 8a0dfc5278d6ab4de81c5b1d2af61b14, type: 3}
   BlizzardSpell: {fileID: 5099040617789825340, guid: face9884c2eec34208b1873173fc9bb6, type: 3}
   explosionRadius: 40
