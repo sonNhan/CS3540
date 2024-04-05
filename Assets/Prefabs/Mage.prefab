@@ -388,7 +388,7 @@ MonoBehaviour:
   enemyGoal: {fileID: 316481469115566528, guid: 127b44a0bd42a344db795741cc2c2e27, type: 3}
   shootSFX: {fileID: 8300000, guid: 46ea725dcc230a188956840c34fb198e, type: 3}
   projectileInstantiatePosition: {x: 0, y: 7, z: 0}
-  damage: 40
+  damage: 33
   attackRate: 4
   turretRotationSpeed: 360
   attackRangeIndicator: {fileID: 0}

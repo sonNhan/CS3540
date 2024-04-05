@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
     AudioClip spawnSFX;
     [SerializeField]
     int maxMana = 100;
+    [SerializeField]
+    Material Skybox1, Skybox2;
 
 
     TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
@@ -53,6 +55,8 @@ public class GameController : MonoBehaviour
         currentScore = startingScore;
         currentWave = startingWave;
         TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
+        // HACK: hardcoded skybox
+        RenderSettings.skybox = Skybox1;
         loadLevel(currentLevel);
     }
 
@@ -142,6 +146,8 @@ public class GameController : MonoBehaviour
             currentTime = 0;
             currentMana = maxMana;
             waveInterval = 150;
+            // HACK: hardcoded skybox
+            RenderSettings.skybox = Skybox2;
         }
     }
 
