@@ -53,12 +53,6 @@ public class EnemyForcedMovement : MonoBehaviour
 
     void sortWaypoints()
     {
-        waypoints = waypoints.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).ToArray();
-        //Debug.Log("Waypoints sorted.");
-        for (int i = 0; i < waypoints.Length; i++)
-        {
-            //Debug.Log("Waypoint " + i + ": " + waypoints[i].transform.position);
-        }
-
+        waypoints = waypoints.OrderBy(x => int.Parse(x.name.Split('(', ')')[1])).ToArray();
     }
 }
