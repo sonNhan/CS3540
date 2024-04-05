@@ -8,17 +8,53 @@ public class CheckShopTile : MonoBehaviour
     TerrainController terrainController;
     GameObject placementPointer;
     bool onShopTile;
+    GameObject shopTile;
+    Animator animator;
+    enum FSMstates {
+        WALKING,
+        IDLE
+    }
+    FSMstates currentState;
+
     void Start()
+    {
+        init();
+    }
+
+    private void init()
     {
         terrain = GameObject.Find("DirtGround");
         terrainController = terrain.GetComponent<TerrainController>();
         placementPointer = GameObject.Find("PlacementPointer");
+        shopTile = GameObject.FindGameObjectWithTag("ShopTile");
+        animator = shopTile.GetComponentInChildren<Animator>();
+        currentState = FSMstates.WALKING;
     }
 
     // Update is called once per frame
     void Update()
     {
+        switch (currentState)
+        {
+            case FSMstates.WALKING:
+                WalkState();
+                break;
+            case FSMstates.IDLE:
+                IdleState();
+                break;
+        }
+    }
+
+    void WalkState()
+    {
+        animator.SetBool("ShouldIdle", false);
         IsOnShopTile();
+    }
+
+    void IdleState()
+    {
+        animator.SetBool("ShouldIdle", true);
+        IsOffShopTile();
         CheckClickOnShopTile();
     }
 
@@ -33,6 +69,20 @@ public class CheckShopTile : MonoBehaviour
             if (ground.CompareTag("ShopTile"))
             {
                 onShopTile = true;
+                currentState = FSMstates.IDLE;
+            }
+        }
+    }
+    
+    void IsOffShopTile()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(placementPointer.transform.position, Vector3.down, out hit))
+        {
+            Transform ground = hit.transform;
+            if (!ground.CompareTag("ShopTile")) {
+                onShopTile = false;
+                currentState = FSMstates.WALKING;
             }
         }
     }
