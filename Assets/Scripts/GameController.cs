@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -23,6 +24,10 @@ public class GameController : MonoBehaviour
     private int currentTime = 0;
     private int waveInterval = 150;
     public static bool isGameOver = false;
+    private int currentLevel = 1;
+    private int finalLevel = 2;
+    private TerrainController TerrainController;
+    private bool levelComplete = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +41,8 @@ public class GameController : MonoBehaviour
         currentMoney = startingMoney;
         currentScore = startingScore;
         currentWave = startingWave;
+        TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
+        loadLevel(currentLevel);
     }
 
     // Update is called once per frame
@@ -62,7 +69,7 @@ public class GameController : MonoBehaviour
                 Destroy(enemy);
             }
         }
-        else if (currentWave >= 40)
+        else if (currentWave >= 2)
         {
             if (enemies.Count != 0)
             {
@@ -74,8 +81,16 @@ public class GameController : MonoBehaviour
             }
             if (enemies.Count == 0)
             {
-                isGameOver = true;
-                UpdateGameStateText(true);
+                if (!levelComplete)
+                {
+                    currentTime = 0;
+                    currentLevel++;
+                    levelComplete = true;
+                    gameStateUI.SetActive(true);
+                    gameStateText.text = $"Level Complete!\n Final Score: {currentScore}\n Next Level in 5 seconds...";
+                    FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
+                }
+                nextLevel();
             }
         }
         else if (currentTime % waveInterval == 0)
@@ -88,6 +103,29 @@ public class GameController : MonoBehaviour
             }
             AudioSource.PlayClipAtPoint(spawnSFX, Camera.main.transform.position);
             enemies.Add(this.GetComponent<EnemySpawner>().SpawnEnemy());
+        }
+    }
+    
+    void nextLevel()
+    {
+        if (currentLevel > finalLevel)
+        {
+            isGameOver = true;
+            UpdateGameStateText(true);
+        }
+        else
+        {
+            if (currentTime < 500)
+            {
+                return;
+            }
+            gameStateUI.SetActive(false);
+            currentMoney = startingMoney;
+            currentLives = startingLives;
+            currentWave = startingWave;
+            loadLevel(currentLevel);
+            levelComplete = false;
+            currentTime = 0;
         }
     }
 
@@ -152,6 +190,46 @@ public class GameController : MonoBehaviour
     public int GetScore()
     {
         return currentScore;
+    }
+
+    private bool loadLevel(int level)
+    {
+        using var reader = new StreamReader("Assets/Settings/Levels.csv");
+        while (reader.ReadLine() is { } line)
+        {
+            string[] values = line.Split(',');
+            if (values[0] == level.ToString())
+            {
+                var levelString = values[1].ToCharArray();
+                var levelMap = new int[10][];
+                for (int i = 0; i < 10; i++)
+                {
+                    levelMap[i] = new int[10];
+                    for (int j = 0; j < 10; j++)
+                    {
+                        levelMap[i][j] = (int)levelString[i * 10 + j] - 48;
+                    }
+                }
+                TerrainController.InitLevel(levelMap);
+                var parent = this.transform;
+                var waypoints = values[2].Split(' ');
+                for (int i = 0; i < waypoints.Length; i++)
+                {
+                    var position = new Vector3(float.Parse(waypoints[i].Split('/')[0]), 0.5f, float.Parse(waypoints[i].Split('/')[1]));
+                    var waypoint = new GameObject($"Waypoint ({i})")
+                    {
+                        tag = "EnemyWaypoint",
+                        transform =
+                        {
+                            position = position + parent.position,
+                            parent = parent
+                        }
+                    };
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
 }
