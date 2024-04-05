@@ -30,9 +30,12 @@ public class ProjectileShoot : MonoBehaviour
         {
             if (homing)
             {
-                targetDirection = (target.transform.position - transform.position).normalized;
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, projectileSpeed * Time.deltaTime);
             }
-            transform.position += targetDirection * projectileSpeed * Time.deltaTime;
+            else
+            {
+                transform.position += targetDirection * projectileSpeed * Time.deltaTime;
+            }
         }
         else if (target == null && targetSet)
         {   // if our target disappears for whatever reason, just let the projectile
