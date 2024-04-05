@@ -17,6 +17,8 @@ TagManager:
   - SellUI
   - UpgradeUI
   - UIButton
+  - WizzardWaypoint
+  - ShopTile
   layers:
   - Default
   - TransparentFX

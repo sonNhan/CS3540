@@ -1,12 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    Text moneyText, livesText, gameStateText, enemiesLeftText;
+    [SerializeField]
+    AudioClip spawnSFX;
+    [SerializeField]
+    int maxMana = 100;
+    [SerializeField]
+    Material Skybox1, Skybox2;
+    [SerializeField]
+    TextAsset levelConfig;
 
+    TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
+    GameObject gameStateUI;
+
+    int currentMana;
+    int manaRegen = 1;
+    float regenInterval = 1f;
+    float regenTimer = 0f;
     public int startingLives = 10;
     private int currentLives;
     public int startingMoney = 100;
@@ -19,25 +35,41 @@ public class GameController : MonoBehaviour
     private int currentTime = 0;
     private int waveInterval = 150;
     public static bool isGameOver = false;
+    private int currentLevel = 1;
+    private int finalLevel = 2;
+    private TerrainController TerrainController;
+    private bool levelComplete = false;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        moneyText = GameObject.Find("UI").transform.Find("MoneyText").GetComponent<Text>();
-        livesText = GameObject.Find("UI").transform.Find("HealthText").GetComponent<Text>();
-        gameStateText = GameObject.Find("UI").transform.Find("GameStateText").GetComponent<Text>();
-        enemiesLeftText = GameObject.Find("UI").transform.Find("EnemiesLeftText").GetComponent<Text>();
+        Transform UI = GameObject.Find("UI").transform;
+        gameStateUI = UI.Find("GameState").gameObject;
+        moneyText = UI.Find("Money").GetComponentInChildren<TextMeshProUGUI>();
+        livesText = UI.Find("Lives").GetComponentInChildren<TextMeshProUGUI>();
+        gameStateText = UI.Find("GameState").GetComponentInChildren<TextMeshProUGUI>(true);
+        enemiesLeftText = UI.Find("EnemiesLeft").GetComponentInChildren<TextMeshProUGUI>();
+        manaText = UI.Find("Mana").GetComponentInChildren<TextMeshProUGUI>();
+        currentMana = maxMana;
         currentLives = startingLives;
         currentMoney = startingMoney;
         currentScore = startingScore;
         currentWave = startingWave;
+        TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
+        // HACK: hardcoded skybox
+        RenderSettings.skybox = Skybox1;
+        LoadLevel(currentLevel);
     }
 
     // Update is called once per frame
     void Update()
     {
+        RegenMana();
         UpdateMoneyText();
         UpdateHealthText();
+        UpdateManaText();
         UpdateEnemiesLeftText();
+        regenTimer += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -56,7 +88,7 @@ public class GameController : MonoBehaviour
                 Destroy(enemy);
             }
         }
-        else if (currentWave >= 40)
+        else if (currentWave >= 100)
         {
             if (enemies.Count != 0)
             {
@@ -68,8 +100,16 @@ public class GameController : MonoBehaviour
             }
             if (enemies.Count == 0)
             {
-                isGameOver = true;
-                UpdateGameStateText(true);
+                if (!levelComplete)
+                {
+                    currentTime = 0;
+                    currentLevel++;
+                    levelComplete = true;
+                    gameStateUI.SetActive(true);
+                    gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
+                    FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
+                }
+                nextLevel();
             }
         }
         else if (currentTime % waveInterval == 0)
@@ -80,7 +120,35 @@ public class GameController : MonoBehaviour
             {
                 waveInterval -= 2;
             }
+            AudioSource.PlayClipAtPoint(spawnSFX, Camera.main.transform.position);
             enemies.Add(this.GetComponent<EnemySpawner>().SpawnEnemy());
+        }
+    }
+
+    void nextLevel()
+    {
+        if (currentLevel > finalLevel)
+        {
+            isGameOver = true;
+            UpdateGameStateText(true);
+        }
+        else
+        {
+            if (currentTime < 500)
+            {
+                return;
+            }
+            gameStateUI.SetActive(false);
+            currentMoney = startingMoney;
+            currentLives = startingLives;
+            currentWave = startingWave;
+            LoadLevel(currentLevel);
+            levelComplete = false;
+            currentTime = 0;
+            currentMana = maxMana;
+            waveInterval = 150;
+            // HACK: hardcoded skybox
+            RenderSettings.skybox = Skybox2;
         }
     }
 
@@ -91,11 +159,29 @@ public class GameController : MonoBehaviour
 
     void UpdateHealthText()
     {
-        livesText.text = "Lives: " + currentLives.ToString();
+        livesText.text = currentLives.ToString();
+    }
+
+    void RegenMana()
+    {
+        if (regenTimer >= regenInterval)
+        {
+            if (currentMana < maxMana)
+            {
+                currentMana = Mathf.Clamp(currentMana + manaRegen, 0, maxMana);
+            }
+            regenTimer = 0f;
+        }
+    }
+
+    void UpdateManaText()
+    {
+        manaText.text = currentMana.ToString();
     }
 
     void UpdateGameStateText(bool win)
     {
+        gameStateUI.SetActive(true);
         if (win)
         {
             gameStateText.text = "You Win!\n Final Score: " + currentScore;
@@ -108,7 +194,7 @@ public class GameController : MonoBehaviour
 
     void UpdateEnemiesLeftText()
     {
-        enemiesLeftText.text = "Enemies Left: " + (40 - currentWave);
+        enemiesLeftText.text = "Enemies Left: " + (100 - currentWave);
     }
 
     public void RemoveEnemy(GameObject enemy)
@@ -144,6 +230,58 @@ public class GameController : MonoBehaviour
     public int GetScore()
     {
         return currentScore;
+    }
+
+    public int GetMana()
+    {
+        return currentMana;
+    }
+
+    public void AddMana(int value)
+    {
+        currentMana = Mathf.Clamp(currentMana + value, 0, maxMana);
+    }
+
+    private bool LoadLevel(int level)
+    {
+        // Split the level configuration file into lines
+        string[] lines = levelConfig.text.Split('\n');
+
+        foreach (string line in lines)
+        {
+            string[] values = line.Split(',');
+            if (values[0] == level.ToString())
+            {
+                var levelString = values[1].ToCharArray();
+                var levelMap = new int[10][];
+                for (int i = 0; i < 10; i++)
+                {
+                    levelMap[i] = new int[10];
+                    for (int j = 0; j < 10; j++)
+                    {
+                        levelMap[i][j] = (int)levelString[i * 10 + j] - 48;
+                    }
+                }
+                TerrainController.InitLevel(levelMap);
+                var parent = this.transform;
+                var waypoints = values[2].Split(' ');
+                for (int i = 0; i < waypoints.Length; i++)
+                {
+                    var position = new Vector3(float.Parse(waypoints[i].Split('/')[0]), 0.5f, float.Parse(waypoints[i].Split('/')[1]));
+                    var waypoint = new GameObject($"Waypoint ({i})")
+                    {
+                        tag = "EnemyWaypoint",
+                        transform =
+                        {
+                            position = position + parent.position,
+                            parent = parent
+                        }
+                    };
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
 }

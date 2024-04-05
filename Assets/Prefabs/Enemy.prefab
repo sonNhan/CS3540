@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ed3016495286e449d5f8bd9b6d9330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathSFX: {fileID: 8300000, guid: 696880b71747994768a14aabee88b0e9, type: 3}
   startingHealth: 100
 --- !u!114 &8493580217449775595
 MonoBehaviour:
@@ -123,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9585cc20ad6617344aac4a34fe405d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 8
 --- !u!136 &7470976275060104947
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -173,4 +174,4 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
