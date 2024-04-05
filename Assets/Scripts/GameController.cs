@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour
                 Destroy(enemy);
             }
         }
-        else if (currentWave >= 2)
+        else if (currentWave >= 100)
         {
             if (enemies.Count != 0)
             {
@@ -101,7 +101,7 @@ public class GameController : MonoBehaviour
                     currentLevel++;
                     levelComplete = true;
                     gameStateUI.SetActive(true);
-                    gameStateText.text = $"Level Complete!\n Final Score: {currentScore}\n Next Level in 5 seconds...";
+                    gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
                     FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
                 }
                 nextLevel();
@@ -119,7 +119,7 @@ public class GameController : MonoBehaviour
             enemies.Add(this.GetComponent<EnemySpawner>().SpawnEnemy());
         }
     }
-    
+
     void nextLevel()
     {
         if (currentLevel > finalLevel)
@@ -140,6 +140,8 @@ public class GameController : MonoBehaviour
             loadLevel(currentLevel);
             levelComplete = false;
             currentTime = 0;
+            currentMana = maxMana;
+            waveInterval = 150;
         }
     }
 
@@ -185,7 +187,7 @@ public class GameController : MonoBehaviour
 
     void UpdateEnemiesLeftText()
     {
-        enemiesLeftText.text = "Enemies Left: " + (40 - currentWave);
+        enemiesLeftText.text = "Enemies Left: " + (100 - currentWave);
     }
 
     public void RemoveEnemy(GameObject enemy)
@@ -231,6 +233,7 @@ public class GameController : MonoBehaviour
     public void AddMana(int value)
     {
         currentMana = Mathf.Clamp(currentMana + value, 0, maxMana);
+    }
 
     private bool loadLevel(int level)
     {

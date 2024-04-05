@@ -278,6 +278,10 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     public void UnhighlightTurret()
     {
+        if (highlightedTurret == null)
+        {
+            return;
+        }
         // Unlock Cursor
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
