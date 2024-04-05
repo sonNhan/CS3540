@@ -7,8 +7,8 @@ public class PlacementCursorBehavior : MonoBehaviour
 
     [SerializeField]
     float cursorSensitivity = 10f;
-    [SerializeField]
-    GameObject turret1; // HACK: need a cleaner way to represent different selectable turrets
+    [SerializeField]// HACK: need a cleaner way to represent different selectable turrets
+    GameObject turret1, turret2;
     [SerializeField]
     GameObject ExplosionSpell, BlizzardSpell;
     [SerializeField]
@@ -112,6 +112,17 @@ public class PlacementCursorBehavior : MonoBehaviour
             placementPointerRenderer.enabled = false;
             selectedTurret = true;
             gameControllerScript.AddMoney(-20);
+        }
+        else if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha2) && gameControllerScript.GetMoney() >= 40)
+        {
+            if (highlightedTurret != null)
+            {
+                UnhighlightTurret();
+            }
+            currentTurret = Instantiate(turret2, placementPointer.transform.position, Quaternion.identity);
+            placementPointerRenderer.enabled = false;
+            selectedTurret = true;
+            gameControllerScript.AddMoney(-40);
         }
         // TODO: handle other keys for other turrets in the future
 
