@@ -36,6 +36,10 @@ public class WizzardBehavior : MonoBehaviour
 
     void CheckDistanceToTarget()
     {
+        if (targetPoint == null)
+        {
+            Start();
+        }
         // get distance
         float distanceToTarget = Vector3.Distance(transform.position, targetPoint.transform.position);
         // based on distance determine if we should go to the next point

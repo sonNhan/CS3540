@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfa45cbd4926f6748990779cf37cca72, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfa45cbd4926f6748990779cf37cca72, type: 3}
       propertyPath: m_LocalRotation.w
@@ -51,6 +51,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bfa45cbd4926f6748990779cf37cca72, type: 3}
       propertyPath: m_Name
       value: simpleFlagpole
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bfa45cbd4926f6748990779cf37cca72, type: 3}
+      propertyPath: m_TagString
+      value: Unplaceable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
