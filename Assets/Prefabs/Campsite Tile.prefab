@@ -4887,7 +4887,7 @@ GameObject:
   - component: {fileID: 8272455633598638269}
   - component: {fileID: 7690574047295988779}
   - component: {fileID: 6948157458403936853}
-  - component: {fileID: 6723916045134157514}
+  - component: {fileID: 6958803447677083154}
   m_Layer: 0
   m_Name: Campsite Tile
   m_TagString: ShopTile
@@ -4992,12 +4992,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 10, z: 1}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!114 &6948157458403936853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5011,28 +5011,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlaceable: 1
-  turret: {fileID: 0}
---- !u!65 &6723916045134157514
-BoxCollider:
+  turret: {fileID: 1035524232108904736, guid: 5b0fe3d8278496e918f69845110a9f21, type: 3}
+--- !u!114 &6958803447677083154
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6714311479941224408}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 14.52, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e63961a057bd8769b5bac268d2e05b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShopkeeperHelloSFX: {fileID: 8300000, guid: ba7205f8c851b40d5a1683be663f9c40, type: 3}
+  ShopKeeperTalkingSFX: {fileID: 8300000, guid: def8ef47217685b718d97bdf473e3792, type: 3}
 --- !u!1 &7845321248324451662
 GameObject:
   m_ObjectHideFlags: 0

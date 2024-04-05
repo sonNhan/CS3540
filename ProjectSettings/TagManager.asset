@@ -19,6 +19,7 @@ TagManager:
   - UIButton
   - WizzardWaypoint
   - ShopTile
+  - PlacementPointer
   layers:
   - Default
   - TransparentFX

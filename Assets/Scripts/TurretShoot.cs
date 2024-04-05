@@ -20,8 +20,6 @@ public class TurretShoot : MonoBehaviour
     int damage = 20;
     [SerializeField]
     float attackRate = 2f, turretRotationSpeed = 10f;
-    [SerializeField]
-    GameObject attackRangeIndicator;
     [Header("Prices")]
     [SerializeField]
     float upgradeCostIncreaseModifier = 1.1f;
@@ -35,13 +33,14 @@ public class TurretShoot : MonoBehaviour
     float timeSinceAttack = 0.0f;
     ProjectileShoot projectileShootScript;
     GameController gameController;
+    GameObject attackRangeIndicator;
 
     // Start is called before the first frame update
     void Start()
     {
         enemiesInRange = new List<GameObject>();
         currentProjectile = InstantiateProjectile();
-        attackRangeIndicator = GameObject.Find("RangeIndicators").transform.Find("AttackRange").gameObject;
+        attackRangeIndicator = transform.Find("RangeIndicators").transform.Find("AttackRange").gameObject;
         gameController = FindObjectOfType<GameController>();
     }
 

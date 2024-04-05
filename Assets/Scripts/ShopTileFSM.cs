@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckShopTile : MonoBehaviour
+public class ShopTileFSM : MonoBehaviour
 {
     [SerializeField]
     AudioClip ShopkeeperHelloSFX, ShopKeeperTalkingSFX;
 
-    GameObject terrain;
+    GameObject chatBox, terrain;
     TerrainController terrainController;
     GameObject placementPointer;
     bool onShopTile;
-    GameObject shopTile;
     Animator animator;
-    GameObject chatBox;
     Material shopTileMaterial;
     Material originalShopTileMaterial;
 
@@ -26,40 +24,31 @@ public class CheckShopTile : MonoBehaviour
 
     FSMstates currentState;
 
-    void init()
+    void Start()
     {
         chatBox = GameObject.Find("UI").transform.Find("Shopkeeper").gameObject;
         chatBox.SetActive(false);
         terrain = GameObject.Find("DirtGround");
         terrainController = terrain.GetComponent<TerrainController>();
-        shopTile = GameObject.FindGameObjectWithTag("ShopTile");
-        animator = shopTile.GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
         currentState = FSMstates.WALKING;
-        shopTileMaterial = shopTile.GetComponent<Renderer>().material;
-        Debug.Log("init shop");
+        shopTileMaterial = GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (shopTile != null)
+        switch (currentState)
         {
-            switch (currentState)
-            {
-                case FSMstates.WALKING:
-                    WalkState();
-                    break;
-                case FSMstates.GREET:
-                    IdleState();
-                    break;
-                case FSMstates.TALK:
-                    TalkState();
-                    break;
-            }
-        }
-        else
-        {
-            init();
+            case FSMstates.WALKING:
+                WalkState();
+                break;
+            case FSMstates.GREET:
+                IdleState();
+                break;
+            case FSMstates.TALK:
+                TalkState();
+                break;
         }
 
     }
@@ -101,7 +90,7 @@ public class CheckShopTile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("ShopTile"))
+        if (other.CompareTag("PlacementPointer"))
         {
             onShopTile = true;
             shopTileMaterial.color = Color.red;
@@ -110,7 +99,7 @@ public class CheckShopTile : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("ShopTile"))
+        if (other.CompareTag("PlacementPointer"))
         {
             onShopTile = false;
             shopTileMaterial.color = Color.cyan;
@@ -183,8 +172,5 @@ public class CheckShopTile : MonoBehaviour
         Debug.Log("Opening the shop");
     }
 
-    public void CloseConversation()
-    {
-        chatBox.SetActive(false);
-    }
+
 }

@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 150
-  projectileLifespan: 0.5
-  homing: 1
+  projectileLifespan: 1
+  homing: 0
   exploding: 1
   explosionAbility: {fileID: 5099040617789825340, guid: 8a0dfc5278d6ab4de81c5b1d2af61b14, type: 3}
   explosionRadius: 15
@@ -148,8 +148,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
