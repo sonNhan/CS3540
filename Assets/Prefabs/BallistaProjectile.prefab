@@ -47,9 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06886c7e9e48c1d990c8fe259456298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 500
-  projectileLifespan: 1
+  projectileSpeed: 300
+  projectileLifespan: 0.5
   homing: 0
+  exploding: 0
+  explosionAbility: {fileID: 0}
+  explosionRadius: 0
 --- !u!54 &9108978211054325881
 Rigidbody:
   m_ObjectHideFlags: 0

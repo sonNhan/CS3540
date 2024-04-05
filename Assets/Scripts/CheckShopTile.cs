@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class CheckShopTile : MonoBehaviour
 {
@@ -22,6 +21,7 @@ public class CheckShopTile : MonoBehaviour
         GREET,
         TALK
     }
+
     FSMstates currentState;
 
     void Start()
@@ -29,7 +29,7 @@ public class CheckShopTile : MonoBehaviour
         init();
     }
 
-    private void init()
+    void init()
     {
         chatBox = GameObject.Find("UI").transform.Find("Shopkeeper").gameObject;
         chatBox.SetActive(false);
@@ -44,17 +44,24 @@ public class CheckShopTile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (currentState)
+        if (shopTile != null)
         {
-            case FSMstates.WALKING:
-                WalkState();
-                break;
-            case FSMstates.GREET:
-                IdleState();
-                break;
-            case FSMstates.TALK:
-                TalkState();
-                break;
+            switch (currentState)
+            {
+                case FSMstates.WALKING:
+                    WalkState();
+                    break;
+                case FSMstates.GREET:
+                    IdleState();
+                    break;
+                case FSMstates.TALK:
+                    TalkState();
+                    break;
+            }
+        }
+        else
+        {
+            init();
         }
     }
 
@@ -101,7 +108,6 @@ public class CheckShopTile : MonoBehaviour
         if (Physics.Raycast(placementPointer.transform.position, Vector3.down, out hit))
         {
             Transform ground = hit.transform;
-            //Debug.Log(ground.tag);
             if (ground.CompareTag("ShopTile"))
             {
                 onShopTile = true;

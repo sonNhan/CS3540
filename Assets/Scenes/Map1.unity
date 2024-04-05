@@ -662,6 +662,7 @@ MonoBehaviour:
   maxMana: 100
   Skybox1: {fileID: 2100000, guid: 4daf60de510e93a4b82c4717c0cb4688, type: 2}
   Skybox2: {fileID: 2100000, guid: 3f1e52dec055a3a4f850420ef19cb2b2, type: 2}
+  levelConfig: {fileID: 4900000, guid: 80717756992ebdf50a90e7895048be13, type: 3}
   startingLives: 10
   startingMoney: 100
   startingScore: 0
@@ -1014,7 +1015,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1351887526
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1232,37 +1233,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShopkeeperHelloSFX: {fileID: 8300000, guid: ba7205f8c851b40d5a1683be663f9c40, type: 3}
   ShopKeeperTalkingSFX: {fileID: 8300000, guid: def8ef47217685b718d97bdf473e3792, type: 3}
---- !u!1 &1922793461
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1922793462}
-  m_Layer: 5
-  m_Name: CostText (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1922793462
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1922793461}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2026639240
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,6 +1470,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 8730322894175006879, guid: 873b7b71ffe014dd0ba42235b96dd9d0, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730322894175006879, guid: 873b7b71ffe014dd0ba42235b96dd9d0, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730322894175006879, guid: 873b7b71ffe014dd0ba42235b96dd9d0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730322894175006879, guid: 873b7b71ffe014dd0ba42235b96dd9d0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730322894175006879, guid: 873b7b71ffe014dd0ba42235b96dd9d0, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730322894175006879, guid: 873b7b71ffe014dd0ba42235b96dd9d0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730322894175006879, guid: 873b7b71ffe014dd0ba42235b96dd9d0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730322894175006879, guid: 873b7b71ffe014dd0ba42235b96dd9d0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1656,7 +1658,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1922793462}
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 1786692859}

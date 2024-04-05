@@ -50,8 +50,8 @@ public class TerrainController : MonoBehaviour
         {
             Destroy(waypoint);
         }
-        
     }
+
     public void InitLevel(int[][] levelMap)
     {
         ClearLevel();

@@ -13,7 +13,8 @@ public class GameController : MonoBehaviour
     int maxMana = 100;
     [SerializeField]
     Material Skybox1, Skybox2;
-
+    [SerializeField]
+    TextAsset levelConfig;
 
     TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
     GameObject gameStateUI;
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour
     private bool levelComplete = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Transform UI = GameObject.Find("UI").transform;
         gameStateUI = UI.Find("GameState").gameObject;
@@ -57,7 +58,7 @@ public class GameController : MonoBehaviour
         TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
         // HACK: hardcoded skybox
         RenderSettings.skybox = Skybox1;
-        loadLevel(currentLevel);
+        LoadLevel(currentLevel);
     }
 
     // Update is called once per frame
@@ -141,7 +142,7 @@ public class GameController : MonoBehaviour
             currentMoney = startingMoney;
             currentLives = startingLives;
             currentWave = startingWave;
-            loadLevel(currentLevel);
+            LoadLevel(currentLevel);
             levelComplete = false;
             currentTime = 0;
             currentMana = maxMana;
@@ -241,10 +242,12 @@ public class GameController : MonoBehaviour
         currentMana = Mathf.Clamp(currentMana + value, 0, maxMana);
     }
 
-    private bool loadLevel(int level)
+    private bool LoadLevel(int level)
     {
-        using var reader = new StreamReader("Assets/Settings/Levels.csv");
-        while (reader.ReadLine() is { } line)
+        // Split the level configuration file into lines
+        string[] lines = levelConfig.text.Split('\n');
+
+        foreach (string line in lines)
         {
             string[] values = line.Split(',');
             if (values[0] == level.ToString())

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5381208297521625659}
   - component: {fileID: 7807920432410282358}
   - component: {fileID: 2471729680133034232}
+  - component: {fileID: 4963757423555339618}
   m_Layer: 0
   m_Name: MageProjectile
   m_TagString: Untagged
@@ -99,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 150
-  projectileLifespan: 2
+  projectileLifespan: 0.5
   homing: 1
   exploding: 1
   explosionAbility: {fileID: 5099040617789825340, guid: 8a0dfc5278d6ab4de81c5b1d2af61b14, type: 3}
@@ -125,3 +126,30 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.012813365
   m_Center: {x: 0.000000009313226, y: 0, z: 0}
+--- !u!54 &4963757423555339618
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5885386812595543022}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
