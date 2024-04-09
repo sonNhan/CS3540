@@ -158,10 +158,13 @@ public class TurretShoot : MonoBehaviour
         Vector3 targetDirection = (target.transform.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
-        timeSinceAttack = 0.0f;
-        AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
-        projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
-        projectileShootScript.Shoot(target, damage);
+        if (transform.rotation == targetRotation)
+        {
+            timeSinceAttack = 0.0f;
+            AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
+            projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
+            projectileShootScript.Shoot(target, damage);
+        }
     }
 
     void Reload()

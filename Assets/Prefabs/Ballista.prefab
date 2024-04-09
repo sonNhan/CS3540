@@ -244,7 +244,7 @@ MonoBehaviour:
   projectileInstantiatePosition: {x: 0, y: 3.8, z: 2}
   damage: 20
   attackRate: 2
-  turretRotationSpeed: 360
+  turretRotationSpeed: 750
   upgradeCostIncreaseModifier: 1.2
   rangeUpgradeCost: 5
   damageUpgradeCost: 5
