@@ -3,7 +3,27 @@ guid: 8230ed800091fa340a795d9d79e8a895
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: leaf bunch
+    second: {fileID: 2100000, guid: fd3def217b1472b13af9a06ea8929cf7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: palm leaf
+    second: {fileID: 2100000, guid: e5fb6424d584279868d884cc12fdd8dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: palm wood
+    second: {fileID: 2100000, guid: 12a8cc09c5c830e1b9dddd39886663fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tree nut
+    second: {fileID: 2100000, guid: 166cd2d3b771d98268b538af6d05674d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

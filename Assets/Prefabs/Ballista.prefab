@@ -19,7 +19,7 @@ GameObject:
   m_TagString: AttackRange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4958785893191813478
 Transform:
@@ -160,7 +160,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6708496910724477302
 Transform:
@@ -195,7 +195,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8941852230478559516
 Transform:
@@ -245,7 +245,6 @@ MonoBehaviour:
   damage: 20
   attackRate: 2
   turretRotationSpeed: 360
-  attackRangeIndicator: {fileID: 0}
   upgradeCostIncreaseModifier: 1.2
   rangeUpgradeCost: 5
   damageUpgradeCost: 5
@@ -267,7 +266,7 @@ GameObject:
   m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4358501407089845585
 Transform:
@@ -353,7 +352,7 @@ GameObject:
   m_TagString: PlacementRange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4493996268559664036
 Transform:
