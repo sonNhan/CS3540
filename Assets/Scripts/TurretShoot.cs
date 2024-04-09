@@ -27,6 +27,7 @@ public class TurretShoot : MonoBehaviour
     int rangeUpgradeCost = 10, damageUpgradeCost = 10,
         speedUpgradeCost = 10, sellValue = 10;
 
+    Transform goalTransform;
     List<GameObject> enemiesInRange;
     GameObject target, currentProjectile;
     TargetPriority targetPriority = TargetPriority.FIRST;
@@ -38,6 +39,7 @@ public class TurretShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        goalTransform = enemyGoal.transform;
         enemiesInRange = new List<GameObject>();
         currentProjectile = InstantiateProjectile();
         attackRangeIndicator = transform.Find("RangeIndicators").transform.Find("AttackRange").gameObject;
@@ -106,8 +108,8 @@ public class TurretShoot : MonoBehaviour
                 first = enemy;
             }
             // The first enemy is the enemy closest to their goal
-            else if (enemy != null && Vector3.Distance(first.transform.position, enemyGoal.transform.position)
-                    > Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
+            else if (enemy != null && Vector3.Distance(first.transform.position, goalTransform.position)
+                    > Vector3.Distance(enemy.transform.position, goalTransform.position))
             {
                 first = enemy;
             }
@@ -126,8 +128,8 @@ public class TurretShoot : MonoBehaviour
                 last = enemy;
             }
             // The last enemy is the enemy furthest from their goal
-            else if (enemy != null && Vector3.Distance(last.transform.position, enemyGoal.transform.position)
-                    < Vector3.Distance(enemy.transform.position, enemyGoal.transform.position))
+            else if (enemy != null && Vector3.Distance(last.transform.position, goalTransform.position)
+                    < Vector3.Distance(enemy.transform.position, goalTransform.position))
             {
                 last = enemy;
             }
@@ -158,7 +160,7 @@ public class TurretShoot : MonoBehaviour
     {
         Vector3 targetDirection = (target.transform.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
         timeSinceAttack = 0.0f;
         AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
         projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
