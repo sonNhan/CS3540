@@ -50,7 +50,14 @@ public class TurretShoot : MonoBehaviour
         LookForTarget(targetPriority);
         if (target != null && enemiesInRange.Contains(target))
         {
-            Shoot(target);
+            if (timeSinceAttack >= attackRate)
+            {
+                if (currentProjectile == null)
+                {
+                    Reload();
+                }
+                Shoot(target);
+            }
         }
         timeSinceAttack += Time.deltaTime;
     }
@@ -152,15 +159,16 @@ public class TurretShoot : MonoBehaviour
         Vector3 targetDirection = (target.transform.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
-        if (timeSinceAttack >= attackRate)
-        {
-            timeSinceAttack = 0.0f;
-            AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
-            projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
-            projectileShootScript.Shoot(target, damage);
-            GameObject newProjectile = InstantiateProjectile();
-            currentProjectile = newProjectile;
-        }
+        timeSinceAttack = 0.0f;
+        AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
+        projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
+        projectileShootScript.Shoot(target, damage);
+    }
+
+    void Reload()
+    {
+        GameObject newProjectile = InstantiateProjectile();
+        currentProjectile = newProjectile;
     }
 
     public void AddEnemyInRange(GameObject enemy)
