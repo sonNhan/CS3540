@@ -77,23 +77,20 @@ public class TurretShoot : MonoBehaviour
 
     void LookForTarget(TargetPriority targetPriority)
     {
-        foreach (GameObject enemy in enemiesInRange)
+        switch (targetPriority)
         {
-            switch (targetPriority)
-            {
-                case TargetPriority.FIRST:
-                    target = GetFirstEnemy();
-                    break;
-                case TargetPriority.LAST:
-                    target = GetLastEnemy();
-                    break;
-                case TargetPriority.CLOSE:
-                    target = GetClosestEnemy();
-                    break;
-                default:
-                    Debug.Log("Invalid targeting style for turret!");
-                    break;
-            }
+            case TargetPriority.FIRST:
+                target = GetFirstEnemy();
+                break;
+            case TargetPriority.LAST:
+                target = GetLastEnemy();
+                break;
+            case TargetPriority.CLOSE:
+                target = GetClosestEnemy();
+                break;
+            default:
+                Debug.Log("Invalid targeting style for turret!");
+                break;
         }
     }
 
