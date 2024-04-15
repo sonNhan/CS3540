@@ -523,6 +523,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4699209343663626751, guid: e8aff4f05fd5873d4af60d4c915518b0, type: 3}
   m_PrefabInstance: {fileID: 1935258470477909615}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &669932123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 669932124}
+  m_Layer: 0
+  m_Name: Waypoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &669932124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669932123}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,13 +708,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnSFX: {fileID: 8300000, guid: 40fc39505eb41c507bb2eafb27e9870e, type: 3}
   maxMana: 100
-  Skybox1: {fileID: 2100000, guid: 4daf60de510e93a4b82c4717c0cb4688, type: 2}
-  Skybox2: {fileID: 2100000, guid: 3f1e52dec055a3a4f850420ef19cb2b2, type: 2}
-  levelConfig: {fileID: 4900000, guid: 80717756992ebdf50a90e7895048be13, type: 3}
   startingLives: 10
   startingMoney: 100
-  startingScore: 0
-  startingWave: 1
+  levelConfig: {fileID: 4900000, guid: 1a89dfe921ced3b60b6f0844403d566d, type: 3}
+  waypointConfig: {fileID: 4900000, guid: 49bae343039375ab2944e07e8f2b7d94, type: 3}
 --- !u!1 &796557365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,3 +1610,4 @@ SceneRoots:
   - {fileID: 3059464591529551942}
   - {fileID: 1194806788278846974}
   - {fileID: 348647451}
+  - {fileID: 669932124}
