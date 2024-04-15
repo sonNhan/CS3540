@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameController : MonoBehaviour
@@ -15,6 +14,8 @@ public class GameController : MonoBehaviour
     int maxMana = 100, startingLives, startingMoney;
     [SerializeField]
     TextAsset levelConfig, waypointConfig;
+    [SerializeField]
+    string nextSceneName;
 
     TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
     GameObject gameStateUI;
@@ -38,6 +39,7 @@ public class GameController : MonoBehaviour
         enemiesLeftText = UI.Find("EnemiesLeft").GetComponentInChildren<TextMeshProUGUI>();
         manaText = UI.Find("Mana").GetComponentInChildren<TextMeshProUGUI>();
         TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
+        isGameOver = false;
         currentMana = maxMana;
         currentLives = startingLives;
         currentMoney = startingMoney;
@@ -63,12 +65,7 @@ public class GameController : MonoBehaviour
         }
         if (currentLives <= 0)
         {
-            isGameOver = true;
-            UpdateGameStateText(false);
-            foreach (var enemy in enemies)
-            {
-                Destroy(enemy);
-            }
+            LoseLevel();
         }
         else if (currentWave >= 100)
         {
@@ -91,7 +88,7 @@ public class GameController : MonoBehaviour
                     gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
                     FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
                 }
-                nextLevel();
+                ClearLevel();
             }
         }
         else if (currentTime % waveInterval == 0)
@@ -115,7 +112,7 @@ public class GameController : MonoBehaviour
         UpdateEnemiesLeftText();
     }
 
-    void nextLevel()
+    void ClearLevel()
     {
         if (currentLevel > finalLevel)
         {
@@ -124,19 +121,32 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if (currentTime < 500)
-            {
-                return;
-            }
-            gameStateUI.SetActive(false);
-            currentMoney = startingMoney;
-            currentLives = startingLives;
-            currentWave = 0;
-            GenerateLevel();
-            levelComplete = false;
-            currentTime = 0;
-            currentMana = maxMana;
-            waveInterval = 150;
+            StartCoroutine(LoadSceneWithDelay(5f, true));
+        }
+    }
+
+    void LoseLevel()
+    {
+        isGameOver = true;
+        UpdateGameStateText(false);
+        foreach (var enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+        StartCoroutine(LoadSceneWithDelay(5, false));
+    }
+
+    IEnumerator LoadSceneWithDelay(float time, bool nextScene)
+    {
+        Debug.Log("Coroutine called");
+        yield return new WaitForSeconds(time);
+        if (nextScene)
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

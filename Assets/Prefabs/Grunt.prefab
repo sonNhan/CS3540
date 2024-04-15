@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fce5caec9846aff4b9dd8d005b330808, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Grunt
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fce5caec9846aff4b9dd8d005b330808, type: 3}
       propertyPath: m_TagString
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSFX: {fileID: 8300000, guid: 696880b71747994768a14aabee88b0e9, type: 3}
-  startingHealth: 100
+  startingHealth: 150
 --- !u!114 &8493580217449775595
 MonoBehaviour:
   m_ObjectHideFlags: 0

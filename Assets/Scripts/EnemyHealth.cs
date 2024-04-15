@@ -21,11 +21,10 @@ public class EnemyHealth : MonoBehaviour
         gameController = GameObject.Find("LevelManager").GetComponent<GameController>();
     }
 
-    public void TakeDamage(int dam)
+    public void TakeDamage(int damage)
     {
-        currentHealth -= dam;
+        currentHealth -= damage;
 
-        Debug.Log(animator);
         // if health is 0 or less we die
         if (currentHealth <= 0 && animator.GetBool("isAlive"))
         {
@@ -33,7 +32,6 @@ public class EnemyHealth : MonoBehaviour
             animator.SetBool("isAlive", false);
             gameController.AddMoney(10);
             gameController.AddScore(10);
-            Debug.Log($"Enemy died. Current money: {gameController.GetMoney()}");
         }
     }
 

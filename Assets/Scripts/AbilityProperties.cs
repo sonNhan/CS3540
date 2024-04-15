@@ -58,7 +58,6 @@ public class AbilityProperties : MonoBehaviour
 
     public void AddAbilityEffect(Constants.AbilityEffect abilityEffect, int value)
     {
-        Debug.Log("Added ability effect");
         abilityEffects.Add(abilityEffect, value);
     }
 
@@ -74,7 +73,6 @@ public class AbilityProperties : MonoBehaviour
         ParticleSystem vfx = Instantiate(abilityVFX, transform.position + abilityVFX.transform.position, transform.rotation);
         vfx.transform.parent = transform;
         vfx.transform.localScale = transform.localScale / 10;
-        Debug.Log($"Destroying in {spellDuration} seconds");
         Destroy(gameObject, spellDuration);
     }
 
