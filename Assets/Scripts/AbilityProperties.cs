@@ -30,7 +30,6 @@ public class AbilityProperties : MonoBehaviour
                     {
                         case Constants.AbilityEffect.DAMAGE:
                             enemyHealthScript.TakeDamage(abilityEffects[abilityEffect]);
-                            Debug.Log($"Hurt {other.name} for {abilityEffects[abilityEffect]}");
                             break;
                         case Constants.AbilityEffect.SLOW:
                             float enemySpeed = enemyMovementScript.speed;
@@ -41,7 +40,6 @@ public class AbilityProperties : MonoBehaviour
                                 newSpeed = 1f;
                             }
                             enemyMovementScript.speed = newSpeed;
-                            Debug.Log($"Slowed {other.name} by {abilityEffects[abilityEffect]}");
                             break;
                         default:
                             break;
@@ -58,7 +56,6 @@ public class AbilityProperties : MonoBehaviour
 
     public void AddAbilityEffect(Constants.AbilityEffect abilityEffect, int value)
     {
-        Debug.Log("Added ability effect");
         abilityEffects.Add(abilityEffect, value);
     }
 
@@ -74,7 +71,6 @@ public class AbilityProperties : MonoBehaviour
         ParticleSystem vfx = Instantiate(abilityVFX, transform.position + abilityVFX.transform.position, transform.rotation);
         vfx.transform.parent = transform;
         vfx.transform.localScale = transform.localScale / 10;
-        Debug.Log($"Destroying in {spellDuration} seconds");
         Destroy(gameObject, spellDuration);
     }
 

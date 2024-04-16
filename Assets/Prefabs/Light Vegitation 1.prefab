@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1918986432006692997}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25, y: 0.5, z: 45}
+  m_LocalPosition: {x: -35, y: 0.5, z: 45}
   m_LocalScale: {x: 10, y: 0.5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -180,6 +180,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 88.349
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 89a98c173bbd510419b8cc8d63ca3687, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 89a98c173bbd510419b8cc8d63ca3687, type: 3}
       propertyPath: m_Name
       value: bigleaf (1)
@@ -261,6 +265,10 @@ PrefabInstance:
     - target: {fileID: -7640558969779515294, guid: 8230ed800091fa340a795d9d79e8a895, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8230ed800091fa340a795d9d79e8a895, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7271449666460269675, guid: 8230ed800091fa340a795d9d79e8a895, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -464,6 +472,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 41.552
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
       propertyPath: m_Name
       value: tinyleaf (2)
@@ -541,6 +553,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -49.155
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
       propertyPath: m_Name
@@ -620,6 +636,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b80955dd09439304fba16f51874acc5b, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b80955dd09439304fba16f51874acc5b, type: 3}
       propertyPath: m_Name
       value: extramediumleaf
@@ -697,6 +717,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -95.715
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
       propertyPath: m_Name
@@ -776,6 +800,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 76.071
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
       propertyPath: m_Name
       value: tinyleaf (1)
@@ -853,6 +881,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 117.241
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
       propertyPath: m_Name
@@ -932,6 +964,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 89a98c173bbd510419b8cc8d63ca3687, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 89a98c173bbd510419b8cc8d63ca3687, type: 3}
       propertyPath: m_Name
       value: bigleaf
@@ -1009,6 +1045,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 49882f2d9f8b0b14d8c5e02c04c0dab7, type: 3}
       propertyPath: m_Name
@@ -1088,6 +1128,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
       propertyPath: m_Name
       value: bush (4)
@@ -1095,6 +1139,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192800573616761333, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3516130088193065069, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1169,6 +1217,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b80955dd09439304fba16f51874acc5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b80955dd09439304fba16f51874acc5b, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b80955dd09439304fba16f51874acc5b, type: 3}
       propertyPath: m_Name
@@ -1248,6 +1300,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
       propertyPath: m_Name
       value: mediumleaf (3)
@@ -1325,6 +1381,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 86.395
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ffe0a4ae5a2bbcd4da1a83380f792153, type: 3}
       propertyPath: m_Name
@@ -1404,6 +1464,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
       propertyPath: m_Name
       value: bush (5)
@@ -1411,6 +1475,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192800573616761333, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3516130088193065069, guid: b041a44e0a3f1d84dadf6c720f336503, type: 3}
       propertyPath: m_StaticEditorFlags

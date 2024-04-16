@@ -390,12 +390,12 @@ MonoBehaviour:
   projectileInstantiatePosition: {x: 0, y: 7, z: 0}
   damage: 33
   attackRate: 4
-  turretRotationSpeed: 750
+  turretRotationSpeed: 1000
   upgradeCostIncreaseModifier: 1.1
-  rangeUpgradeCost: 10
+  rangeUpgradeCost: 5
   damageUpgradeCost: 10
-  speedUpgradeCost: 10
-  sellValue: 10
+  speedUpgradeCost: 15
+  sellValue: 20
 --- !u!1001 &5356363628821967537
 PrefabInstance:
   m_ObjectHideFlags: 0

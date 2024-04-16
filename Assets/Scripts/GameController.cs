@@ -1,44 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameController : MonoBehaviour
 {
+    public static bool isGameOver = false;
+
     [SerializeField]
     AudioClip spawnSFX;
     [SerializeField]
-    int maxMana = 100;
+    int maxMana = 100, startingLives, startingMoney;
     [SerializeField]
-    Material Skybox1, Skybox2;
+    TextAsset levelConfig, waypointConfig;
     [SerializeField]
-    TextAsset levelConfig;
+    string nextSceneName;
 
     TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
     GameObject gameStateUI;
-
-    int currentMana;
-    int manaRegen = 1;
+    int currentMana, manaRegen = 1;
     float regenInterval = 1f;
     float regenTimer = 0f;
-    public int startingLives = 10;
-    private int currentLives;
-    public int startingMoney = 100;
-    private int currentMoney;
-    public int startingScore = 0;
-    private int currentScore;
-    public int startingWave = 1;
-    private int currentWave;
-    private List<GameObject> enemies = new List<GameObject>();
-    private int currentTime = 0;
-    private int waveInterval = 150;
-    public static bool isGameOver = false;
-    private int currentLevel = 1;
-    private int finalLevel = 2;
-    private TerrainController TerrainController;
-    private bool levelComplete = false;
+    int currentLives, currentMoney, currentScore, currentWave;
+    List<GameObject> enemies = new List<GameObject>();
+    int currentTime = 0, waveInterval = 150, currentLevel = 1, finalLevel = 2;
+    TerrainController TerrainController;
+    bool levelComplete = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -50,25 +38,21 @@ public class GameController : MonoBehaviour
         gameStateText = UI.Find("GameState").GetComponentInChildren<TextMeshProUGUI>(true);
         enemiesLeftText = UI.Find("EnemiesLeft").GetComponentInChildren<TextMeshProUGUI>();
         manaText = UI.Find("Mana").GetComponentInChildren<TextMeshProUGUI>();
+        TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
+        isGameOver = false;
         currentMana = maxMana;
         currentLives = startingLives;
         currentMoney = startingMoney;
-        currentScore = startingScore;
-        currentWave = startingWave;
-        TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
-        // HACK: hardcoded skybox
-        RenderSettings.skybox = Skybox1;
-        LoadLevel(currentLevel);
+        currentScore = 0;
+        currentWave = 1;
+        GenerateLevel();
     }
 
     // Update is called once per frame
     void Update()
     {
         RegenMana();
-        UpdateMoneyText();
-        UpdateHealthText();
-        UpdateManaText();
-        UpdateEnemiesLeftText();
+        UpdateUI();
         regenTimer += Time.deltaTime;
     }
 
@@ -81,12 +65,7 @@ public class GameController : MonoBehaviour
         }
         if (currentLives <= 0)
         {
-            isGameOver = true;
-            UpdateGameStateText(false);
-            foreach (var enemy in enemies)
-            {
-                Destroy(enemy);
-            }
+            LoseLevel();
         }
         else if (currentWave >= 100)
         {
@@ -109,7 +88,7 @@ public class GameController : MonoBehaviour
                     gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
                     FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
                 }
-                nextLevel();
+                ClearLevel();
             }
         }
         else if (currentTime % waveInterval == 0)
@@ -125,7 +104,15 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void nextLevel()
+    void UpdateUI()
+    {
+        UpdateMoneyText();
+        UpdateHealthText();
+        UpdateManaText();
+        UpdateEnemiesLeftText();
+    }
+
+    void ClearLevel()
     {
         if (currentLevel > finalLevel)
         {
@@ -134,21 +121,31 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if (currentTime < 500)
-            {
-                return;
-            }
-            gameStateUI.SetActive(false);
-            currentMoney = startingMoney;
-            currentLives = startingLives;
-            currentWave = startingWave;
-            LoadLevel(currentLevel);
-            levelComplete = false;
-            currentTime = 0;
-            currentMana = maxMana;
-            waveInterval = 150;
-            // HACK: hardcoded skybox
-            RenderSettings.skybox = Skybox2;
+            StartCoroutine(LoadSceneWithDelay(5f, true));
+        }
+    }
+
+    void LoseLevel()
+    {
+        isGameOver = true;
+        UpdateGameStateText(false);
+        foreach (var enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+        StartCoroutine(LoadSceneWithDelay(5, false));
+    }
+
+    IEnumerator LoadSceneWithDelay(float time, bool nextScene)
+    {
+        yield return new WaitForSeconds(time);
+        if (nextScene)
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
@@ -197,6 +194,68 @@ public class GameController : MonoBehaviour
         enemiesLeftText.text = "Enemies Left: " + (100 - currentWave);
     }
 
+    void GenerateLevel()
+    {
+        if (levelConfig == null)
+        {
+            Debug.LogError("Missing or invalid level config file!");
+            return;
+        }
+
+        // Split the level configuration file into lines
+        string[] lines = levelConfig.text.Split("\n");
+        int rows = lines.Length - 1; // account for the trailing newline
+        int cols = lines[0].Split(',').Length;
+        int[][] levelMap = new int[rows][];
+        for (int i = 0; i < rows; i++)
+        {
+            string line = lines[i];
+            // all rows must have the same # of elements, i.e. the csv file contents must be rectangular
+            string[] values = line.Split(',');
+            if (values.Length != cols)
+            {
+                Debug.Log($"{values.Length} vs {cols}");
+                Debug.LogError("Invalid level config csv file -- non-rectangular csv data.");
+                return;
+            }
+            levelMap[i] = new int[cols];
+            int j = 0;
+            foreach (string value in values)
+            {
+                levelMap[i][j] = int.Parse(value);
+                j++;
+            }
+        }
+        TerrainController.InitLevel(levelMap);
+        InitWaypoints();
+    }
+
+    void InitWaypoints()
+    {
+        GameObject waypointParent = GameObject.Find("Waypoints");
+        string[] lines = waypointConfig.text.Split('\n');
+        // each waypoint should be on its own line
+        // subtract 1 to account for trailing newline
+        for (int i = 0; i < lines.Length - 1; i++)
+        {
+            string value = lines[i];
+            string[] waypoints = value.Split('/');
+            float xPos = float.Parse(waypoints[0]);
+            float yPos = float.Parse(waypoints[1]);
+            float zPos = float.Parse(waypoints[2]);
+            Vector3 position = new Vector3(xPos, yPos, zPos);
+            GameObject waypoint = new GameObject($"Waypoint {i}")
+            {
+                tag = "EnemyWaypoint",
+                transform =
+                {
+                    position = position + waypointParent.transform.position,
+                    parent = waypointParent.transform
+                }
+            };
+        }
+    }
+
     public void RemoveEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
@@ -240,48 +299,6 @@ public class GameController : MonoBehaviour
     public void AddMana(int value)
     {
         currentMana = Mathf.Clamp(currentMana + value, 0, maxMana);
-    }
-
-    private bool LoadLevel(int level)
-    {
-        // Split the level configuration file into lines
-        string[] lines = levelConfig.text.Split('\n');
-
-        foreach (string line in lines)
-        {
-            string[] values = line.Split(',');
-            if (values[0] == level.ToString())
-            {
-                var levelString = values[1].ToCharArray();
-                var levelMap = new int[10][];
-                for (int i = 0; i < 10; i++)
-                {
-                    levelMap[i] = new int[10];
-                    for (int j = 0; j < 10; j++)
-                    {
-                        levelMap[i][j] = (int)levelString[i * 10 + j] - 48;
-                    }
-                }
-                TerrainController.InitLevel(levelMap);
-                var parent = this.transform;
-                var waypoints = values[2].Split(' ');
-                for (int i = 0; i < waypoints.Length; i++)
-                {
-                    var position = new Vector3(float.Parse(waypoints[i].Split('/')[0]), 0.5f, float.Parse(waypoints[i].Split('/')[1]));
-                    var waypoint = new GameObject($"Waypoint ({i})")
-                    {
-                        tag = "EnemyWaypoint",
-                        transform =
-                        {
-                            position = position + parent.position,
-                            parent = parent
-                        }
-                    };
-                }
-                return true;
-            }
-        }
-        return false;
     }
 
 }

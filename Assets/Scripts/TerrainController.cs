@@ -6,37 +6,35 @@ using UnityEngine;
 
 public class TerrainController : MonoBehaviour
 {
-    public GameObject terrain;
-    public GameObject[] vegitatedTerrain;
-    public GameObject end;
+    // Anything 5 or higher is a decorated unplaceable tile
+    const int BLANK = -1, ROAD = 0, PLACEABLE = 1, ENEMY_START = 2, ENEMY_END = 3, SHOP = 4;
 
-    /*
-    Representations:
-    0 - Enemy path
-    1 - Placeable tile
-    2 - Enemy Start Tile
-    3 - Enemy end tile
-    4 - Small veg tile 1
-    5 - Small veg tile 2
-    6 - High veg tile 1
-    7 - High veg tile 2
-    8 - Shop Tile
-    */
+    [SerializeField]
+    GameObject road, placeable, shop, enemyEnd;
+    [SerializeField]
+    GameObject[] decoratedTiles;
 
-    // Start is called before the first frame update
-    private void ClearLevel()
+    GameObject terrain;
+    List<GameObject> tiles;
+
+    TerrainController()
+    {
+        tiles = new List<GameObject>();
+    }
+
+    void ClearLevel()
     {
         var turrets = GameObject.FindGameObjectsWithTag("Turret");
         foreach (var turret in turrets)
         {
             Destroy(turret);
         }
-        var placeable = this.transform.Find("Placeable");
+        var placeable = transform.Find("Placeable");
         foreach (Transform child in placeable)
         {
             Destroy(child.gameObject);
         }
-        var unplaceable = this.transform.Find("Unplaceable");
+        var unplaceable = transform.Find("Unplaceable");
         foreach (Transform child in unplaceable)
         {
             if (child.name == "DirtGround")
@@ -55,58 +53,75 @@ public class TerrainController : MonoBehaviour
     public void InitLevel(int[][] levelMap)
     {
         ClearLevel();
-        terrain.transform.localScale = new Vector3(10f, 0.5f, 10f);
-        var placeable = this.transform.Find("Placeable");
-        var unplaceable = this.transform.Find("Unplaceable");
+        placeable.transform.localScale = new Vector3(10f, 0.5f, 10f);
+        Transform placeableParent = transform.Find("Placeable");
+        Transform unplaceableParent = transform.Find("Unplaceable");
         for (int i = 0; i < levelMap.Length; i++)
         {
             for (int j = 0; j < levelMap[i].Length; j++)
             {
-                switch (levelMap[i][j])
+                int tileIndex = levelMap[i][j];
+                Vector3 tilePosition = new Vector3(-j * 10 + 45, 0f, i * 10 - 45);
+                switch (tileIndex)
                 {
-                    case 1:
-                        terrain.tag = "Placeable";
-                        terrain.name = $"Terrain_{i}_{j}";
-                        terrain.transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
-                        Instantiate(terrain, placeable);
+                    case BLANK:
                         break;
-                    case 2:
-                        var enemyStart = GameObject.Find("LevelManager");
-                        enemyStart.transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
+                    case ROAD:
+                        road.tag = "Unplaceable";
+                        road.transform.position = tilePosition;
+                        tiles.Add(Instantiate(road, unplaceableParent));
                         break;
-                    case 3:
-                        end.tag = "Unplaceable";
-                        end.transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
-                        Instantiate(end, unplaceable);
+                    case PLACEABLE:
+                        placeable.tag = "Placeable";
+                        placeable.name = $"Terrain_{i}_{j}";
+                        tilePosition.y = 0.5f;
+                        placeable.transform.position = tilePosition;
+                        tiles.Add(Instantiate(placeable, placeableParent));
                         break;
-                    case 4:
-                        vegitatedTerrain[0].tag = "Unplaceable";
-                        vegitatedTerrain[0].transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
-                        Instantiate(vegitatedTerrain[0], unplaceable);
+                    case ENEMY_START:
+                        // generate road
+                        road.tag = "Unplaceable";
+                        road.transform.position = tilePosition;
+                        tiles.Add(Instantiate(road, unplaceableParent));
+                        // set start
+                        GameObject enemyStart = GameObject.Find("LevelManager");
+                        tilePosition.y = 0.5f;
+                        enemyStart.transform.position = tilePosition;
                         break;
-                    case 5:
-                        vegitatedTerrain[1].tag = "Unplaceable";
-                        vegitatedTerrain[1].transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
-                        Instantiate(vegitatedTerrain[1], unplaceable);
+                    case ENEMY_END:
+                        // generate road
+                        road.tag = "Unplaceable";
+                        road.transform.position = tilePosition;
+                        tiles.Add(Instantiate(road, unplaceableParent));
+                        // generate goal on top
+                        enemyEnd.tag = "Unplaceable";
+                        tilePosition.y = 0.5f;
+                        enemyEnd.transform.position = tilePosition;
+                        Instantiate(enemyEnd, unplaceableParent);
                         break;
-                    case 6:
-                        vegitatedTerrain[2].tag = "Unplaceable";
-                        vegitatedTerrain[2].transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
-                        Instantiate(vegitatedTerrain[2], unplaceable);
+                    case SHOP:
+                        shop.tag = "ShopTile";
+                        tilePosition.y = 0.5f;
+                        shop.transform.position = tilePosition;
+                        tiles.Add(Instantiate(shop, unplaceableParent));
                         break;
-                    case 7:
-                        vegitatedTerrain[3].tag = "Unplaceable";
-                        vegitatedTerrain[3].transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
-                        Instantiate(vegitatedTerrain[3], unplaceable);
+                    default:
+                        // Decorated unplaceable tiles
+                        GameObject unplaceableTilePrefab = decoratedTiles[tileIndex - 5]; // sub by 5, since there are 5 set prefabs 
+                                                                                          // before decorated tiles
+                        unplaceableTilePrefab.tag = "Unplaceable";
+                        tilePosition.y = 0.5f;
+                        unplaceableTilePrefab.transform.position = tilePosition;
+                        tiles.Add(Instantiate(unplaceableTilePrefab, unplaceableParent));
                         break;
-                    case 8:
-                        vegitatedTerrain[4].tag = "ShopTile";
-                        vegitatedTerrain[4].transform.position = new Vector3(-j * 10 + 45, 0.5f, i * 10 - 45);
-                        Instantiate(vegitatedTerrain[4], unplaceable);
-                        break;
-
                 }
             }
         }
     }
+
+    public List<GameObject> GetTiles()
+    {
+        return tiles;
+    }
+
 }

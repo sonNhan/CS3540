@@ -243,8 +243,8 @@ MonoBehaviour:
   shootSFX: {fileID: 8300000, guid: d7a3236f439759afaaf2d5e3fdcb99d6, type: 3}
   projectileInstantiatePosition: {x: 0, y: 3.8, z: 2}
   damage: 20
-  attackRate: 2
-  turretRotationSpeed: 750
+  attackRate: 1.25
+  turretRotationSpeed: 1000
   upgradeCostIncreaseModifier: 1.2
   rangeUpgradeCost: 5
   damageUpgradeCost: 5

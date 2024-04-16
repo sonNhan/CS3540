@@ -100,7 +100,7 @@ public class TurretShoot : MonoBehaviour
         foreach (GameObject enemy in enemiesInRange)
         {
             // The only enemy in range is the first one
-            if (first == null || !enemiesInRange.Contains(first))
+            if (first == null)
             {
                 first = enemy;
             }
@@ -120,7 +120,7 @@ public class TurretShoot : MonoBehaviour
         foreach (GameObject enemy in enemiesInRange)
         {
             // The only enemy in range is the first one
-            if (last == null || !enemiesInRange.Contains(last))
+            if (last == null)
             {
                 last = enemy;
             }
@@ -140,7 +140,7 @@ public class TurretShoot : MonoBehaviour
         foreach (GameObject enemy in enemiesInRange)
         {
             // The only enemy in range is the first one
-            if (closest == null || !enemiesInRange.Contains(closest))
+            if (closest == null)
             {
                 closest = enemy;
             }

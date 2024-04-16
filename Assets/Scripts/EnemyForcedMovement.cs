@@ -7,14 +7,13 @@ public class EnemyForcedMovement : MonoBehaviour
 {
     public float speed = 10f;
     GameObject[] waypoints;
-    int wayponitIndex;
+    int waypointIndex;
     private GameController gameController;
     private bool isAlive = true;
     void Start()
     {
         waypoints = GameObject.FindGameObjectsWithTag("EnemyWaypoint");
-        wayponitIndex = 0;
-        sortWaypoints();
+        waypointIndex = 0;
         gameController = GameObject.Find("LevelManager").GetComponent<GameController>();
     }
 
@@ -26,16 +25,16 @@ public class EnemyForcedMovement : MonoBehaviour
             Destroy(gameObject, 1);
             gameController.RemoveEnemy(gameObject);
         }
-        if (wayponitIndex < waypoints.Length)
+        if (waypointIndex < waypoints.Length)
         {
-            Vector3 targetPosition = waypoints[wayponitIndex].transform.position;
+            Vector3 targetPosition = waypoints[waypointIndex].transform.position;
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
             transform.LookAt(targetPosition);
 
             if (transform.position == targetPosition)
             {
-                wayponitIndex++;
+                waypointIndex++;
             }
         }
         else
@@ -51,8 +50,4 @@ public class EnemyForcedMovement : MonoBehaviour
         }
     }
 
-    void sortWaypoints()
-    {
-        waypoints = waypoints.OrderBy(x => int.Parse(x.name.Split('(', ')')[1])).ToArray();
-    }
 }
