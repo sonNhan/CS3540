@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
 
     TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
     GameObject gameStateUI;
+    WaveManager[] waveManagers;
     int currentMana, manaRegen = 1;
     float regenInterval = 1f;
     float regenTimer = 0f;
@@ -40,23 +41,79 @@ public class GameController : MonoBehaviour
         enemiesLeftText = UI.Find("EnemiesLeft").GetComponentInChildren<TextMeshProUGUI>();
         manaText = UI.Find("Mana").GetComponentInChildren<TextMeshProUGUI>();
         TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
+        waveManagers = GetComponents<WaveManager>();
         isGameOver = false;
         currentMana = maxMana;
         currentLives = startingLives;
         currentMoney = startingMoney;
         currentScore = 0;
-        currentWave = 1;
         GenerateLevel();
     }
 
     // Update is called once per frame
     void Update()
     {
+        SendWaves();
         RegenMana();
         UpdateUI();
         regenTimer += Time.deltaTime;
     }
 
+    void SendWaves()
+    {
+        if (isGameOver)
+        {
+            return;
+        }
+        else if (currentLives <= 0)
+        {
+            LoseLevel();
+        }
+        else if (!AllWavesCleared())
+        {
+            foreach (WaveManager waveManager in waveManagers)
+            {
+                StartCoroutine(StartWaveWithDelay(3f, waveManager));
+            }
+        }
+        else
+        {
+            if (enemies.Count == 0)
+            {
+                levelComplete = true;
+                gameStateUI.SetActive(true);
+                gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
+                FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
+                ClearLevel();
+            }
+        }
+    }
+
+    IEnumerator StartWaveWithDelay(float seconds, WaveManager waveManager)
+    {
+        yield return new WaitForSeconds(2f);
+        // only start the wave if all enemies defeated and wavemanager is done spawning enemies
+        if (!waveManager.HasWaveStarted() && GameObject.Find("Enemies").transform.childCount == 0)
+        {
+            Debug.Log("staring wave");
+            waveManager.StartWaves();
+            currentWave = waveManager.GetCurrentWave();
+        }
+    }
+
+    bool AllWavesCleared()
+    {
+        foreach (WaveManager waveManager in waveManagers)
+        {
+            if (!waveManager.AreAllWavesCleared())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /*
     void FixedUpdate()
     {
         currentTime++;
@@ -104,6 +161,7 @@ public class GameController : MonoBehaviour
             enemies.Add(this.GetComponent<EnemySpawner>().SpawnEnemy());
         }
     }
+    */
 
     void UpdateUI()
     {
@@ -254,6 +312,18 @@ public class GameController : MonoBehaviour
                     parent = waypointParent.transform
                 }
             };
+        }
+        InitWaveManagers();
+    }
+
+    void InitWaveManagers()
+    {
+        GameObject[] enemyStarts = GameObject.FindGameObjectsWithTag("EnemyStart");
+        for (int i = 0; i < waveManagers.Length; i++)
+        {
+            WaveManager waveManager = waveManagers[i];
+            waveManager.InitEnemies();
+            waveManager.SetEnemySpawnPoint(enemyStarts[i]);
         }
     }
 

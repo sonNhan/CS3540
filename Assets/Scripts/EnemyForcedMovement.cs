@@ -22,12 +22,12 @@ public class EnemyForcedMovement : MonoBehaviour, EnemyMovement
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.GetComponent<EnemyHealth>().GetCurrentHealth() <= 0)
+        if (gameObject.GetComponent<EnemyHealth>().GetCurrentHealth() <= 0)
         {
             Destroy(gameObject, 1);
             gameController.RemoveEnemy(gameObject);
         }
-        if (waypointIndex < waypoints.Length)
+        else if (waypointIndex < waypoints.Length)
         {
             Vector3 targetPosition = waypoints[waypointIndex].transform.position;
             float step = speed * Time.deltaTime;
