@@ -50,4 +50,15 @@ public class EnemyFlyingMovement : MonoBehaviour, EnemyMovement
         return Vector3.Distance(transform.position, goal);
     }
 
+    public void Slow(int amount)
+    {
+        if (!(speed - amount <= 1))
+        {
+            speed = speed - amount;
+        }
+        else
+        {
+            speed = 1;
+        }
+    }
 }

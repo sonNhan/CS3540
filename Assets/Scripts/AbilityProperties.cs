@@ -23,7 +23,7 @@ public class AbilityProperties : MonoBehaviour
             if (other.CompareTag("Enemy") && other != null)
             {
                 EnemyHealth enemyHealthScript = other.GetComponent<EnemyHealth>();
-                EnemyForcedMovement enemyMovementScript = other.GetComponent<EnemyForcedMovement>();
+                EnemyMovement enemyMovementScript = other.GetComponent<EnemyMovement>();
                 foreach (Constants.AbilityEffect abilityEffect in abilityEffects.Keys)
                 {
                     switch (abilityEffect)
@@ -32,14 +32,7 @@ public class AbilityProperties : MonoBehaviour
                             enemyHealthScript.TakeDamage(abilityEffects[abilityEffect]);
                             break;
                         case Constants.AbilityEffect.SLOW:
-                            float enemySpeed = enemyMovementScript.speed;
-                            float newSpeed = enemySpeed - abilityEffects[abilityEffect];
-                            // Cannot slow the enemy down to 0
-                            if (newSpeed <= 0)
-                            {
-                                newSpeed = 1f;
-                            }
-                            enemyMovementScript.speed = newSpeed;
+                            enemyMovementScript.Slow(abilityEffects[abilityEffect]);
                             break;
                         default:
                             break;

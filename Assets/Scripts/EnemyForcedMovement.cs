@@ -60,4 +60,16 @@ public class EnemyForcedMovement : MonoBehaviour, EnemyMovement
         return totalDistance;
     }
 
+    public void Slow(int amount)
+    {
+        if (!(speed - amount <= 1))
+        {
+            speed = speed - amount;
+        }
+        else
+        {
+            speed = 1;
+        }
+    }
+
 }
