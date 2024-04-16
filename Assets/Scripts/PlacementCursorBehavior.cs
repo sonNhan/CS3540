@@ -26,8 +26,8 @@ public class PlacementCursorBehavior : MonoBehaviour
     GameController gameControllerScript;
     Renderer placementPointerRenderer;
     bool selectedTurret = false;
-    float highlightDelay = 0.5f;
-    float lastPlacedTime = 0f;
+    float highlightDelay = 0.5f, lastPlacedTime = 0f;
+    float minX, minZ, maxX, maxZ;
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +35,12 @@ public class PlacementCursorBehavior : MonoBehaviour
         learnedAbilities = new List<Constants.Ability>();
         levelManager = GameObject.Find("LevelManager");
         gameControllerScript = levelManager.GetComponent<GameController>();
-        terrain = GameObject.Find("DirtGround");
+        terrain = GameObject.Find("Terrain").transform.Find("Unplaceable").gameObject;
         placementPointer = GameObject.Find("PlacementPointer");
         placementPointerRenderer = placementPointer.GetComponent<Renderer>();
         turretParent = GameObject.Find("Turrets");
         highlightedTurretUIScript = GameObject.Find("UI").GetComponent<HighlightedTurretUI>();
+        DetermineBounds();
         // Temp
         learnedAbilities.Add(Constants.Ability.EXPLOSION);
         learnedAbilities.Add(Constants.Ability.BLIZZARD);
@@ -64,15 +65,24 @@ public class PlacementCursorBehavior : MonoBehaviour
         CheckForAbilityCast();
     }
 
+    void DetermineBounds()
+    {
+        TerrainController terrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
+        List<GameObject> tiles = terrainController.GetTiles();
+        foreach (GameObject tile in tiles)
+        {
+            minX = Mathf.Min(minX, tile.transform.position.x);
+            maxX = Mathf.Max(maxX, tile.transform.position.x);
+            minZ = Mathf.Min(minZ, tile.transform.position.z);
+            maxZ = Mathf.Max(maxZ, tile.transform.position.z);
+        }
+
+    }
+
     void MovePointer()
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
-
-        float minX = -terrain.transform.localScale.x / 2;
-        float minZ = -terrain.transform.localScale.z / 2;
-        float maxX = terrain.transform.localScale.x / 2;
-        float maxZ = terrain.transform.localScale.z / 2;
 
         placementPointer.transform.Translate(mouseX * cursorSensitivity, mouseY * cursorSensitivity, 0f);
 
@@ -111,7 +121,7 @@ public class PlacementCursorBehavior : MonoBehaviour
             currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
             placementPointerRenderer.enabled = false;
             selectedTurret = true;
-            gameControllerScript.AddMoney(-20);
+            GameController.AddMoney(-20);
         }
         else if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha2) && gameControllerScript.GetMoney() >= 40)
         {
@@ -122,7 +132,7 @@ public class PlacementCursorBehavior : MonoBehaviour
             currentTurret = Instantiate(turret2, placementPointer.transform.position, Quaternion.identity);
             placementPointerRenderer.enabled = false;
             selectedTurret = true;
-            gameControllerScript.AddMoney(-40);
+            GameController.AddMoney(-40);
         }
         // TODO: handle other keys for other turrets in the future
 
@@ -315,4 +325,5 @@ public class PlacementCursorBehavior : MonoBehaviour
     {
         return highlightedTurret;
     }
+
 }
