@@ -9,13 +9,14 @@ public class EnemyFlyingMovement : MonoBehaviour
     [SerializeField]
     float speed = 10f;
 
-    Transform goal;
+    Vector3 goal;
     GameController gameController;
     bool isAlive = true;
     void Start()
     {
         GameObject[] waypoints = GameObject.FindGameObjectsWithTag("EnemyWaypoint");
-        goal = waypoints[waypoints.Length - 1].transform;
+        goal = waypoints[waypoints.Length - 1].transform.position;
+        goal.y = transform.position.y;
         gameController = GameObject.Find("LevelManager").GetComponent<GameController>();
     }
 
@@ -27,17 +28,17 @@ public class EnemyFlyingMovement : MonoBehaviour
             Destroy(gameObject, 1);
             gameController.RemoveEnemy(gameObject);
         }
-        else if (Vector3.Distance(transform.position, goal.position) >= 0f)
+        else if (Vector3.Distance(transform.position, goal) >= 0.5f)
         {
             float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, goal.position, step);
+            transform.position = Vector3.MoveTowards(transform.position, goal, step);
             transform.LookAt(goal);
         }
         else
         {
             if (isAlive)
             {
-                Destroy(gameObject, 1);
+                Destroy(gameObject);
                 gameController.RemoveEnemy(gameObject);
                 isAlive = false;
                 gameController.LoseLife(1);

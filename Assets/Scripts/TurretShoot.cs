@@ -228,19 +228,19 @@ public class TurretShoot : MonoBehaviour
             switch (upgradeType)
             {
                 case UpgradeType.RANGE:
-                    gameController.AddMoney(-rangeUpgradeCost);
+                    GameController.AddMoney(-rangeUpgradeCost);
                     attackRangeIndicator.transform.localScale *= 1.2f;
                     sellValue += Mathf.RoundToInt(rangeUpgradeCost / 2);
                     rangeUpgradeCost = Mathf.RoundToInt(rangeUpgradeCost * upgradeCostIncreaseModifier);
                     break;
                 case UpgradeType.DAMAGE:
-                    gameController.AddMoney(-damageUpgradeCost);
+                    GameController.AddMoney(-damageUpgradeCost);
                     damage += 5;
                     sellValue += Mathf.RoundToInt(damageUpgradeCost / 2);
                     damageUpgradeCost = Mathf.RoundToInt(damageUpgradeCost * upgradeCostIncreaseModifier);
                     break;
                 case UpgradeType.SPEED:
-                    gameController.AddMoney(-speedUpgradeCost);
+                    GameController.AddMoney(-speedUpgradeCost);
                     attackRate /= 1.2f;
                     sellValue += Mathf.RoundToInt(speedUpgradeCost / 2);
                     speedUpgradeCost = Mathf.RoundToInt(speedUpgradeCost * upgradeCostIncreaseModifier);
@@ -253,7 +253,7 @@ public class TurretShoot : MonoBehaviour
 
     public void SellTurret()
     {
-        gameController.AddMoney(sellValue);
+        GameController.AddMoney(sellValue);
         Destroy(gameObject);
     }
 

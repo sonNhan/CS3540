@@ -41,7 +41,7 @@ public class EnemyForcedMovement : MonoBehaviour
         {
             if (isAlive)
             {
-                Destroy(gameObject, 1);
+                Destroy(gameObject);
                 gameController.RemoveEnemy(gameObject);
                 isAlive = false;
                 gameController.LoseLife(1);

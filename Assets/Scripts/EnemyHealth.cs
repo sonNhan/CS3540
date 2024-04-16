@@ -18,7 +18,6 @@ public class EnemyHealth : MonoBehaviour
         /* could do something for getting enemy type based on tag here to determine health amount */
         currentHealth = startingHealth;
         animator = GetComponent<Animator>();
-        gameController = GameObject.Find("LevelManager").GetComponent<GameController>();
     }
 
     public void TakeDamage(int damage)
@@ -26,12 +25,12 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
 
         // if health is 0 or less we die
-        if (currentHealth <= 0 && animator.GetBool("isAlive"))
+        if (currentHealth <= 0)
         {
             AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position);
             animator.SetBool("isAlive", false);
-            gameController.AddMoney(10);
-            gameController.AddScore(10);
+            GameController.AddMoney(10);
+            GameController.AddScore(10);
         }
     }
 

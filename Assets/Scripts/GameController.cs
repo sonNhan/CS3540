@@ -7,6 +7,7 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public static bool isGameOver = false;
+    public static int currentMoney, currentScore;
 
     [SerializeField]
     AudioClip spawnSFX;
@@ -22,7 +23,7 @@ public class GameController : MonoBehaviour
     int currentMana, manaRegen = 1;
     float regenInterval = 1f;
     float regenTimer = 0f;
-    int currentLives, currentMoney, currentScore, currentWave;
+    int currentLives, currentWave;
     List<GameObject> enemies = new List<GameObject>();
     int currentTime = 0, waveInterval = 150, currentLevel = 1, finalLevel = 2;
     TerrainController TerrainController;
@@ -271,7 +272,7 @@ public class GameController : MonoBehaviour
         return currentLives;
     }
 
-    public void AddMoney(int money)
+    public static void AddMoney(int money)
     {
         currentMoney += money;
     }
@@ -281,7 +282,7 @@ public class GameController : MonoBehaviour
         return currentMoney;
     }
 
-    public void AddScore(int score)
+    public static void AddScore(int score)
     {
         currentScore += score;
     }
