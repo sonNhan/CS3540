@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d4e34faecb9b9564e941b0a4236003c7, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: a59fe87939f259d40a7ee37624c9568b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.31195316, g: 0.40352383, b: 0.44798642, a: 1}
+  m_IndirectSpecularColor: {r: 0.66102904, g: 0.459383, b: 0.45468062, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -901,7 +901,7 @@ Transform:
   m_GameObject: {fileID: 756807716}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0014078656, y: -0.7933513, z: 0.60875976, w: 0.0018347664}
-  m_LocalPosition: {x: 1.7, y: 64.3, z: 25.9}
+  m_LocalPosition: {x: -7.5, y: 55, z: 40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -969,8 +969,8 @@ MonoBehaviour:
   maxMana: 100
   startingLives: 10
   startingMoney: 100
-  levelConfig: {fileID: 4900000, guid: 4a91070f5c0d5e006a09fafa44c3c68d, type: 3}
-  waypointConfig: {fileID: 4900000, guid: 4d3a1a8adfd2ce686a3b1155c5b262ce, type: 3}
+  levelConfig: {fileID: 4900000, guid: d34483560d7654943b4ee62b179edb9f, type: 3}
+  waypointConfig: {fileID: 4900000, guid: 47ef24f10ff08a25a843fcfa1db1b918, type: 3}
   nextSceneName: 
 --- !u!1 &770143494
 GameObject:
