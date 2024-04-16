@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class EnemyForcedMovement : MonoBehaviour
+public class EnemyForcedMovement : MonoBehaviour, EnemyMovement
 {
     public float speed = 10f;
     GameObject[] waypoints;
     int waypointIndex;
     private GameController gameController;
     private bool isAlive = true;
+
+
     void Start()
     {
         waypoints = GameObject.FindGameObjectsWithTag("EnemyWaypoint");
@@ -48,6 +50,16 @@ public class EnemyForcedMovement : MonoBehaviour
                 // Debug.Log($"Lives: {gameController.GetLives()}");
             }
         }
+    }
+
+    public float GetDistanceToGoal()
+    {
+        float totalDistance = 0f;
+        foreach (var waypoint in waypoints)
+        {
+            totalDistance += Vector3.Distance(transform.position, waypoint.transform.position);
+        }
+        return totalDistance;
     }
 
 }

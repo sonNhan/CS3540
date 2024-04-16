@@ -19,7 +19,7 @@ public class TurretShoot : MonoBehaviour
     [SerializeField]
     int damage = 20;
     [SerializeField]
-    float attackRate = 2f, turretRotationSpeed = 10f;
+    float attackRate = 2f;
     [Header("Prices")]
     [SerializeField]
     float upgradeCostIncreaseModifier = 1.1f;
@@ -105,8 +105,7 @@ public class TurretShoot : MonoBehaviour
                 first = enemy;
             }
             // The first enemy is the enemy closest to their goal
-            else if (enemy != null && Vector3.Distance(first.transform.position, goalTransform.position)
-                    > Vector3.Distance(enemy.transform.position, goalTransform.position))
+            else if (enemy != null && first.GetComponent<EnemyMovement>().GetDistanceToGoal() > enemy.GetComponent<EnemyMovement>().GetDistanceToGoal())
             {
                 first = enemy;
             }
@@ -125,8 +124,8 @@ public class TurretShoot : MonoBehaviour
                 last = enemy;
             }
             // The last enemy is the enemy furthest from their goal
-            else if (enemy != null && Vector3.Distance(last.transform.position, goalTransform.position)
-                    < Vector3.Distance(enemy.transform.position, goalTransform.position))
+            else if (enemy != null && last.GetComponent<EnemyMovement>().GetDistanceToGoal()
+                    < enemy.GetComponent<EnemyMovement>().GetDistanceToGoal())
             {
                 last = enemy;
             }
@@ -157,14 +156,11 @@ public class TurretShoot : MonoBehaviour
     {
         Vector3 targetDirection = (target.transform.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
-        if (transform.rotation == targetRotation)
-        {
-            timeSinceAttack = 0.0f;
-            AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
-            projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
-            projectileShootScript.Shoot(target, damage);
-        }
+        transform.rotation = targetRotation;
+        timeSinceAttack = 0.0f;
+        AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
+        projectileShootScript = currentProjectile.GetComponent<ProjectileShoot>();
+        projectileShootScript.Shoot(target, damage);
     }
 
     void Reload()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 // Flying enemies don't need to follow the road, they'll fly 
 // directly towards the end!
-public class EnemyFlyingMovement : MonoBehaviour
+public class EnemyFlyingMovement : MonoBehaviour, EnemyMovement
 {
     [SerializeField]
     float speed = 10f;
@@ -28,7 +28,7 @@ public class EnemyFlyingMovement : MonoBehaviour
             Destroy(gameObject, 1);
             gameController.RemoveEnemy(gameObject);
         }
-        else if (Vector3.Distance(transform.position, goal) >= 0.5f)
+        else if (GetDistanceToGoal() >= 0.5f)
         {
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, goal, step);
@@ -45,6 +45,11 @@ public class EnemyFlyingMovement : MonoBehaviour
                 // Debug.Log($"Lives: {gameController.GetLives()}");
             }
         }
+    }
+
+    public float GetDistanceToGoal()
+    {
+        return Vector3.Distance(transform.position, goal);
     }
 
 }
