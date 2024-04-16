@@ -96,7 +96,6 @@ public class GameController : MonoBehaviour
         // only start the wave if all enemies defeated and wavemanager is done spawning enemies
         if (!waveManager.HasWaveStarted() && enemies.transform.childCount == 0)
         {
-            Debug.Log("staring wave");
             waveManager.StartWaves();
             currentWave = waveManager.GetCurrentWave();
         }
