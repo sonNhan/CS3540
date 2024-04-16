@@ -84,9 +84,17 @@ public class TerrainController : MonoBehaviour
                         road.transform.position = tilePosition;
                         tiles.Add(Instantiate(road, unplaceableParent));
                         // set start
-                        GameObject enemyStart = GameObject.Find("LevelManager");
                         tilePosition.y = 0.5f;
-                        enemyStart.transform.position = tilePosition;
+                        Transform enemyStartParent = GameObject.Find("EnemyStarts").transform;
+                        GameObject enemyStart = new GameObject("EnemyStart")
+                        {
+                            tag = "EnemyStart",
+                            transform =
+                            {
+                                position = tilePosition,
+                                parent = enemyStartParent
+                            }
+                        };
                         break;
                     case ENEMY_END:
                         // generate road

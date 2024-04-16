@@ -121,7 +121,7 @@ public class PlacementCursorBehavior : MonoBehaviour
             currentTurret = Instantiate(turret1, placementPointer.transform.position, Quaternion.identity);
             placementPointerRenderer.enabled = false;
             selectedTurret = true;
-            gameControllerScript.AddMoney(-20);
+            GameController.AddMoney(-20);
         }
         else if (!selectedTurret && Input.GetKeyDown(KeyCode.Alpha2) && gameControllerScript.GetMoney() >= 40)
         {
@@ -132,7 +132,7 @@ public class PlacementCursorBehavior : MonoBehaviour
             currentTurret = Instantiate(turret2, placementPointer.transform.position, Quaternion.identity);
             placementPointerRenderer.enabled = false;
             selectedTurret = true;
-            gameControllerScript.AddMoney(-40);
+            GameController.AddMoney(-40);
         }
         // TODO: handle other keys for other turrets in the future
 

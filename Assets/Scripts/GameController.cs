@@ -7,6 +7,7 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public static bool isGameOver = false;
+    public static int currentMoney, currentScore;
 
     [SerializeField]
     AudioClip spawnSFX;
@@ -19,12 +20,13 @@ public class GameController : MonoBehaviour
 
     TextMeshProUGUI moneyText, livesText, gameStateText, enemiesLeftText, manaText;
     GameObject gameStateUI;
+    WaveManager[] waveManagers;
     int currentMana, manaRegen = 1;
     float regenInterval = 1f;
     float regenTimer = 0f;
-    int currentLives, currentMoney, currentScore, currentWave;
-    List<GameObject> enemies = new List<GameObject>();
-    int currentTime = 0, waveInterval = 150, currentLevel = 1, finalLevel = 2;
+    int currentLives, currentWave;
+    GameObject enemies;
+    int currentLevel = 1, finalLevel = 2;
     TerrainController TerrainController;
     bool levelComplete = false;
 
@@ -39,69 +41,76 @@ public class GameController : MonoBehaviour
         enemiesLeftText = UI.Find("EnemiesLeft").GetComponentInChildren<TextMeshProUGUI>();
         manaText = UI.Find("Mana").GetComponentInChildren<TextMeshProUGUI>();
         TerrainController = GameObject.Find("Terrain").GetComponent<TerrainController>();
+        waveManagers = GetComponents<WaveManager>();
         isGameOver = false;
         currentMana = maxMana;
         currentLives = startingLives;
         currentMoney = startingMoney;
         currentScore = 0;
-        currentWave = 1;
+        enemies = GameObject.Find("Enemies");
         GenerateLevel();
     }
 
     // Update is called once per frame
     void Update()
     {
+        SendWaves();
         RegenMana();
         UpdateUI();
         regenTimer += Time.deltaTime;
     }
 
-    void FixedUpdate()
+    void SendWaves()
     {
-        currentTime++;
         if (isGameOver)
         {
             return;
         }
-        if (currentLives <= 0)
+        else if (currentLives <= 0)
         {
             LoseLevel();
         }
-        else if (currentWave >= 100)
+        else if (!AllWavesCleared())
         {
-            if (enemies.Count != 0)
+            foreach (WaveManager waveManager in waveManagers)
             {
-                return;
+                StartCoroutine(StartWaveWithDelay(3f, waveManager));
             }
-            foreach (var enemy in enemies)
+        }
+        else
+        {
+            if (enemies.transform.childCount == 0)
             {
-                Destroy(enemy);
-            }
-            if (enemies.Count == 0)
-            {
-                if (!levelComplete)
-                {
-                    currentTime = 0;
-                    currentLevel++;
-                    levelComplete = true;
-                    gameStateUI.SetActive(true);
-                    gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
-                    FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
-                }
+                levelComplete = true;
+                gameStateUI.SetActive(true);
+                gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
+                FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
                 ClearLevel();
             }
         }
-        else if (currentTime % waveInterval == 0)
+    }
+
+    IEnumerator StartWaveWithDelay(float seconds, WaveManager waveManager)
+    {
+        yield return new WaitForSeconds(2f);
+        // only start the wave if all enemies defeated and wavemanager is done spawning enemies
+        if (!waveManager.HasWaveStarted() && enemies.transform.childCount == 0)
         {
-            currentWave++;
-            // TODO: arbitrary values, make variables later
-            if (waveInterval >= 4)
-            {
-                waveInterval -= 2;
-            }
-            AudioSource.PlayClipAtPoint(spawnSFX, Camera.main.transform.position);
-            enemies.Add(this.GetComponent<EnemySpawner>().SpawnEnemy());
+            waveManager.StartWaves();
+            currentWave = waveManager.GetCurrentWave();
         }
+    }
+
+    bool AllWavesCleared()
+    {
+        foreach (WaveManager waveManager in waveManagers)
+        {
+            if (!waveManager.AreAllWavesCleared())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     void UpdateUI()
@@ -129,10 +138,6 @@ public class GameController : MonoBehaviour
     {
         isGameOver = true;
         UpdateGameStateText(false);
-        foreach (var enemy in enemies)
-        {
-            Destroy(enemy);
-        }
         StartCoroutine(LoadSceneWithDelay(5, false));
     }
 
@@ -191,7 +196,7 @@ public class GameController : MonoBehaviour
 
     void UpdateEnemiesLeftText()
     {
-        enemiesLeftText.text = "Enemies Left: " + (100 - currentWave);
+        enemiesLeftText.text = "Current Wave: " + (currentWave + 1).ToString();
     }
 
     void GenerateLevel()
@@ -254,11 +259,18 @@ public class GameController : MonoBehaviour
                 }
             };
         }
+        InitWaveManagers();
     }
 
-    public void RemoveEnemy(GameObject enemy)
+    void InitWaveManagers()
     {
-        enemies.Remove(enemy);
+        GameObject[] enemyStarts = GameObject.FindGameObjectsWithTag("EnemyStart");
+        for (int i = 0; i < waveManagers.Length; i++)
+        {
+            WaveManager waveManager = waveManagers[i];
+            waveManager.InitEnemies();
+            waveManager.SetEnemySpawnPoint(enemyStarts[i]);
+        }
     }
 
     public void LoseLife(int life)
@@ -271,7 +283,7 @@ public class GameController : MonoBehaviour
         return currentLives;
     }
 
-    public void AddMoney(int money)
+    public static void AddMoney(int money)
     {
         currentMoney += money;
     }
@@ -281,7 +293,7 @@ public class GameController : MonoBehaviour
         return currentMoney;
     }
 
-    public void AddScore(int score)
+    public static void AddScore(int score)
     {
         currentScore += score;
     }

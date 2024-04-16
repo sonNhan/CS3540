@@ -918,6 +918,8 @@ GameObject:
   - component: {fileID: 760772966}
   - component: {fileID: 760772965}
   - component: {fileID: 760772967}
+  - component: {fileID: 760772969}
+  - component: {fileID: 760772968}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -972,6 +974,38 @@ MonoBehaviour:
   levelConfig: {fileID: 4900000, guid: d34483560d7654943b4ee62b179edb9f, type: 3}
   waypointConfig: {fileID: 4900000, guid: 47ef24f10ff08a25a843fcfa1db1b918, type: 3}
   nextSceneName: 
+--- !u!114 &760772968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760772964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0e7d24d26b33ea7bbb527304f3d154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveConfig: {fileID: 4900000, guid: 47257d7d14672638fadb904555865680, type: 3}
+  enemyPrefabs:
+  - {fileID: 5641754721376316627, guid: 298a4eaf499a8ed42ae7e5c76809300f, type: 3}
+  - {fileID: 4628170520958092292, guid: b6d3a8ce72ce8891a9be948fe7dd86aa, type: 3}
+--- !u!114 &760772969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760772964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0e7d24d26b33ea7bbb527304f3d154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveConfig: {fileID: 4900000, guid: 47257d7d14672638fadb904555865680, type: 3}
+  enemyPrefabs:
+  - {fileID: 5641754721376316627, guid: 298a4eaf499a8ed42ae7e5c76809300f, type: 3}
+  - {fileID: 4628170520958092292, guid: b6d3a8ce72ce8891a9be948fe7dd86aa, type: 3}
 --- !u!1 &770143494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,6 +1176,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351887525}
   m_CullTransparentMesh: 1
+--- !u!1 &1618796961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1618796962}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1618796962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618796961}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 41.743282, y: -0.6464071, z: 13.600218}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1775336188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1775336189}
+  m_Layer: 0
+  m_Name: EnemyStarts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1775336189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775336188}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 41.743282, y: -0.6464071, z: 13.600218}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1874736664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,3 +1603,5 @@ SceneRoots:
   - {fileID: 669932124}
   - {fileID: 756807721}
   - {fileID: 203975822}
+  - {fileID: 1775336189}
+  - {fileID: 1618796962}

@@ -554,6 +554,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &677221549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 677221550}
+  m_Layer: 0
+  m_Name: EnemyStarts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &677221550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677221549}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,6 +690,7 @@ GameObject:
   - component: {fileID: 760772966}
   - component: {fileID: 760772965}
   - component: {fileID: 760772967}
+  - component: {fileID: 760772968}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -713,6 +745,21 @@ MonoBehaviour:
   levelConfig: {fileID: 4900000, guid: 1a89dfe921ced3b60b6f0844403d566d, type: 3}
   waypointConfig: {fileID: 4900000, guid: 49bae343039375ab2944e07e8f2b7d94, type: 3}
   nextSceneName: Level2
+--- !u!114 &760772968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760772964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0e7d24d26b33ea7bbb527304f3d154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveConfig: {fileID: 4900000, guid: 8435b34907768f260b3118abe04091da, type: 3}
+  enemyPrefabs:
+  - {fileID: 5641754721376316627, guid: 298a4eaf499a8ed42ae7e5c76809300f, type: 3}
 --- !u!1 &796557365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,6 +1278,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1786692859}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2126400387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2126400388}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2126400388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126400387}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1194806788278846974
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1507,3 +1585,5 @@ SceneRoots:
   - {fileID: 1194806788278846974}
   - {fileID: 348647451}
   - {fileID: 669932124}
+  - {fileID: 677221550}
+  - {fileID: 2126400388}
