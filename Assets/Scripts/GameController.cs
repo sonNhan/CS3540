@@ -138,7 +138,6 @@ public class GameController : MonoBehaviour
 
     IEnumerator LoadSceneWithDelay(float time, bool nextScene)
     {
-        Debug.Log("Coroutine called");
         yield return new WaitForSeconds(time);
         if (nextScene)
         {

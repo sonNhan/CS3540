@@ -30,7 +30,6 @@ public class AbilityProperties : MonoBehaviour
                     {
                         case Constants.AbilityEffect.DAMAGE:
                             enemyHealthScript.TakeDamage(abilityEffects[abilityEffect]);
-                            Debug.Log($"Hurt {other.name} for {abilityEffects[abilityEffect]}");
                             break;
                         case Constants.AbilityEffect.SLOW:
                             float enemySpeed = enemyMovementScript.speed;
@@ -41,7 +40,6 @@ public class AbilityProperties : MonoBehaviour
                                 newSpeed = 1f;
                             }
                             enemyMovementScript.speed = newSpeed;
-                            Debug.Log($"Slowed {other.name} by {abilityEffects[abilityEffect]}");
                             break;
                         default:
                             break;
