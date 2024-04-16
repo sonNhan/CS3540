@@ -197,7 +197,7 @@ public class GameController : MonoBehaviour
 
     void UpdateEnemiesLeftText()
     {
-        enemiesLeftText.text = "Enemies Left: " + (100 - currentWave);
+        enemiesLeftText.text = "Current Wave: " + (currentWave + 1).ToString();
     }
 
     void GenerateLevel()
