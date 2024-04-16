@@ -8,12 +8,12 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public GameObject SpawnEnemy()
     {
         // Spawn enemy prefab at the spawner's position and rotation
-        return Instantiate(enemyPrefab, transform.position, transform.rotation);
+        return Instantiate(enemyPrefab, enemyPrefab.transform.position + transform.position, Quaternion.identity);
     }
 }
