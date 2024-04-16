@@ -25,7 +25,6 @@ public class EnemyForcedMovement : MonoBehaviour, EnemyMovement
         if (gameObject.GetComponent<EnemyHealth>().GetCurrentHealth() <= 0)
         {
             Destroy(gameObject, 1);
-            gameController.RemoveEnemy(gameObject);
         }
         else if (waypointIndex < waypoints.Length)
         {
@@ -44,7 +43,6 @@ public class EnemyForcedMovement : MonoBehaviour, EnemyMovement
             if (isAlive)
             {
                 Destroy(gameObject);
-                gameController.RemoveEnemy(gameObject);
                 isAlive = false;
                 gameController.LoseLife(1);
                 // Debug.Log($"Lives: {gameController.GetLives()}");

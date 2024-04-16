@@ -23,10 +23,9 @@ public class EnemyFlyingMovement : MonoBehaviour, EnemyMovement
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.GetComponent<EnemyHealth>().GetCurrentHealth() <= 0)
+        if (gameObject.GetComponent<EnemyHealth>().GetCurrentHealth() <= 0)
         {
             Destroy(gameObject, 1);
-            gameController.RemoveEnemy(gameObject);
         }
         else if (GetDistanceToGoal() >= 0.5f)
         {
@@ -39,7 +38,6 @@ public class EnemyFlyingMovement : MonoBehaviour, EnemyMovement
             if (isAlive)
             {
                 Destroy(gameObject);
-                gameController.RemoveEnemy(gameObject);
                 isAlive = false;
                 gameController.LoseLife(1);
                 // Debug.Log($"Lives: {gameController.GetLives()}");

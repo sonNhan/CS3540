@@ -25,8 +25,8 @@ public class GameController : MonoBehaviour
     float regenInterval = 1f;
     float regenTimer = 0f;
     int currentLives, currentWave;
-    List<GameObject> enemies = new List<GameObject>();
-    int currentTime = 0, waveInterval = 150, currentLevel = 1, finalLevel = 2;
+    GameObject enemies;
+    int currentLevel = 1, finalLevel = 2;
     TerrainController TerrainController;
     bool levelComplete = false;
 
@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour
         currentLives = startingLives;
         currentMoney = startingMoney;
         currentScore = 0;
+        enemies = GameObject.Find("Enemies");
         GenerateLevel();
     }
 
@@ -78,7 +79,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if (enemies.Count == 0)
+            if (enemies.transform.childCount == 0)
             {
                 levelComplete = true;
                 gameStateUI.SetActive(true);
@@ -93,7 +94,7 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         // only start the wave if all enemies defeated and wavemanager is done spawning enemies
-        if (!waveManager.HasWaveStarted() && GameObject.Find("Enemies").transform.childCount == 0)
+        if (!waveManager.HasWaveStarted() && enemies.transform.childCount == 0)
         {
             Debug.Log("staring wave");
             waveManager.StartWaves();
@@ -112,56 +113,6 @@ public class GameController : MonoBehaviour
         }
         return true;
     }
-
-    /*
-    void FixedUpdate()
-    {
-        currentTime++;
-        if (isGameOver)
-        {
-            return;
-        }
-        if (currentLives <= 0)
-        {
-            LoseLevel();
-        }
-        else if (currentWave >= 100)
-        {
-            if (enemies.Count != 0)
-            {
-                return;
-            }
-            foreach (var enemy in enemies)
-            {
-                Destroy(enemy);
-            }
-            if (enemies.Count == 0)
-            {
-                if (!levelComplete)
-                {
-                    currentTime = 0;
-                    currentLevel++;
-                    levelComplete = true;
-                    gameStateUI.SetActive(true);
-                    gameStateText.text = $"Level Complete!\n Current Score: {currentScore}\n Next Level in 5 seconds...";
-                    FindObjectOfType<PlacementCursorBehavior>().UnhighlightTurret();
-                }
-                ClearLevel();
-            }
-        }
-        else if (currentTime % waveInterval == 0)
-        {
-            currentWave++;
-            // TODO: arbitrary values, make variables later
-            if (waveInterval >= 4)
-            {
-                waveInterval -= 2;
-            }
-            AudioSource.PlayClipAtPoint(spawnSFX, Camera.main.transform.position);
-            enemies.Add(this.GetComponent<EnemySpawner>().SpawnEnemy());
-        }
-    }
-    */
 
     void UpdateUI()
     {
@@ -188,10 +139,6 @@ public class GameController : MonoBehaviour
     {
         isGameOver = true;
         UpdateGameStateText(false);
-        foreach (var enemy in enemies)
-        {
-            Destroy(enemy);
-        }
         StartCoroutine(LoadSceneWithDelay(5, false));
     }
 
@@ -325,11 +272,6 @@ public class GameController : MonoBehaviour
             waveManager.InitEnemies();
             waveManager.SetEnemySpawnPoint(enemyStarts[i]);
         }
-    }
-
-    public void RemoveEnemy(GameObject enemy)
-    {
-        enemies.Remove(enemy);
     }
 
     public void LoseLife(int life)
