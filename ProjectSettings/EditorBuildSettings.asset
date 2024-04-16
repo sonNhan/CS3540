@@ -17,4 +17,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: 3d07f19383a2f788099cfd60b1063155
+    path: Assets/Scenes/Cutscenes/IntroPanel1.unity
+    guid: 846c1180a3083c64180c68ee85a95d5c
+  - enabled: 1
+    path: Assets/Scenes/Map1.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/BeatFirstLevelPanel1.unity
+    guid: 6ec4a3dc459389343ad32bcf3e6fedc1
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/BeatFirstLevelPanel2.unity
+    guid: 6f7e74429abf7a447b94c331b432cf18
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/SecondLevelBeatPanel1.unity
+    guid: 6c9118a21b40188408d524d6e54a83ea
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/FinalLevelCompletePanel1.unity
+    guid: dd1a18890e718d6449f95882df1ad7c2
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/FinalLevelCompletePanel2.unity
+    guid: 7806b90099221c8448830ec2f0ff42fe
   m_configObjects: {}
