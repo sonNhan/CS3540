@@ -971,7 +971,7 @@ MonoBehaviour:
   startingMoney: 100
   levelConfig: {fileID: 4900000, guid: 4a91070f5c0d5e006a09fafa44c3c68d, type: 3}
   waypointConfig: {fileID: 4900000, guid: 4d3a1a8adfd2ce686a3b1155c5b262ce, type: 3}
-  nextSceneName: Level3
+  nextSceneName: 
 --- !u!1 &770143494
 GameObject:
   m_ObjectHideFlags: 0

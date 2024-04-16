@@ -7,7 +7,7 @@ using UnityEngine;
 public class TerrainController : MonoBehaviour
 {
     // Anything 5 or higher is a decorated unplaceable tile
-    const int ROAD = 0, PLACEABLE = 1, ENEMY_START = 2, ENEMY_END = 3, SHOP = 4;
+    const int BLANK = -1, ROAD = 0, PLACEABLE = 1, ENEMY_START = 2, ENEMY_END = 3, SHOP = 4;
 
     [SerializeField]
     GameObject road, placeable, shop, enemyEnd;
@@ -64,6 +64,8 @@ public class TerrainController : MonoBehaviour
                 Vector3 tilePosition = new Vector3(-j * 10 + 45, 0f, i * 10 - 45);
                 switch (tileIndex)
                 {
+                    case BLANK:
+                        break;
                     case ROAD:
                         road.tag = "Unplaceable";
                         road.transform.position = tilePosition;
