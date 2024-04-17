@@ -714,6 +714,7 @@ GameObject:
   - component: {fileID: 756807719}
   - component: {fileID: 756807718}
   - component: {fileID: 756807717}
+  - component: {fileID: 756807722}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -905,6 +906,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 75, y: -179.735, z: 0}
+--- !u!114 &756807722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756807716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e8bad31c29533b0915879f67b8d4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &760772964
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,6 +1001,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 5641754721376316627, guid: 298a4eaf499a8ed42ae7e5c76809300f, type: 3}
   - {fileID: 4628170520958092292, guid: b6d3a8ce72ce8891a9be948fe7dd86aa, type: 3}
+  - {fileID: 1155341465828141291, guid: 7aed8714c9e8dac4f96d9a934fe59212, type: 3}
 --- !u!114 &760772969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,6 +1018,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 5641754721376316627, guid: 298a4eaf499a8ed42ae7e5c76809300f, type: 3}
   - {fileID: 4628170520958092292, guid: b6d3a8ce72ce8891a9be948fe7dd86aa, type: 3}
+  - {fileID: 1155341465828141291, guid: 7aed8714c9e8dac4f96d9a934fe59212, type: 3}
 --- !u!1 &770143494
 GameObject:
   m_ObjectHideFlags: 0
