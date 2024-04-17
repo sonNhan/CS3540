@@ -8,7 +8,6 @@ public class ShopTileFSM : MonoBehaviour
     AudioClip ShopkeeperHelloSFX, ShopKeeperTalkingSFX;
 
     GameObject chatBox, terrain;
-    TerrainController terrainController;
     GameObject placementPointer;
     bool onShopTile;
     Animator animator;
@@ -29,7 +28,6 @@ public class ShopTileFSM : MonoBehaviour
         chatBox = GameObject.Find("UI").transform.Find("Shopkeeper").gameObject;
         chatBox.SetActive(false);
         terrain = GameObject.Find("DirtGround");
-        terrainController = terrain.GetComponent<TerrainController>();
         animator = GetComponentInChildren<Animator>();
         currentState = FSMstates.WALKING;
         shopTileMaterial = GetComponent<Renderer>().material;

@@ -20,6 +20,7 @@ TagManager:
   - WizzardWaypoint
   - ShopTile
   - PlacementPointer
+  - EnemyStart
   layers:
   - Default
   - TransparentFX
