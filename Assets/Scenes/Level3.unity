@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.66102904, g: 0.459383, b: 0.45468062, a: 1}
+  m_IndirectSpecularColor: {r: 0.6610563, g: 0.45940274, b: 0.4546926, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -427,14 +427,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   road: {fileID: 2590736993465120540, guid: 1dd51f5f3679ef8deb71abb77947068b, type: 3}
-  placeable: {fileID: 1196857241743545068, guid: 20b4c001883ae9d22a65457d29594431, type: 3}
+  placeable: {fileID: 3103730187360991917, guid: 493ac89fd27f3a34a9acf9fad9a4da8e, type: 3}
   shop: {fileID: 6714311479941224408, guid: c2763abe835d839458cf2b2f6042878a, type: 3}
   enemyEnd: {fileID: 316481469115566528, guid: 127b44a0bd42a344db795741cc2c2e27, type: 3}
   decoratedTiles:
-  - {fileID: 1918986432006692997, guid: 88713ec0b47147e42a0f288ce4679e0d, type: 3}
-  - {fileID: 6588866250651801179, guid: 0b4060bcedd794b49af7695e47cd1058, type: 3}
-  - {fileID: 5651388803900931385, guid: bf2071ad47a50ea489c5eb987a5c46d9, type: 3}
-  - {fileID: 5692015404228956425, guid: 2f9be7f671bb1e948bfd0ad50862faf6, type: 3}
+  - {fileID: 219732747004424039, guid: 6b9dcccd4a1dd4e408b3b27357dd94f6, type: 3}
+  - {fileID: 3533903085241949906, guid: 5c4af31da6eca004a82c593f7bc4f161, type: 3}
 --- !u!4 &203975822
 Transform:
   m_ObjectHideFlags: 0
