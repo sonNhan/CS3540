@@ -5,12 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GoToScenes : MonoBehaviour
 {
-    public void nextScene() {
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    public void nextScene()
+    {
         // load the next level
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void backToMenu() {
+    public void backToMenu()
+    {
         // return to the main menu
         SceneManager.LoadScene(0);
     }
