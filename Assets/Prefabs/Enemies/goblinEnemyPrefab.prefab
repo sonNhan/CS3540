@@ -162,4 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSFX: {fileID: 8300000, guid: 156dded259243660dad74c5e69f4835f, type: 3}
-  startingHealth: 100
+  startingHealth: 80
