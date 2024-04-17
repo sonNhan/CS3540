@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.5408601, g: 0.75044787, b: 0.84539104, a: 1}
+  m_IndirectSpecularColor: {r: 0.54089326, g: 0.7505262, b: 0.8453567, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -448,7 +448,7 @@ MonoBehaviour:
   startingMoney: 100
   levelConfig: {fileID: 4900000, guid: 1a89dfe921ced3b60b6f0844403d566d, type: 3}
   waypointConfig: {fileID: 4900000, guid: 49bae343039375ab2944e07e8f2b7d94, type: 3}
-  nextSceneName: Level2
+  nextSceneName: BeatFirstLevelPanel1
 --- !u!114 &760772968
 MonoBehaviour:
   m_ObjectHideFlags: 0
