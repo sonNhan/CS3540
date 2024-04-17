@@ -183,7 +183,7 @@ MonoBehaviour:
   m_text: Start Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
-  m_sharedMaterial: {fileID: -6268671097141924151, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
+  m_sharedMaterial: {fileID: 3900069182680232703, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_text: 'Help Menu:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
-  m_sharedMaterial: {fileID: -6268671097141924151, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
+  m_sharedMaterial: {fileID: 3900069182680232703, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1069,7 +1069,7 @@ MonoBehaviour:
     shopkeer tile!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
-  m_sharedMaterial: {fileID: -6268671097141924151, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
+  m_sharedMaterial: {fileID: 3900069182680232703, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_text: Quit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
-  m_sharedMaterial: {fileID: -6268671097141924151, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
+  m_sharedMaterial: {fileID: 3900069182680232703, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1613,7 +1613,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c3cb7db5f4d8f3d42af38d27afd4244b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 59003c4a5459b6f4aab559ddf6cd0c9a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1691,7 +1691,7 @@ MonoBehaviour:
   m_text: Back to Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
-  m_sharedMaterial: {fileID: -6268671097141924151, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
+  m_sharedMaterial: {fileID: 3900069182680232703, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1825,7 +1825,7 @@ MonoBehaviour:
   m_text: The Chronicles of Northwind
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
-  m_sharedMaterial: {fileID: -6268671097141924151, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
+  m_sharedMaterial: {fileID: 3900069182680232703, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2127,7 +2127,7 @@ MonoBehaviour:
   m_text: Help
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
-  m_sharedMaterial: {fileID: -6268671097141924151, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
+  m_sharedMaterial: {fileID: 3900069182680232703, guid: 649f282308413af11b45bab77d5a17b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
